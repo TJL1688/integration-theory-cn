@@ -1,0 +1,1930 @@
+\chapter{拉东--斯蒂尔杰斯积分}
+
+\section{正测度的定义}
+\label{sec:positive-radon-measures}
+
+在第二章中, 我们已经看到: 从黎曼积分推广到 Lebesgue 积分时, 真正使用的并不是黎曼积分的全部性质, 而主要是 \(\C_0(\R^d)\) 上积分的两个基本性质:
+\begin{align}
+	\int_{\R^d}(af+bg)\,\dd x
+	&=a\int_{\R^d}f\,\dd x+b\int_{\R^d}g\,\dd x,\label{eq:lebesgue-basic-linear}\\
+	\int_{\R^d}f\,\dd x&\geq0,\qquad f\in\C_0^+(\R^d).\label{eq:lebesgue-basic-positive}
+\end{align}
+因此, 可以把 Lebesgue 积分的构造抽象出来: 不一定从通常的体积积分出发, 而是从 \(\C_0(\R^d)\) 上的一个正线性泛函出发. 这样得到的积分就是 Radon 积分的基本形式.
+
+设
+\[
+\mu:\C_0(\R^d)\longrightarrow\R
+\]
+是一个映射. 若它满足
+\begin{equation}
+	\mu(af+bg)=a\mu(f)+b\mu(g),
+	\qquad a,b\in\R,\quad f,g\in\C_0(\R^d),
+	\label{eq:positive-measure-linear}
+\end{equation}
+以及
+\begin{equation}
+	\mu(f)\geq0,
+	\qquad f\in\C_0^+(\R^d),
+	\label{eq:positive-measure-positive}
+\end{equation}
+则 \(\mu\) 称为 \(\C_0(\R^d)\) 上的一个正线性泛函.
+
+由 \eqref{eq:positive-measure-linear} 和 \eqref{eq:positive-measure-positive} 立刻得到单调性: 若 \(f,g\in\C_0(\R^d)\) 且 \(f\leq g\), 则
+\[
+\mu(f)\leq \mu(g).
+\]
+此外还有下面的连续性性质.
+
+\begin{lem}\label{lem:positive-functional-continuity-from-above}
+	设 \(\mu\) 满足 \eqref{eq:positive-measure-linear} 和 \eqref{eq:positive-measure-positive}. 若 \(f_n\in\C_0^+(\R^d)\), 且
+	\[
+	f_1\geq f_2\geq\cdots\geq0,
+	\qquad
+	f_n(x)\downarrow0
+	\]
+	对每个 \(x\in\R^d\) 成立, 并且所有 \(f_n\) 的支集都包含在同一个紧集内, 则
+	\begin{equation}
+		\mu(f_n)\longrightarrow0.
+		\label{eq:positive-functional-continuity-from-above}
+	\end{equation}
+\end{lem}
+
+\begin{proof}
+	因为所有 \(f_n\) 的支集都包含在同一个紧集 \(K\) 中, 可取 \(\varphi\in\C_0^+(\R^d)\), 使得
+	\[
+	\varphi=1\quad\text{于 }K\text{ 上}.
+	\]
+	令
+	\[
+	M_n=\max_{x\in K} f_n(x).
+	\]
+	由 Dini 引理, \(f_n\downarrow0\) 在紧集 \(K\) 上一致成立, 所以 \(M_n\to0\). 又有
+	\[
+	0\leq f_n\leq M_n\varphi.
+	\]
+	由单调性和齐次性,
+	\[
+	0\leq\mu(f_n)\leq M_n\mu(\varphi)\to0.
+	\]
+\end{proof}
+
+现在可以仿照第二章的构造, 从 \(\mu\) 出发定义积分. 对 \(f\in\mathcal I^+\), 定义
+\begin{equation}
+	\mu^*(f)=\sup\{\mu(g):g\in\C_0(\R^d),\ 0\leq g\leq f\}.
+	\label{eq:mu-star-on-i-plus}
+\end{equation}
+若 \(f\geq0\) 是任意非负函数, 再定义
+\begin{equation}
+	\mu^*(f)=\inf\{\mu^*(h):h\in\mathcal I^+,\ f\leq h\}.
+	\label{eq:mu-star-positive-function}
+\end{equation}
+这里允许取值为 \(+\infty\). 与第二章完全相同, 可以证明 \(\mu^*\) 对非负函数具有单调性、正齐次性、次可加性和单调收敛性质.
+
+\begin{defn}[关于 \(\mu\) 的可积函数]
+	\label{def:l1-mu}
+	设 \(f\) 是取值于 \([-\infty,+\infty]\) 的函数. 若对任意 \(\varepsilon>0\), 存在 \(g\in\C_0(\R^d)\), 使得
+	\[
+	\mu^*(|f-g|)<\varepsilon,
+	\]
+	则称 \(f\) 关于 \(\mu\) 可积, 并记 \(f\in L^1_\mu\).
+\end{defn}
+
+若 \(f\in L^1_\mu\), 取 \(g_n\in\C_0(\R^d)\), 使得
+\[
+\mu^*(|f-g_n|)\to0.
+\]
+则 \(\mu(g_n)\) 是 Cauchy 数列. 事实上,
+\[
+|\mu(g_n)-\mu(g_m)|
+\leq \mu^*(|g_n-g_m|)
+\leq \mu^*(|g_n-f|)+\mu^*(|f-g_m|)\to0.
+\]
+因此 \(\mu(g_n)\) 有极限, 且与逼近列 \(g_n\) 的选取无关.
+
+\begin{defn}[关于 \(\mu\) 的积分]
+	\label{def:integral-with-respect-to-mu}
+	设 \(f\in L^1_\mu\). 取 \(g_n\in\C_0(\R^d)\), 使 \(\mu^*(|f-g_n|)\to0\). 定义
+	\[
+	\mu(f)=\lim_{n\to\infty}\mu(g_n).
+	\]
+	在不致混淆时, 也写作
+	\[
+	\int f\,\dd\mu.
+	\]
+\end{defn}
+
+用这种方法, 第二章关于 Lebesgue 积分的许多结论都可以逐字推广到 \(\mu\)-积分. 例如, \(L^1_\mu\) 是线性空间; 若 \(f,g\in L^1_\mu\), \(a,b\in\R\), 则
+\[
+\mu(af+bg)=a\mu(f)+b\mu(g).
+\]
+若 \(f\geq0\) 且 \(f\in L^1_\mu\), 则
+\[
+\mu(f)\geq0.
+\]
+单调收敛定理、Fatou 引理和控制收敛定理也都有相应版本. 证明与第二章中的证明没有本质差别, 只要把通常积分 \(\int f\,\dd x\) 换成 \(\mu(f)\) 即可.
+
+\begin{rem}
+	需要注意的是, 零集合的概念现在依赖于 \(\mu\). 也就是说, 一个集合 \(E\) 是否满足
+	\[
+	\mu^*(\chi_E)=0
+	\]
+	取决于所选的正线性泛函 \(\mu\). 因此, 在涉及``几乎处处''的表述时, 必须说明是相对于哪个测度而言.
+\end{rem}
+
+\begin{defn}[Radon 正测度]
+	\label{def:positive-radon-measure}
+	一个满足 \eqref{eq:positive-measure-linear} 和 \eqref{eq:positive-measure-positive} 的正线性泛函
+	\[
+	\mu:
+	\C_0(\R^d)\to\R
+	\]
+	称为 \(\R^d\) 上的一个 Radon 正测度.
+\end{defn}
+
+特别地, 通常的 Lebesgue 测度就是由
+\[
+\mu(f)=\int_{\R^d}f(x)\,\dd x,
+\qquad f\in\C_0(\R^d),
+\]
+所给出的 Radon 正测度.
+
+更一般地, 若 \(\Omega\subset\R^d\) 是开集, 用 \(\C_0(\Omega)\) 代替 \(\C_0(\R^d)\), 则 \(\C_0(\Omega)\) 上的正线性泛函称为 \(\Omega\) 上的 Radon 正测度. 为了避免记号过于繁复, 后面主要讨论 \(\R^d\) 上的情形; 对开集 \(\Omega\) 的情形, 相应结论可以逐字改写.
+
+\clearpage
+
+\section{一维情形: Stieltjes 积分}
+\label{sec:one-dimensional-stieltjes-integral}
+
+设 \(\Omega=(a,b)\subset\R\) 是一个有限或无限开区间. 本节的目标是描述 \(\Omega\) 上所有 Radon 正测度. 结果表明, 一维 Radon 正测度正好就是 Stieltjes 积分.
+
+对 \(x\in\Omega\), 定义函数
+\[
+H_x(y)=
+\begin{cases}
+	1, & y>x,\\
+	0, & y\leq x.
+\end{cases}
+\]
+则 \(H_x\in\mathcal I^+(\Omega)\). 若 \(x_1<x_2\), 则 \(H_{x_1}-H_{x_2}\) 是区间 \((x_1,x_2]\) 的特征函数, 因而关于任意 Radon 正测度 \(\mu\) 都是可积的.
+
+设 \(\mu\) 是 \(\Omega\) 上的 Radon 正测度. 我们要构造一个增函数 \(\varphi\), 使得
+\begin{equation}
+	\varphi(x_2)-\varphi(x_1)
+	=
+	\mu(H_{x_1}-H_{x_2}),
+	\qquad x_1<x_2.
+	\label{eq:stieltjes-distribution-function}
+\end{equation}
+取定一点 \(x_0\in\Omega\) 和常数 \(C\in\R\), 定义
+\begin{equation}
+	\varphi(x)=\mu(H_{x_0}-H_x)+C.
+	\label{eq:distribution-function-from-measure}
+\end{equation}
+这里若 \(x<x_0\), 则 \(H_{x_0}-H_x\) 应理解为 \(- (H_x-H_{x_0})\). 由积分的可加性可知, \eqref{eq:distribution-function-from-measure} 正好满足 \eqref{eq:stieltjes-distribution-function}. 反过来, 满足 \eqref{eq:stieltjes-distribution-function} 的函数只能相差一个常数.
+
+由于 \(H_{x_1}-H_{x_2}\geq0\) 当 \(x_1<x_2\), 由 \(\mu\) 的正性可知 \(\varphi\) 是增函数. 进一步, \(\varphi\) 是右连续的. 事实上, 当 \(h\downarrow0\) 时,
+\[
+H_x-H_{x+h}\downarrow0
+\]
+在紧支意义下成立, 从而
+\[
+\varphi(x+h)-\varphi(x)
+=
+\mu(H_x-H_{x+h})\longrightarrow0.
+\]
+
+下面说明, \(\mu\) 可以由 \(\varphi\) 重新构造出来. 设 \(f\in\C_0(\Omega)\), 取一个包含 \(\operatorname{supp}f\) 的紧区间 \([\alpha,\beta]\subset\Omega\), 并作剖分
+\[
+\alpha=x_0<x_1<\cdots <x_N=\beta.
+\]
+记 \(M_k\) 和 \(m_k\) 分别为 \(f\) 在 \([x_{k-1},x_k]\) 上的最大值和最小值. 由 \eqref{eq:stieltjes-distribution-function} 和单调性, 有
+\begin{equation}
+	\sum_{k=1}^N m_k\bigl(\varphi(x_k)-\varphi(x_{k-1})\bigr)
+	\leq
+	\mu(f)
+	\leq
+	\sum_{k=1}^N M_k\bigl(\varphi(x_k)-\varphi(x_{k-1})\bigr).
+	\label{eq:stieltjes-upper-lower-bound}
+\end{equation}
+
+反过来, 若 \(\varphi\) 是 \(\Omega\) 上的一个增函数, 则可以仿照 Riemann 积分定义 Riemann--Stieltjes 上、下积分:
+\[
+\overline{\int_\Omega} f\,\dd\varphi
+=
+\inf_P\sum_{k=1}^N M_k\bigl(\varphi(x_k)-\varphi(x_{k-1})\bigr),
+\]
+\[
+\underline{\int_\Omega} f\,\dd\varphi
+=
+\sup_P\sum_{k=1}^N m_k\bigl(\varphi(x_k)-\varphi(x_{k-1})\bigr),
+\]
+其中 \(P\) 取遍包含 \(\operatorname{supp}f\) 的紧区间的所有剖分. 当 \(f\in\C_0(\Omega)\) 时, 由于 \(f\) 一致连续, 上、下 Stieltjes 积分相等. 这个共同值记作
+\[
+\int_\Omega f\,\dd\varphi.
+\]
+于是由 \eqref{eq:stieltjes-upper-lower-bound} 得
+\[
+\mu(f)=\int_\Omega f\,\dd\varphi,
+\qquad f\in\C_0(\Omega).
+\]
+另一方面, 对任意增函数 \(\varphi\), 映射
+\[
+f\longmapsto \int_\Omega f\,\dd\varphi,
+\qquad f\in\C_0(\Omega),
+\]
+显然是正线性的, 从而定义 \(\Omega\) 上的一个 Radon 正测度.
+
+现在讨论唯一性. 设两个增函数 \(\varphi\) 与 \(\psi\) 给出同一个正测度, 即
+\[
+\int_\Omega f\,\dd\varphi
+=
+\int_\Omega f\,\dd\psi,
+\qquad f\in\C_0(\Omega).
+\]
+取 \(x_1<x_2\). 令 \(f_n\in\C_0(\Omega)\) 满足 \(0\leq f_n\leq1\), 在 \([x_1,x_2]\) 上等于 \(1\), 在 \((x_1-1/n,x_2+1/n)^c\) 上等于 \(0\), 并在中间连续过渡. 令 \(n\to\infty\), 得
+\[
+\varphi(x_2+0)-\varphi(x_1-0)
+=
+\psi(x_2+0)-\psi(x_1-0).
+\]
+因此
+\[
+\varphi(x+0)-\psi(x+0)
+=
+\varphi(x-0)-\psi(x-0)=C
+\]
+对所有 \(x\in\Omega\) 成立, 其中 \(C\) 为常数. 特别地, 在所有连续点上, \(\varphi\) 与 \(\psi\) 只相差同一个常数. 若进一步要求二者右连续, 则
+\[
+\varphi(x)-\psi(x)=C,
+\qquad x\in\Omega.
+\]
+
+于是得到如下定理.
+
+\begin{thm}[Riesz 表示的一维形式]
+	\label{thm:one-dimensional-positive-measure-stieltjes}
+	设 \(\Omega=(a,b)\subset\R\). \(\Omega\) 上任意 Radon 正测度 \(\mu\) 都可以表示为关于某个增函数 \(\varphi\) 的 Stieltjes 积分:
+	\[
+	\mu(f)=\int_\Omega f\,\dd\varphi,
+	\qquad f\in\C_0(\Omega).
+	\]
+	若要求 \(\varphi\) 右连续, 并指定它在某一点的值, 则 \(\varphi\) 由 \(\mu\) 唯一确定.
+\end{thm}
+
+\begin{exer}
+	证明: 一个增函数至多有可数多个不连续点. 提示: 先证明对任意 \(\varepsilon>0\), 在任一紧区间上, 跃度大于 \(\varepsilon\) 的不连续点只有有限多个.
+\end{exer}
+
+由这个练习可知, 若只在可数多个点上改变一个增函数的取值, 则相应的 Stieltjes 积分不变. 因为紧支连续函数的 Stieltjes 积分只感受到增函数的左右极限所决定的跳跃量, 而不取决于函数在跳跃点本身如何赋值.
+
+\begin{rem}
+	一般的 Radon 测度可以看作 Stieltjes 积分的高维推广. 因此, 即使在多变量情形中, 我们也常把测度作用写成积分形式
+	\[
+	\mu(f)=\int f\,\dd\mu.
+	\]
+	这种记号强调的是: 测度本身充当了积分的“微分元”.
+\end{rem}
+
+\clearpage
+
+\section{一般的 Radon 测度及其正部与负部的分解}
+\label{sec:general-radon-measures-jordan-decomposition}
+
+若 \(\mu\) 为 Radon 正测度, 则它具有如下连续性: 若 \(f_n\in\C_0(\R^d)\) 都在同一个紧集外等于零, 并且 \(f_n\) 一致收敛到零, 则
+\[
+\mu(f_n)\longrightarrow0.
+\]
+事实上, 取 \(\varphi\in\C_0^+(\R^d)\), 使得 \(\varphi=1\) 于这个公共紧集上. 若
+\[
+M_n=\sup_{x\in\R^d}|f_n(x)|,
+\]
+则 \(M_n\to0\), 且
+\[
+-M_n\varphi\leq f_n\leq M_n\varphi.
+\]
+由正性和单调性便得
+\[
+|\mu(f_n)|\leq M_n\mu(\varphi)\to0.
+\]
+基于这个性质, 我们可以把正测度推广为一般的 Radon 测度.
+
+\begin{defn}[Radon 测度]
+	\label{def:radon-measure-general}
+	一个定义在 \(\C_0(\R^d)\) 上的实值泛函 \(\mu\), 若满足:
+	\begin{enumerate}
+		\item 线性性:
+		\[
+		\mu(af+bg)=a\mu(f)+b\mu(g),
+		\qquad a,b\in\R,\quad f,g\in\C_0(\R^d);
+		\]
+		\item 连续性: 若 \(f_n\in\C_0(\R^d)\) 都在同一个紧集外等于零, 且 \(f_n\) 一致收敛到零, 则
+		\[
+		\mu(f_n)\to0,
+		\]
+	\end{enumerate}
+	则称 \(\mu\) 为 \(\R^d\) 上的一个 Radon 测度.
+\end{defn}
+
+Radon 正测度显然是这里意义下的 Radon 测度. 引入一般 Radon 测度之后, 测度的线性组合也自然有意义: 若 \(\mu,\nu\) 为 Radon 测度, \(a,b\in\R\), 则
+\[
+(a\mu+b\nu)(f)=a\mu(f)+b\nu(f),
+\qquad f\in\C_0(\R^d),
+\]
+定义了新的 Radon 测度.
+
+\begin{defn}[测度的序]
+	\label{def:order-of-radon-measures}
+	设 \(\mu,\nu\) 为 Radon 测度. 若 \(\nu-\mu\) 是 Radon 正测度, 即
+	\[
+	\mu(f)\leq \nu(f),
+	\qquad f\in\C_0^+(\R^d),
+	\]
+	则记作
+	\[
+	\mu\leq \nu.
+	\]
+\end{defn}
+
+下面的定理是测度的 Jordan 分解. 它是函数分解
+\[
+f=f^+-f^-,
+\qquad
+f^+=\max(f,0),
+\quad
+f^-=\max(-f,0)
+\]
+在测度层面的对应物.
+
+\begin{thm}[Jordan 分解]
+	\label{thm:jordan-decomposition-radon-measure}
+	任意 Radon 测度 \(\mu\) 都可以唯一地写成
+	\[
+	\mu=\mu^+-\mu^-,
+	\]
+	其中 \(\mu^+\) 和 \(\mu^-\) 是 Radon 正测度. 这个分解具有如下最小性: 若
+	\[
+	\mu=\mu_1-\mu_2,
+	\qquad \mu_1,\mu_2\geq0,
+	\]
+	则
+	\[
+	\mu^+\leq \mu_1,
+	\qquad
+	\mu^-\leq \mu_2.
+	\]
+\end{thm}
+
+\begin{proof}
+	先构造 \(\mu^+\). 对 \(f\in\C_0^+(\R^d)\), 定义
+	\begin{equation}
+		\mu^+(f)=\sup\{\mu(g):g\in\C_0(\R^d),\ 0\leq g\leq f\}.
+		\label{eq:positive-part-measure-definition}
+	\end{equation}
+	显然 \(\mu^+(f)\geq0\), 且 \(\mu^+(cf)=c\mu^+(f)\) 对 \(c\geq0\) 成立.
+	
+	下面证明可加性. 设 \(f_1,f_2\in\C_0^+(\R^d)\). 一方面, 若 \(0\leq g_i\leq f_i\), 则
+	\[
+	0\leq g_1+g_2\leq f_1+f_2,
+	\]
+	所以
+	\[
+	\mu(g_1)+\mu(g_2)=\mu(g_1+g_2)\leq \mu^+(f_1+f_2).
+	\]
+	取上确界得
+	\[
+	\mu^+(f_1)+\mu^+(f_2)\leq \mu^+(f_1+f_2).
+	\]
+	另一方面, 任取 \(g\in\C_0(\R^d)\) 满足 \(0\leq g\leq f_1+f_2\). 令
+	\[
+	g_1=\min(g,f_1),
+	\qquad
+	g_2=g-g_1.
+	\]
+	则 \(g_1,g_2\in\C_0^+(\R^d)\), 且 \(g_1\leq f_1\). 又
+	\[
+	g_2=g-\min(g,f_1)=\max(0,g-f_1)\leq f_2.
+	\]
+	因此
+	\[
+	\mu(g)=\mu(g_1)+\mu(g_2)\leq \mu^+(f_1)+\mu^+(f_2).
+	\]
+	再对 \(g\) 取上确界, 得反向不等式. 所以 \(\mu^+\) 在 \(\C_0^+\) 上可加.
+	
+	由齐次性和可加性, \(\mu^+\) 可以唯一地扩张为 \(\C_0(\R^d)\) 上的正线性泛函. 由正线性泛函的连续性可知, \(\mu^+\) 是 Radon 正测度.
+	
+	定义
+	\[
+	\mu^-=\mu^+-\mu.
+	\]
+	若 \(f\in\C_0^+(\R^d)\), 则由 \eqref{eq:positive-part-measure-definition} 中取 \(g=f\) 可知
+	\[
+	\mu^+(f)\geq \mu(f),
+	\]
+	从而 \(\mu^-(f)\geq0\). 因此 \(\mu^-\) 也是 Radon 正测度, 且
+	\[
+	\mu=\mu^+-\mu^-.
+	\]
+	
+	现在证明最小性. 若 \(\mu=\mu_1-\mu_2\), 其中 \(\mu_1,\mu_2\geq0\), 则对任意 \(0\leq g\leq f\) 有
+	\[
+	\mu(g)=\mu_1(g)-\mu_2(g)\leq \mu_1(g)\leq \mu_1(f).
+	\]
+	取上确界得
+	\[
+	\mu^+(f)\leq \mu_1(f),
+	\qquad f\in\C_0^+(\R^d).
+	\]
+	于是 \(\mu^+\leq\mu_1\). 又
+	\[
+	\mu^-=\mu^+-\mu\leq \mu_1-\mu=\mu_2.
+	\]
+	最小性得证.
+	
+	唯一性也由最小性得到. 若 \(\mu=\alpha-\beta\) 是另一个具有相同最小性的分解, 则由最小性有 \(\mu^+\leq\alpha\) 和 \(\alpha\leq\mu^+\), 故 \(\alpha=\mu^+\); 同理 \(\beta=\mu^-\).
+\end{proof}
+
+\begin{defn}[全变差测度]
+	\label{def:total-variation-measure}
+	设 \(\mu\) 为 Radon 测度, 并设
+	\[
+	\mu=\mu^+-\mu^-
+	\]
+	是它的 Jordan 分解. 定义 \(\mu\) 的绝对值或全变差测度为
+	\[
+	|\mu|=\mu^++\mu^-.
+	\]
+\end{defn}
+
+\begin{exer}
+	\label{exer:total-variation-characterization}
+	设 \(f\in\C_0^+(\R^d)\). 证明
+	\[
+	|\mu|(f)=\sup\{\mu(g):g\in\C_0(\R^d),\ |g|\leq f\}.
+	\]
+	并证明三角不等式
+	\[
+	|\mu+\nu|\leq |\mu|+|\nu|.
+	\]
+\end{exer}
+
+\subsection{测度的最大值与最小值}
+
+类似于两个函数的最大值和最小值, 可以定义两个测度的最大值和最小值.
+
+\begin{defn}[测度的最大值与最小值]
+	\label{def:max-min-radon-measures}
+	设 \(\mu,\nu\) 为 Radon 测度. 定义
+	\[
+	\max(\mu,\nu)=\frac{\mu+\nu+|\mu-\nu|}{2},
+	\]
+	以及
+	\[
+	\min(\mu,\nu)=\frac{\mu+\nu-|\mu-\nu|}{2}.
+	\]
+\end{defn}
+
+\begin{thm}
+	\label{thm:max-min-measures-order-property}
+	\(\max(\mu,\nu)\) 是所有大于等于 \(\mu\) 和 \(\nu\) 的 Radon 测度中最小的一个; \(\min(\mu,\nu)\) 是所有小于等于 \(\mu\) 和 \(\nu\) 的 Radon 测度中最大的一个.
+\end{thm}
+
+\begin{proof}
+	只证明最大值的断言, 最小值的断言类似. 首先
+	\[
+	\max(\mu,\nu)-\mu
+	=
+	\frac{|\mu-\nu|-(\mu-\nu)}{2}
+	=(\nu-\mu)^+\geq0,
+	\]
+	所以 \(\max(\mu,\nu)\geq\mu\). 同理 \(\max(\mu,\nu)\geq\nu\).
+	
+	若 \(\sigma\geq\mu\) 且 \(\sigma\geq\nu\), 则 \(\sigma-\mu\geq0\), \(\sigma-\nu\geq0\). 又因为
+	\[
+	|\mu-\nu|\leq (\sigma-\mu)+(\sigma-\nu),
+	\]
+	故
+	\[
+	\max(\mu,\nu)
+	=
+	\frac{\mu+\nu+|\mu-\nu|}{2}
+	\leq
+	\frac{\mu+\nu+\sigma-\mu+\sigma-\nu}{2}
+	=\sigma.
+	\]
+	因此 \(\max(\mu,\nu)\) 是最小上界.
+\end{proof}
+
+特别地,
+\[
+\mu^+=\max(\mu,0),
+\qquad
+\mu^-=\max(-\mu,0).
+\]
+
+\subsection{Hahn 分解与奇异性}
+
+下面证明测度的 Hahn 分解. 它说明一个有符号测度可以把空间分成两部分, 在其中一部分上只看见正部, 在另一部分上只看见负部.
+
+\begin{thm}[Hahn 分解]
+	\label{thm:hahn-decomposition-radon-measure}
+	设 \(\mu\) 为 Radon 测度. 则存在互为余集的集合 \(E^+\) 和 \(E^-\), 使得 \(E^+\) 关于 \(\mu^-\) 是零集, 而 \(E^-\) 关于 \(\mu^+\) 是零集. 并且可以选择这样的 \(E^+\) 和 \(E^-\), 使它们关于任意 Radon 正测度都是可测的.
+\end{thm}
+
+\begin{proof}
+	取一个连续函数 \(F>0\), 使得 \(F\in L^1_{\mu^+}\). 例如可用一列逐渐扩大的紧集和快速下降的系数构造这样的函数. 由 \(\mu^+\) 的定义, 可以取 \(g_n\in\C_0(\R^d)\), \(0\leq g_n\leq F\), 使得
+	\[
+	\mu(g_n)>\mu^+(F)-2^{-n}.
+	\]
+	因为
+	\[
+	\mu(g_n)=\mu^+(g_n)-\mu^-(g_n),
+	\]
+	上式等价于
+	\[
+	\bigl(\mu^+(F)-\mu^+(g_n)\bigr)+\mu^-(g_n)<2^{-n}.
+	\]
+	于是特别有
+	\[
+	\mu^-(g_n)<2^{-n},
+	\qquad
+	\mu^+(F-g_n)<2^{-n}.
+	\]
+	令
+	\[
+	g(x)=\limsup_{n\to\infty}g_n(x).
+	\]
+	因为每个 \(g_n\) 连续, 所以 \(g\) 关于任意 Radon 正测度都是可测的, 且 \(0\leq g\leq F\).
+	
+	对任意 \(N\), 有
+	\[
+	g\leq \sum_{n=N}^{\infty}g_n.
+	\]
+	因此
+	\[
+	\mu^-(g)
+	\leq
+	\sum_{n=N}^{\infty}\mu^-(g_n)
+	\leq
+	2^{1-N}.
+	\]
+	令 \(N\to\infty\), 得 \(\mu^-(g)=0\). 又由 Fatou 引理,
+	\[
+	\mu^+(F-g)
+	=
+	\mu^+\bigl(\liminf_{n\to\infty}(F-g_n)\bigr)
+	\leq
+	\liminf_{n\to\infty}\mu^+(F-g_n)=0.
+	\]
+	
+	定义
+	\[
+	E^+=\{x:g(x)>0\},
+	\qquad
+	E^-=\{x:g(x)=0\}.
+	\]
+	显然二者互为余集, 且由于 \(g\) 可测, 它们关于任意 Radon 正测度都是可测的. 由 \(\mu^-(g)=0\) 且 \(g>0\) 于 \(E^+\) 上可知, \(E^+\) 关于 \(\mu^-\) 是零集. 又因为 \(F-g=F>0\) 于 \(E^-\) 上, 且 \(\mu^+(F-g)=0\), 故 \(E^-\) 关于 \(\mu^+\) 是零集.
+\end{proof}
+
+\begin{thm}
+	\label{thm:singularity-equivalent-characterizations}
+	设 \(\mu,\nu\) 为两个 Radon 测度. 下列条件等价:
+	\begin{enumerate}
+		\item
+		\[
+		\min(|\mu|,|\nu|)=0;
+		\]
+		\item 存在互为余集的集合 \(E_\mu\) 和 \(E_\nu\), 使得 \(E_\mu\) 关于 \(|\nu|\) 是零集, 而 \(E_\nu\) 关于 \(|\mu|\) 是零集.
+	\end{enumerate}
+\end{thm}
+
+\begin{proof}
+	只需考虑 \(\mu\) 和 \(\nu\) 都为正测度的情形, 因为一般情形可对 \(|\mu|\) 和 \(|\nu|\) 应用同样论证.
+	
+	先设 \(\min(\mu,\nu)=0\). 令
+	\[
+	\rho=\mu-\nu.
+	\]
+	由 \(\min(\mu,\nu)=0\) 可知 \(\rho^+=\mu\), \(\rho^-=\nu\). 对 \(\rho\) 应用 Hahn 分解, 得到互余集合 \(E_\mu,E_\nu\), 使得 \(E_\mu\) 关于 \(\nu\) 是零集, \(E_\nu\) 关于 \(\mu\) 是零集.
+	
+	反过来, 假设存在这样的互余集合. 令
+	\[
+	\sigma=\min(\mu,\nu).
+	\]
+	则 \(\sigma\leq\mu\) 且 \(\sigma\leq\nu\). 因为 \(E_\nu\) 关于 \(\mu\) 是零集, 所以 \(E_\nu\) 关于 \(\sigma\) 也是零集; 因为 \(E_\mu\) 关于 \(\nu\) 是零集, 所以 \(E_\mu\) 关于 \(\sigma\) 也是零集. 二者互为余集, 因而整个空间关于 \(\sigma\) 是零集, 即 \(\sigma=0\). 因此 \(\min(\mu,\nu)=0\).
+\end{proof}
+
+\begin{defn}[互为奇异]
+	\label{def:mutually-singular-measures}
+	若定理 \ref{thm:singularity-equivalent-characterizations} 中的等价条件成立, 则称 \(\mu\) 与 \(\nu\) 互为奇异, 记作
+	\[
+	\mu\perp\nu.
+	\]
+\end{defn}
+
+\begin{rem}
+	古典术语中常说``\(\mu\) 关于 \(\nu\) 是奇异的''. 但由定义可见, 奇异性是对称关系, 因而说两个测度互为奇异更准确.
+\end{rem}
+
+\clearpage
+
+\section{一维情形}
+\label{sec:one-dimensional-general-radon-measures}
+
+为了用 Stieltjes 积分描述一维的一般 Radon 测度, 我们需要引入有界变差函数的概念.
+
+\begin{defn}[局部有界变差函数]
+	\label{def:locally-bounded-variation-function}
+	设 \(\Omega=(a,b)\subset\R\) 是一个开区间. 若函数 \(\varphi:\Omega\to\R\) 满足: 对任意紧子区间 \([\alpha,\beta]\subset\Omega\), 存在常数 \(V\), 使得对 \([\alpha,\beta]\) 的任意剖分
+	\[
+	\alpha=x_0<x_1<\cdots<x_N=\beta,
+	\]
+	都有
+	\[
+	\sum_{k=0}^{N-1}\left|\varphi(x_{k+1})-\varphi(x_k)\right|\leq V,
+	\]
+	则称 \(\varphi\) 在 \(\Omega\) 上是局部有界变差函数. 使上式成立的最小常数称为 \(\varphi\) 在 \([\alpha,\beta]\) 上的全变差.
+\end{defn}
+
+\begin{thm}\label{thm:bv-decomposition-difference-increasing}
+	任一有界变差函数 \(\varphi\) 都可以写成两个增函数之差:
+	\[
+	\varphi=\varphi^+-\varphi^-.
+	\]
+	反过来, 两个增函数之差必为有界变差函数. 若 \(\varphi\) 右连续, 则可以选择 \(\varphi^+\) 和 \(\varphi^-\) 都右连续.
+\end{thm}
+
+\begin{proof}
+	只需在一个紧区间 \([\alpha,\beta]\) 上证明. 为了简化记号, 先减去常数, 假设 \(\varphi(\alpha)=0\). 对 \(x\in[\alpha,\beta]\), 定义
+	\[
+	\varphi^+(x)=
+	\sup\sum_{k=0}^{N-1}\bigl(\varphi(x_{k+1})-\varphi(x_k)\bigr)^+,
+	\]
+	\[
+	\varphi^-(x)=
+	\sup\sum_{k=0}^{N-1}\bigl(\varphi(x_{k+1})-\varphi(x_k)\bigr)^-,
+	\]
+	以及
+	\[
+	V_\varphi(x)=
+	\sup\sum_{k=0}^{N-1}\left|\varphi(x_{k+1})-\varphi(x_k)\right|.
+	\]
+	这里上确界均取遍 \([\alpha,x]\) 的所有剖分
+	\[
+	\alpha=x_0<x_1<\cdots<x_N=x,
+	\]
+	并记
+	\[
+	r^+=\max(r,0),
+	\qquad
+	r^- =\max(-r,0).
+	\]
+	由有界变差性, 上述三个量都是有限的. 它们显然都是关于 \(x\) 的增函数.
+	
+	下面证明
+	\[
+	\varphi=\varphi^+-\varphi^-.
+	\]
+	对任一剖分, 有
+	\[
+	\varphi(x)-\varphi(\alpha)
+	=
+	\sum_{k=0}^{N-1}\bigl(\varphi(x_{k+1})-\varphi(x_k)\bigr)
+	=
+	\sum_{k=0}^{N-1}\bigl(\varphi(x_{k+1})-\varphi(x_k)\bigr)^+
+	-
+	\sum_{k=0}^{N-1}\bigl(\varphi(x_{k+1})-\varphi(x_k)\bigr)^-.
+	\]
+	由此得到
+	\[
+	\varphi(x)+\varphi^-(x)\leq \varphi^+(x).
+	\]
+	反过来, 由同一个等式也得到
+	\[
+	\varphi^+(x)\leq \varphi(x)+\varphi^-(x).
+	\]
+	故
+	\[
+	\varphi(x)=\varphi^+(x)-\varphi^-(x).
+	\]
+	
+	类似地可得
+	\[
+	V_\varphi(x)=\varphi^+(x)+\varphi^-(x).
+	\]
+	这说明分解中的 \(\varphi^+\) 和 \(\varphi^-\) 是最小的: 若
+	\[
+	\varphi=u-v,
+	\]
+	其中 \(u,v\) 为增函数且 \(u(\alpha)=v(\alpha)=0\), 则必有
+	\[
+	u\geq \varphi^+,
+	\qquad
+	v\geq \varphi^-.
+	\]
+	
+	反过来, 若 \(\varphi=u-v\), 其中 \(u,v\) 为增函数, 则对任意剖分有
+	\[
+	\sum_{k=0}^{N-1}|\varphi(x_{k+1})-\varphi(x_k)|
+	\leq
+	\sum_{k=0}^{N-1}\bigl(u(x_{k+1})-u(x_k)\bigr)
+	+
+	\sum_{k=0}^{N-1}\bigl(v(x_{k+1})-v(x_k)\bigr),
+	\]
+	右端等于
+	\[
+	u(\beta)-u(\alpha)+v(\beta)-v(\alpha).
+	\]
+	所以 \(\varphi\) 有界变差.
+	
+	最后, 若 \(\varphi\) 右连续, 则 \(\varphi^+\) 和 \(\varphi^-\) 可以取为右连续. 事实上, 最小分解中 \(\varphi^+\) 与 \(\varphi^-\) 不可能在同一点同时有正的右跳跃; 否则可从二者同时减去较小的那个跳跃, 从而得到更小的分解. 又因为
+	\[
+	\varphi=\varphi^+-\varphi^-
+	\]
+	右连续, 二者的右间断必须相同, 于是它们都右连续.
+\end{proof}
+
+设 \(\varphi\) 是 \(\Omega\) 上的局部有界变差函数. 对 \(f\in\C_0(\Omega)\), 取包含 \(\operatorname{supp} f\) 的紧区间 \([\alpha,\beta]\subset\Omega\). 若
+\[
+\alpha=x_0<x_1<\cdots<x_N=\beta
+\]
+是剖分, 并在每个 \([x_k,x_{k+1}]\) 中任取一点 \(\xi_k\), 定义 Riemann--Stieltjes 和
+\[
+\sum_{k=0}^{N-1} f(\xi_k)\bigl(\varphi(x_{k+1})-\varphi(x_k)\bigr).
+\]
+当剖分细度趋于零时, 这个和有极限, 记作
+\[
+\int_\Omega f\,\dd\varphi.
+\]
+
+这个极限存在的理由如下: 由定理 \ref{thm:bv-decomposition-difference-increasing}, 可写
+\[
+\varphi=\varphi^+-\varphi^-,
+\]
+其中 \(\varphi^+\) 和 \(\varphi^-\) 为增函数. 对增函数情形, 上一节已经定义了 Stieltjes 积分; 因此可令
+\[
+\int_\Omega f\,\dd\varphi
+=
+\int_\Omega f\,\dd\varphi^+
+-
+\int_\Omega f\,\dd\varphi^-.
+\]
+这也说明, 由有界变差函数定义的 Stieltjes 积分, 正是两个关于增函数的 Stieltjes 积分之差.
+
+于是映射
+\[
+f\longmapsto \int_\Omega f\,\dd\varphi,
+\qquad f\in\C_0(\Omega),
+\]
+是一个 Radon 测度. 反过来, 由上一节正测度的一维表示以及 Jordan 分解可知, 一维的一般 Radon 测度都可以用这种方式表示.
+
+\begin{thm}\label{thm:one-dimensional-radon-measure-bv-stieltjes}
+	设 \(\Omega=(a,b)\subset\R\). \(\Omega\) 上的一般 Radon 测度恰好是关于局部有界变差函数的 Stieltjes 积分. 更准确地说, 对任意 Radon 测度 \(\mu\), 存在局部有界变差函数 \(\varphi\), 使得
+	\[
+	\mu(f)=\int_\Omega f\,\dd\varphi,
+	\qquad f\in\C_0(\Omega).
+	\]
+	若要求 \(\varphi\) 右连续并指定它在某一点的值, 则 \(\varphi\) 由 \(\mu\) 唯一确定.
+\end{thm}
+
+\begin{proof}
+	若 \(\varphi\) 局部有界变差, 写成
+	\[
+	\varphi=\varphi^+-\varphi^-,
+	\]
+	则
+	\[
+	f\longmapsto \int f\,\dd\varphi
+	=
+	\int f\,\dd\varphi^+
+	-
+	\int f\,\dd\varphi^-
+	\]
+	是两个 Radon 正测度之差, 因而是 Radon 测度.
+	
+	反过来, 设 \(\mu\) 是 Radon 测度. 由 Jordan 分解,
+	\[
+	\mu=\mu^+-\mu^-.
+	\]
+	根据上一节的一维正测度表示, 存在右连续增函数 \(\varphi^+\) 与 \(\varphi^-\), 使得
+	\[
+	\mu^+(f)=\int f\,\dd\varphi^+,
+	\qquad
+	\mu^-(f)=\int f\,\dd\varphi^-.
+	\]
+	令
+	\[
+	\varphi=\varphi^+-\varphi^-.
+	\]
+	则 \(\varphi\) 局部有界变差, 且
+	\[
+	\mu(f)=\int f\,\dd\varphi.
+	\]
+	唯一性由上一节正测度表示的唯一性和 Jordan 分解的唯一性得到.
+\end{proof}
+
+\begin{exer}\label{exer:bv-function-positive-negative-measures}
+	设局部有界变差函数 \(\varphi\) 定义 Radon 测度 \(\mu_\varphi\). 证明: 定理 \ref{thm:bv-decomposition-difference-increasing} 中构造的 \(\varphi^+\)、\(\varphi^-\) 以及全变差函数 \(V_\varphi\) 分别定义测度
+	\[
+	\mu_\varphi^+,
+	\qquad
+	\mu_\varphi^-,
+	\qquad
+	|\mu_\varphi|.
+	\]
+	换言之,
+	\[
+	(\mu_\varphi)^+=\mu_{\varphi^+},
+	\qquad
+	(\mu_\varphi)^-=\mu_{\varphi^-},
+	\qquad
+	|\mu_\varphi|=\mu_{V_\varphi}.
+	\]
+\end{exer}
+
+\clearpage
+
+\section{以 \texorpdfstring{\(\mu\)}{mu} 为基的测度}
+\label{sec:measures-with-base-mu}
+
+设 \(\mu\) 是一个 Radon 正测度. 和第二章中定义局部可积函数类似, 若函数 \(g\) 在每个紧集上关于 \(\mu\) 可积, 或等价地, 对任意 \(\varphi\in\C_0(\R^d)\) 都有
+\[
+\varphi g\in L^1_\mu,
+\]
+则称 \(g\) 为局部 \(\mu\)-可积函数, 记作 \(g\in L^1_{\operatorname{loc}}(\mu)\).
+
+\begin{defn}[以 \(\mu\) 为基的测度]
+	\label{def:measure-with-base-mu}
+	设 \(\mu\) 是 Radon 正测度, \(g\in L^1_{\operatorname{loc}}(\mu)\). 定义
+	\[
+	(g\mu)(f)=\mu(fg)=\int f g\,\dd\mu,
+	\qquad f\in\C_0(\R^d).
+	\]
+	则 \(g\mu\) 是一个 Radon 测度, 称为测度 \(\mu\) 与函数 \(g\) 的乘积. 任意形如 \(g\mu\) 的测度称为以 \(\mu\) 为基的测度.
+\end{defn}
+
+这个定义是合理的. 线性性显然. 若 \(f_n\in\C_0(\R^d)\) 都在同一个紧集 \(K\) 外为零, 且 \(f_n\to0\) 一致收敛, 则
+\[
+|(g\mu)(f_n)|\leq \|f_n\|_\infty\int_K |g|\,\dd\mu\to0,
+\]
+所以 \(g\mu\) 满足 Radon 测度的连续性条件.
+
+\begin{rem}
+	古典术语中, 形如 \(g\mu\) 的测度常称为关于 \(\mu\) 绝对连续的测度. 本书后面会用 Lebesgue--Radon--Nikodym 定理说明, 这与零集意义下的绝对连续性等价.
+\end{rem}
+
+\begin{lem}\label{lem:upper-integral-product-measure}
+	设 \(g\geq0\) 且 \(g\in L^1_{\operatorname{loc}}(\mu)\). 则对任意非负函数 \(f\), 有
+	\begin{equation}
+		(g\mu)^*(f)=\mu^*(fg),
+		\label{eq:upper-integral-product-measure}
+	\end{equation}
+	其中约定 \(0\cdot(+\infty)=0\).
+\end{lem}
+
+\begin{proof}
+	若 \(f\in\C_0^+(\R^d)\), 则由定义直接有
+	\[
+	(g\mu)(f)=\mu(fg).
+	\]
+	由单调收敛性质, 等式先推广到 \(f\in\mathcal I^+\). 事实上, 若 \(0\leq f_n\uparrow f\), \(f_n\in\C_0^+\), 则
+	\[
+	(g\mu)^*(f)=\lim_n (g\mu)(f_n)
+	=\lim_n \mu(f_n g)=\mu^*(fg).
+	\]
+	
+	现在令 \(f\geq0\) 任意. 若 \(f\leq F\in\mathcal I^+\), 则由已经证明的情形,
+	\[
+	\mu^*(fg)\leq \mu^*(Fg)=(g\mu)^*(F).
+	\]
+	对所有这样的 \(F\) 取下确界, 得
+	\[
+	\mu^*(fg)\leq (g\mu)^*(f).
+	\]
+	反过来, 若 \(fg\leq H\in\mathcal I^+\), 在 \(g>0\) 的点上令 \(F=H/g\), 在 \(g=0\) 的点上令 \(F=+\infty\). 则 \(f\leq F\), 且 \(gF\leq H\). 以 \(\mathcal I^+\) 中函数从上逼近 \(F\) 后应用前一部分, 可得
+	\[
+	(g\mu)^*(f)\leq \mu^*(H).
+	\]
+	再对所有 \(H\in\mathcal I^+\), \(fg\leq H\) 取下确界, 得
+	\[
+	(g\mu)^*(f)\leq \mu^*(fg).
+	\]
+	两式合并即得 \eqref{eq:upper-integral-product-measure}.
+\end{proof}
+
+\begin{thm}\label{thm:l1-product-measure-characterization}
+	设 \(g\geq0\) 且 \(g\in L^1_{\operatorname{loc}}(\mu)\). 则函数 \(f\in L^1_{g\mu}\) 的充分必要条件是
+	\[
+	fg\in L^1_\mu.
+	\]
+	在这种情形下,
+	\begin{equation}
+		(g\mu)(f)=\mu(fg).
+		\label{eq:product-measure-integral-formula}
+	\end{equation}
+\end{thm}
+
+\begin{proof}
+	由引理 \ref{lem:upper-integral-product-measure}, 对任意非负函数 \(u\) 有
+	\[
+	(g\mu)^*(u)=\mu^*(ug).
+	\]
+	特别地, 对 \(u=|f|\), 得
+	\[
+	(g\mu)^*(|f|)=\mu^*(|fg|).
+	\]
+	因此 \(|f|\) 关于 \(g\mu\) 的上积分有限, 当且仅当 \(|fg|\) 关于 \(\mu\) 的上积分有限.
+	
+	同时, 零集和可测性的对应也由同一公式给出: 一个集合 \(E\) 关于 \(g\mu\) 为零集, 当且仅当 \(g=0\) 在 \(E\) 上 \(\mu\)-几乎处处成立. 因而 \(f\) 关于 \(g\mu\) 可测, 当且仅当 \(fg\) 关于 \(\mu\) 可测. 结合可积性判别定理, 即得
+	\[
+	f\in L^1_{g\mu}\quad\Longleftrightarrow\quad fg\in L^1_\mu.
+	\]
+	公式 \eqref{eq:product-measure-integral-formula} 先对 \(f\in\C_0\) 成立, 再由 \(L^1\) 逼近传递到一般可积函数.
+\end{proof}
+
+\begin{thm}\label{thm:l1-intersection-sum-measures}
+	设 \(\mu\) 与 \(\nu\) 是 Radon 正测度. 则
+	\[
+	L^1_{\mu+\nu}=L^1_\mu\cap L^1_\nu.
+	\]
+	并且对任意 \(f\in L^1_{\mu+\nu}\), 有
+	\begin{equation}
+		(\mu+\nu)(f)=\mu(f)+\nu(f).
+		\label{eq:sum-measures-integral-formula}
+	\end{equation}
+\end{thm}
+
+\begin{proof}
+	对任意非负函数 \(f\), 有
+	\begin{equation}
+		(\mu+\nu)^*(f)=\mu^*(f)+\nu^*(f).
+		\label{eq:upper-integral-sum-measures}
+	\end{equation}
+	当 \(f\in\C_0^+\) 时, 这就是 \(\mu+\nu\) 的定义. 由单调收敛性质, 它推广到 \(f\in\mathcal I^+\), 再由上方控制函数取下确界, 推广到任意 \(f\geq0\).
+	
+	由 \eqref{eq:upper-integral-sum-measures} 可知, 一个集合关于 \(\mu+\nu\) 是零集, 当且仅当它同时关于 \(\mu\) 与 \(\nu\) 是零集. 因此一个函数关于 \(\mu+\nu\) 可测, 当且仅当它同时关于 \(\mu\) 与 \(\nu\) 可测.
+	
+	再由 \eqref{eq:upper-integral-sum-measures} 应用于 \(|f|\), 得
+	\[
+	(\mu+\nu)^*(|f|)<+\infty
+	\]
+	当且仅当
+	\[
+	\mu^*(|f|)<+\infty
+	\quad\text{且}\quad
+	\nu^*(|f|)<+\infty.
+	\]
+	结合可积性判别定理, 得
+	\[
+	L^1_{\mu+\nu}=L^1_\mu\cap L^1_\nu.
+	\]
+	最后, \eqref{eq:sum-measures-integral-formula} 对 \(f\in\C_0\) 由定义成立, 对一般 \(L^1_{\mu+\nu}\) 函数由逼近得到.
+\end{proof}
+
+下面研究第三节中定义的正部、负部和全变差在以 \(\mu\) 为基的测度上的具体形式.
+
+\begin{thm}\label{thm:positive-negative-parts-density-measure}
+	设 \(\mu\) 是 Radon 正测度, \(g\in L^1_{\operatorname{loc}}(\mu)\). 则
+	\[
+	(g\mu)^+=g^+\mu,
+	\qquad
+	(g\mu)^-=g^-\mu,
+	\qquad
+	|g\mu|=|g|\mu,
+	\]
+	其中
+	\[
+	g^+=\max(g,0),
+	\qquad
+	g^-=\max(-g,0).
+	\]
+\end{thm}
+
+\begin{proof}
+	令
+	\[
+	\nu_1=g^+\mu,
+	\qquad
+	\nu_2=g^-\mu.
+	\]
+	则 \(\nu_1,\nu_2\) 是 Radon 正测度, 且
+	\[
+	g\mu=\nu_1-\nu_2.
+	\]
+	设
+	\[
+	E^+=\{x:g(x)>0\},
+	\qquad
+	E^-=\{x:g(x)\leq0\}.
+	\]
+	则 \(E^+\) 关于 \(\nu_2\) 是零集, 而 \(E^-\) 关于 \(\nu_1\) 是零集. 因而 \(\nu_1\perp\nu_2\). 由 Jordan 分解的唯一性和最小性, 得
+	\[
+	(g\mu)^+=\nu_1=g^+\mu,
+	\qquad
+	(g\mu)^-=\nu_2=g^-\mu.
+	\]
+	于是
+	\[
+	|g\mu|=(g\mu)^++(g\mu)^-=(g^++g^-)\mu=|g|\mu.
+	\]
+\end{proof}
+
+\begin{thm}\label{thm:zero-product-measure-iff-density-zero}
+	测度 \(g\mu\) 为零测度的充分必要条件是 \(|g|\) 为 \(\mu\)-零函数, 即
+	\[
+	g=0\quad \mu\text{-几乎处处}.
+	\]
+\end{thm}
+
+\begin{proof}
+	若 \(|g|\) 是 \(\mu\)-零函数, 则对任意 \(f\in\C_0\), 有
+	\[
+	|(g\mu)(f)|\leq \|f\|_\infty\int |g|\,\dd\mu=0,
+	\]
+	所以 \(g\mu=0\).
+	
+	反过来, 若 \(g\mu=0\), 则由定理 \ref{thm:positive-negative-parts-density-measure}, 有
+	\[
+	|g|\mu=|g\mu|=0.
+	\]
+	这说明常数函数 \(1\) 关于测度 \(|g|\mu\) 的积分为零. 根据定理 \ref{thm:l1-product-measure-characterization}, 这等价于 \(|g|\) 关于 \(\mu\) 是零函数. 因此 \(g=0\) \(\mu\)-几乎处处.
+\end{proof}
+
+\begin{thm}\label{thm:monotone-density-dominated-measures}
+	设 \(0\leq g_n\uparrow g\). 假定每个 \(g_n\) 都局部 \(\mu\)-可积, 并且存在 Radon 正测度 \(\nu\), 使得
+	\[
+	g_n\mu\leq \nu,
+	\qquad n=1,2,\ldots.
+	\]
+	则 \(g\) 局部 \(\mu\)-可积.
+\end{thm}
+
+\begin{proof}
+	任取 \(0\leq f\in\C_0(\R^d)\). 因为
+	\[
+	\int fg_n\,\dd\mu=(g_n\mu)(f)\leq \nu(f),
+	\]
+	且 \(fg_n\uparrow fg\), 由单调收敛定理得到
+	\[
+	\int fg\,\dd\mu\leq \nu(f)<+\infty.
+	\]
+	因此 \(fg\in L^1_\mu\) 对任意 \(f\in\C_0^+\) 成立. 由定义, \(g\) 局部 \(\mu\)-可积.
+\end{proof}
+
+\clearpage
+
+\section{勒贝格分解, 勒贝格--Radon--Nikodym 定理}
+\label{sec:lebesgue-radon-nikodym}
+
+本节证明 Radon 测度之间最重要的结构分解. 固定一个 Radon 正测度 \(\mu\). 我们将说明, 任意 Radon 测度 \(\nu\) 都可以唯一地分解为两部分: 一部分以 \(\mu\) 为基, 另一部分与 \(\mu\) 互为奇异. 这就是 Lebesgue 分解. 进一步, 若 \(\nu\) 对 \(\mu\) 的零集不敏感, 则 \(\nu\) 必然可以写成 \(g\mu\), 这就是 Lebesgue--Radon--Nikodym 定理.
+
+\begin{thm}[Lebesgue 分解]
+	\label{thm:lebesgue-decomposition}
+	设 \(\mu\) 为 Radon 正测度. 任意 Radon 测度 \(\nu\) 都可以唯一地写成
+	\begin{equation}
+		\nu=g\mu+\nu_s,
+		\label{eq:lebesgue-decomposition}
+	\end{equation}
+	其中 \(g\) 是局部 \(\mu\)-可积函数, 而 \(\nu_s\perp\mu\). 若 \(\nu\) 是正测度, 则可以取
+	\[
+	g\geq0,\qquad \nu_s\geq0.
+	\]
+\end{thm}
+
+证明这个定理之前, 先给出几个引理.
+
+\begin{lem}\label{lem:max-mu-based-below-nu}
+	设 \(\mu\) 和 \(\nu\) 为 Radon 正测度. 在所有以 \(\mu\) 为基并且不超过 \(\nu\) 的正测度中, 存在一个最大的测度.
+\end{lem}
+
+\begin{proof}
+	取一个处处为正的连续函数 \(\eta\), 使得 \(\eta\in L^1_\nu\). 例如可以用一列紧集上的截断函数配以快速下降的系数来构造. 考虑所有满足
+	\[
+	0\leq h\mu\leq \nu
+	\]
+	的局部 \(\mu\)-可积函数 \(h\), 并令
+	\[
+	A=\sup (h\mu)(\eta).
+	\]
+	取一列 \(h_n\), 使得
+	\[
+	0\leq h_n\mu\leq\nu,
+	\qquad
+	(h_n\mu)(\eta)\to A.
+	\]
+	利用测度的最大值运算, 可以把 \(h_n\) 替换成
+	\[
+	\max(h_1,\ldots,h_n),
+	\]
+	从而不妨假定 \(h_n\uparrow\). 由上一节的单调密度定理可知, 极限
+	\[
+	h=\lim_{n\to\infty}h_n
+	\]
+	局部 \(\mu\)-可积, 并且
+	\[
+	h\mu\leq\nu.
+	\]
+	同时由单调收敛定理,
+	\[
+	(h\mu)(\eta)=\lim_{n\to\infty}(h_n\mu)(\eta)=A.
+	\]
+	
+	现在证明 \(h\mu\) 是最大的. 若 \(k\mu\leq\nu\), 则
+	\[
+	\max(h,k)\mu\leq\nu.
+	\]
+	由 \(A\) 的定义,
+	\[
+	(\max(h,k)\mu)(\eta)\leq A=(h\mu)(\eta).
+	\]
+	因此
+	\[
+	\int (\max(h,k)-h)\eta\,\dd\mu=0.
+	\]
+	由于 \(\eta>0\), 得 \(\max(h,k)=h\) \(\mu\)-几乎处处, 即 \(k\leq h\) \(\mu\)-几乎处处. 所以
+	\[
+	k\mu\leq h\mu.
+	\]
+	这说明 \(h\mu\) 是所有此类测度中最大的一个.
+\end{proof}
+
+\begin{lem}\label{lem:dominated-positive-has-mu-based-submeasure}
+	设 \(\rho\) 和 \(\mu\) 为 Radon 正测度, 且
+	\[
+	0\leq \rho\leq \mu,
+	\qquad \rho\neq0.
+	\]
+	则存在一个非零的以 \(\mu\) 为基的 Radon 正测度 \(\sigma\), 使得
+	\[
+	0<\sigma\leq\rho.
+	\]
+\end{lem}
+
+\begin{proof}
+	若对每个 \(t>0\) 都有 \(\rho\leq t\mu\), 则令 \(t\downarrow0\) 可得 \(\rho=0\), 矛盾. 因此存在 \(t>0\), 使得
+	\[
+	\rho-t\mu\leq0
+	\]
+	不成立, 即 \((\rho-t\mu)^+\neq0\).
+	
+	对有符号测度 \(\rho-t\mu\) 作 Hahn 分解. 存在互余可测集 \(E^+\) 与 \(E^-\), 使得 \(E^+\) 关于 \((\rho-t\mu)^-\) 是零集, 而 \(E^-\) 关于 \((\rho-t\mu)^+\) 是零集. 记 \(\chi=\chi_{E^+}\). 则在测度意义下,
+	\[
+	\chi(\rho-t\mu)^-=0,
+	\qquad
+	(1-\chi)(\rho-t\mu)^+=0.
+	\]
+	由
+	\[
+	(\rho-t\mu)^+-(\rho-t\mu)^-=\rho-t\mu
+	\]
+	两边乘以 \(\chi\), 得
+	\[
+	\chi(\rho-t\mu)^+=\chi\rho-t\chi\mu.
+	\]
+	因此
+	\[
+	t\chi\mu\leq \chi\rho\leq \rho.
+	\]
+	另一方面, 因为 \(\rho\leq\mu\), 有
+	\[
+	\chi\mu\geq\chi\rho\geq\chi(\rho-t\mu)^+=(\rho-t\mu)^+\neq0.
+	\]
+	于是
+	\[
+	\sigma=t\chi\mu
+	\]
+	就是所需的非零以 \(\mu\) 为基的正测度.
+\end{proof}
+
+\begin{lem}\label{lem:non-singular-gives-mu-based-submeasure}
+	设 \(\mu\) 和 \(\nu\) 为 Radon 正测度. 若
+	\[
+	\min(\mu,\nu)\neq0,
+	\]
+	即 \(\mu\) 与 \(\nu\) 不互为奇异, 则存在一个非零的以 \(\mu\) 为基的 Radon 正测度 \(\sigma\), 使得
+	\[
+	0<\sigma\leq\nu.
+	\]
+\end{lem}
+
+\begin{proof}
+	令
+	\[
+	\rho=\min(\mu,\nu).
+	\]
+	则 \(0<\rho\leq\mu\), 且 \(\rho\leq\nu\). 由引理 \ref{lem:dominated-positive-has-mu-based-submeasure}, 存在非零的以 \(\mu\) 为基的正测度 \(\sigma\), 使得
+	\[
+	0<\sigma\leq\rho\leq\nu.
+	\]
+\end{proof}
+
+\begin{proof}[定理 \ref{thm:lebesgue-decomposition} 的证明]
+	先设 \(\nu\geq0\). 由引理 \ref{lem:max-mu-based-below-nu}, 存在最大的以 \(\mu\) 为基且不超过 \(\nu\) 的正测度, 记为 \(g\mu\). 令
+	\[
+	\nu_s=\nu-g\mu.
+	\]
+	则 \(\nu_s\geq0\). 若 \(\nu_s\) 与 \(\mu\) 不互为奇异, 则由引理 \ref{lem:non-singular-gives-mu-based-submeasure}, 存在非零的以 \(\mu\) 为基的正测度 \(\sigma\), 使得
+	\[
+	0<\sigma\leq\nu_s.
+	\]
+	于是
+	\[
+	g\mu+\sigma\leq\nu,
+	\]
+	且 \(g\mu+\sigma\) 仍以 \(\mu\) 为基, 这与 \(g\mu\) 的最大性矛盾. 因此
+	\[
+	\nu_s\perp\mu.
+	\]
+	这就得到正测度情形的存在性.
+	
+	若 \(\nu\) 为一般 Radon 测度, 写出 Jordan 分解
+	\[
+	\nu=\nu^+-\nu^-.
+	\]
+	分别对 \(\nu^+\) 与 \(\nu^-\) 应用正测度情形, 得
+	\[
+	\nu^+=g_+\mu+\nu_s^+,
+	\qquad
+	\nu^-=g_-\mu+\nu_s^-.
+	\]
+	于是
+	\[
+	\nu=(g_+-g_-)\mu+(\nu_s^+-\nu_s^-).
+	\]
+	令
+	\[
+	g=g_+-g_-,
+	\qquad
+	\nu_s=\nu_s^+-\nu_s^-.
+	\]
+	因为 \(\nu_s^+\perp\mu\) 且 \(\nu_s^-\perp\mu\), 故 \(\nu_s\perp\mu\). 于是存在性得证.
+	
+	下面证明唯一性. 只需说明: 若
+	\[
+	g\mu+\nu_s=0,
+	\qquad \nu_s\perp\mu,
+	\]
+	则 \(g\mu=0\) 且 \(\nu_s=0\). 由奇异性, 存在互余集合 \(E\) 与 \(F\), 使得 \(E\) 关于 \(|\nu_s|\) 是零集, 而 \(F\) 关于 \(\mu\) 是零集. 由
+	\[
+	g\mu=-\nu_s
+	\]
+	可得
+	\[
+	|g|\mu=|\nu_s|.
+	\]
+	在 \(E\) 上右端为零; 在 \(F\) 上左端为零. 因 \(E\cup F=\mathbb{R}^d\), 得
+	\[
+	|g|\mu=0.
+	\]
+	于是 \(g\mu=0\), 进而 \(\nu_s=0\). 唯一性得证.
+\end{proof}
+
+下面给出 Lebesgue--Radon--Nikodym 定理. 它刻画了一个正测度何时能写成 \(g\mu\) 的形式.
+
+\begin{thm}[Lebesgue--Radon--Nikodym 定理]
+	\label{thm:lebesgue-radon-nikodym}
+	设 \(\mu\) 和 \(\nu\) 是 Radon 正测度. 下列条件等价:
+	\begin{enumerate}
+		\item \(\nu\) 以 \(\mu\) 为基, 即存在局部 \(\mu\)-可积函数 \(g\geq0\), 使得
+		\[
+		\nu=g\mu;
+		\]
+		\item 每个 \(\mu\)-零集都是 \(\nu\)-零集.
+	\end{enumerate}
+\end{thm}
+
+\begin{proof}
+	若 \(\nu=g\mu\), 则由上一节关于乘积测度的刻画可知: \(\mu\)-零集必为 \(g\mu\)-零集. 因而 \((1)\Rightarrow(2)\).
+	
+	反过来, 假设每个 \(\mu\)-零集都是 \(\nu\)-零集. 对 \(\nu\) 作关于 \(\mu\) 的 Lebesgue 分解:
+	\[
+	\nu=g\mu+\nu_s,
+	\qquad
+	\nu_s\perp\mu.
+	\]
+	由奇异性, 存在互余集合 \(E\) 与 \(F\), 使得 \(E\) 关于 \(\nu_s\) 是零集, 而 \(F\) 关于 \(\mu\) 是零集. 根据假设, \(F\) 也是 \(\nu\)-零集, 从而也是 \(\nu_s\)-零集. 于是 \(E\) 与 \(F\) 都是 \(\nu_s\)-零集, 其并为整个空间, 故
+	\[
+	\nu_s=0.
+	\]
+	因此 \(\nu=g\mu\), 即 \((2)\Rightarrow(1)\).
+\end{proof}
+
+\begin{cor}\label{cor:dominated-measure-radon-nikodym-density-bound}
+	若 \(\mu\) 和 \(\nu\) 为 Radon 正测度, 且
+	\[
+	0\leq \nu\leq\mu,
+	\]
+	则存在局部 \(\mu\)-可积函数 \(g\), 使得
+	\[
+	\nu=g\mu,
+	\qquad
+	0\leq g\leq1\quad \mu\text{-几乎处处}.
+	\]
+\end{cor}
+
+\begin{proof}
+	由 \(\nu\leq\mu\) 可知, 每个 \(\mu\)-零集都是 \(\nu\)-零集. 由定理 \ref{thm:lebesgue-radon-nikodym}, 得 \(\nu=g\mu\). 又
+	\[
+	\mu-\nu=(1-g)\mu
+	\]
+	为正测度, 所以 \(1-g\geq0\) \(\mu\)-几乎处处, 即 \(g\leq1\) \(\mu\)-几乎处处. 由于 \(\nu\geq0\), 也有 \(g\geq0\) \(\mu\)-几乎处处.
+\end{proof}
+
+\begin{exer}\label{exer:common-base-for-two-measures}
+	设 \(\mu\) 和 \(\nu\) 是两个 Radon 正测度. 证明存在一个 Radon 正测度 \(\lambda\), 使得 \(\mu\) 与 \(\nu\) 都以 \(\lambda\) 为基. 进一步, 把结论推广到可数多个给定的 Radon 正测度.
+\end{exer}
+
+\begin{exer}\label{exer:measure-geometric-mean}
+	利用练习 \ref{exer:common-base-for-two-measures} 说明: 对任意两个 Radon 正测度 \(\mu\) 和 \(\nu\), 可以定义
+	\[
+	(\mu\nu)^{1/2},
+	\qquad
+	(\mu^2+\nu^2)^{1/2}
+	\]
+	等测度. 具体地说, 若 \(\mu=f\lambda\), \(\nu=g\lambda\), 可令
+	\[
+	(\mu\nu)^{1/2}=(fg)^{1/2}\lambda,
+	\qquad
+	(\mu^2+\nu^2)^{1/2}=(f^2+g^2)^{1/2}\lambda,
+	\]
+	并证明定义与共同基 \(\lambda\) 的选择无关.
+	
+	这些构造可用于定义可求长曲线的弧长测度. 例如曲线
+	\[
+	t\longmapsto x(t)=(x_1(t),\ldots,x_d(t))
+	\]
+	中每个坐标函数 \(x_j\) 为有界变差函数时, 可令
+	\[
+	\dd s=\left(\sum_{j=1}^d(\dd x_j)^2\right)^{1/2},
+	\]
+	从而把
+	\[
+	\int \varphi(t)\,\dd s(t)
+	\]
+	解释为 \(\varphi\) 在曲线上关于弧长的积分.
+\end{exer}
+
+\subsection{弥散部分与原子部分}
+
+通常的 Lebesgue 分解还会把与基测度奇异的部分进一步分解为``连续的''部分和``跳跃的''部分. 在这里, 更合适的术语是弥散测度和原子测度.
+
+\begin{defn}[弥散测度与原子测度]
+	\label{def:diffuse-and-atomic-measure}
+	设 \(\nu\) 为 Radon 测度.
+	\begin{enumerate}
+		\item 若每个点, 从而每个可数集合, 都是 \(|\nu|\)-零集, 则称 \(\nu\) 为弥散的.
+		\item 若存在一个可数集合 \(A\), 使得 \(A^c\) 关于 \(|\nu|\) 是零集, 则称 \(\nu\) 为原子的.
+	\end{enumerate}
+\end{defn}
+
+显然, 弥散测度与原子测度总是互为奇异的.
+
+\begin{thm}\label{thm:diffuse-atomic-decomposition}
+	任意 Radon 测度 \(\mu\) 都可以唯一地写成
+	\begin{equation}
+		\mu=\mu_1+\mu_2,
+		\label{eq:diffuse-atomic-decomposition}
+	\end{equation}
+	其中 \(\mu_1\) 是弥散测度, \(\mu_2\) 是原子测度.
+\end{thm}
+
+\begin{proof}
+	唯一性由弥散测度和原子测度互为奇异得到. 事实上, 若存在两个这样的分解, 将它们相减, 就得到一个既弥散又原子的测度, 它只能是零测度.
+	
+	下面证明存在性. 只需考虑 \(\mu\geq0\) 的情形; 一般情形对 \(|\mu|\) 或对正负部分分别处理即可. 使
+	\[
+	\mu(\{t\})\neq0
+	\]
+	的点 \(t\) 至多可数. 因为对任意紧集 \(K\) 和任意 \(\varepsilon>0\), 集合
+	\[
+	\{t\in K:\mu(\{t\})>\varepsilon\}
+	\]
+	只能是有限集, 否则会与 \(\mu(K)<+\infty\) 矛盾.
+	
+	把所有满足 \(\mu(\{t\})\neq0\) 的点排成序列 \(t_1,t_2,\ldots\). 定义
+	\[
+	\mu_2(f)=\sum_{n=1}^{\infty}\mu(\{t_n\})f(t_n),
+	\qquad f\in C_0(\mathbb{R}^d).
+	\]
+	由于部分和不超过 \(\mu(f)\) 对 \(f\in C_0^+\) 成立, 上述级数收敛, 并且定义一个 Radon 正测度. 显然 \(\mu_2\) 集中在可数集 \(\{t_n\}\) 上, 因而是原子的.
+	
+	令
+	\[
+	\mu_1=\mu-\mu_2.
+	\]
+	则 \(\mu_1\geq0\). 对每个点 \(t\), 若 \(t=t_n\), 则 \(\mu_1(\{t\})=0\); 若 \(t\) 不在序列中, 则本来就有 \(\mu(\{t\})=0\), 也有 \(\mu_1(\{t\})=0\). 因而每个点关于 \(\mu_1\) 都是零集, \(\mu_1\) 弥散. 存在性得证.
+\end{proof}
+
+把 Lebesgue 分解和原子--弥散分解合在一起, 得到如下更细的分解.
+
+\begin{thm}\label{thm:full-lebesgue-diffuse-atomic-decomposition}
+	设 \(\mu\) 是弥散的 Radon 正测度. 则任意 Radon 测度 \(\nu\) 都可以唯一地写成
+	\begin{equation}
+		\nu=g\mu+\nu'+\nu'',
+		\label{eq:full-lebesgue-diffuse-atomic-decomposition}
+	\end{equation}
+	其中 \(g\) 局部 \(\mu\)-可积, \(\nu'\) 是弥散测度且 \(\nu'\perp\mu\), 而 \(\nu''\) 是原子测度. 特别地, \(\nu''\perp\mu\).
+\end{thm}
+
+\begin{proof}
+	先对 \(\nu\) 作关于 \(\mu\) 的 Lebesgue 分解:
+	\[
+	\nu=g\mu+\rho,
+	\qquad
+	\rho\perp\mu.
+	\]
+	再对 \(\rho\) 作弥散--原子分解:
+	\[
+	\rho=\nu'+\nu'',
+	\]
+	其中 \(\nu'\) 弥散, \(\nu''\) 原子. 因为 \(\rho\perp\mu\), 且 \(\nu',\nu''\) 都被 \(|\rho|\) 控制, 所以 \(\nu'\perp\mu\), \(\nu''\perp\mu\). 又因 \(\mu\) 弥散, 原子测度 \(\nu''\) 自动与 \(\mu\) 互为奇异.
+	
+	唯一性由三个部分所属类别两两分离得到: 以 \(\mu\) 为基的部分由 Radon--Nikodym 密度唯一确定; 与 \(\mu\) 奇异的部分由 Lebesgue 分解唯一确定; 在奇异部分中, 弥散部分和原子部分又由定理 \ref{thm:diffuse-atomic-decomposition} 唯一确定.
+\end{proof}
+
+\clearpage
+
+\section{\texorpdfstring{\(L^p\)}{Lp} 上的连续线性泛函}
+\label{sec:continuous-linear-functionals-on-lp}
+
+本节固定一个 Radon 正测度 \(\mu\). 对 \(1\leq p<+\infty\), 记
+\[
+\|f\|_{p,\mu}
+=
+\left(\int |f|^p\,\dd\mu\right)^{1/p}.
+\]
+在不引起混淆时, 仍简记为 \(\|f\|_p\).
+
+\begin{defn}[连续线性泛函]
+	\label{def:continuous-linear-functional-lp}
+	设 \(1\leq p<+\infty\). \(L^p_\mu\) 上的一个连续线性泛函, 是指一个线性映射
+	\[
+	\theta:L^p_\mu\longrightarrow \R,
+	\]
+	满足: 若 \(f_n\to f\) 于 \(L^p_\mu\), 即
+	\[
+	\|f_n-f\|_{p,\mu}\to0,
+	\]
+	则
+	\[
+	\theta(f_n)\to\theta(f).
+	\]
+\end{defn}
+
+\begin{exer}\label{exer:continuous-linear-functional-bounded}
+	证明: 定义 \ref{def:continuous-linear-functional-lp} 中的连续性等价于存在常数 \(C\geq0\), 使得
+	\[
+	|\theta(f)|\leq C\|f\|_{p,\mu},
+	\qquad f\in L^p_\mu.
+	\]
+	满足上式的最小常数称为 \(\theta\) 的范数, 记作 \(\|\theta\|\).
+\end{exer}
+
+\begin{thm}[\(L^p\) 的对偶表示]
+	\label{thm:lp-dual-representation-radon}
+	设 \(1<p<+\infty\), 且 \(q\) 满足
+	\[
+	\frac1p+\frac1q=1.
+	\]
+	若 \(\theta\) 是 \(L^p_\mu\) 上的连续线性泛函, 则存在唯一的
+	\(g\in L^q_\mu\), 使得
+	\begin{equation}
+		\theta(f)=\int f(x)g(x)\,\dd\mu(x),
+		\qquad f\in L^p_\mu.
+		\label{eq:lp-dual-representation-radon}
+	\end{equation}
+	并且
+	\begin{equation}
+		\|\theta\|=\|g\|_{q,\mu}.
+		\label{eq:lp-dual-norm-equality-radon}
+	\end{equation}
+\end{thm}
+
+\begin{proof}
+	先说明 \eqref{eq:lp-dual-representation-radon} 右端确实给出一个连续线性泛函. 若 \(g\in L^q_\mu\), 则由 H\"older 不等式,
+	\[
+	\left|\int fg\,\dd\mu\right|
+	\leq \|f\|_{p,\mu}\|g\|_{q,\mu}.
+	\]
+	因此 \(f\mapsto \int fg\,\dd\mu\) 是连续线性泛函, 且范数不超过
+	\(\|g\|_{q,\mu}\). 由 H\"older 不等式的反向刻画, 这个范数实际上等于
+	\(\|g\|_{q,\mu}\).
+	
+	下面证明任意连续线性泛函都具有这种形式. 设
+	\[
+	|\theta(f)|\leq C\|f\|_{p,\mu},
+	\qquad f\in L^p_\mu.
+	\]
+	把 \(\theta\) 限制在 \(\C_0(\R^d)\) 上, 记为
+	\[
+	\nu(f)=\theta(f),
+	\qquad f\in\C_0(\R^d).
+	\]
+	若 \(f_n\in\C_0(\R^d)\) 都在同一个紧集 \(K\) 外为零, 且 \(f_n\to0\) 一致收敛, 则
+	\[
+	\|f_n\|_{p,\mu}^p
+	\leq \|f_n\|_\infty^p\mu^*(\chi_K)\to0.
+	\]
+	因此 \(\nu(f_n)\to0\). 这说明 \(\nu\) 是一个 Radon 测度.
+	
+	作 Jordan 分解
+	\[
+	\nu=\nu^+-\nu^-.
+	\]
+	对 \(0\leq f\in\C_0(\R^d)\), 由 \(\nu^+\) 的定义得
+	\[
+	\nu^+(f)
+	=
+	\sup_{0\leq h\leq f}\nu(h)
+	\leq C\sup_{0\leq h\leq f}\|h\|_{p,\mu}
+	\leq C\|f\|_{p,\mu}.
+	\]
+	同理
+	\[
+	\nu^-(f)\leq C\|f\|_{p,\mu},
+	\qquad 0\leq f\in\C_0(\R^d).
+	\]
+	由单调收敛和上积分定义, 这些不等式可推广到任意非负函数:
+	\begin{equation}
+		(\nu^+)^*(f)
+		\leq C\left(\mu^*(f^p)\right)^{1/p},
+		\qquad f\geq0,
+		\label{eq:positive-part-controlled-by-lp}
+	\end{equation}
+	并且 \(\nu^-\) 也满足同样估计.
+	
+	于是每个 \(\mu\)-零集都是 \(\nu^+\)-零集, 也是 \(\nu^-\)-零集. 由 Lebesgue--Radon--Nikodym 定理, 存在局部 \(\mu\)-可积函数 \(g_+,g_-\geq0\), 使得
+	\[
+	\nu^+=g_+\mu,
+	\qquad
+	\nu^-=g_-\mu.
+	\]
+	因此, 对 \(f\in\C_0(\R^d)\), 有
+	\begin{equation}
+		\theta(f)=\nu(f)=\int f(g_+-g_-)\,\dd\mu.
+		\label{eq:theta-c0-density-before-lq}
+	\end{equation}
+	现在只需证明 \(g_+,g_-\in L^q_\mu\).
+	
+	我们只证明 \(g_+\in L^q_\mu\), 另一部分完全相同. 取一个处处正的连续函数 \(\eta\in L^q_\mu\). 例如可用紧集穷竭和快速下降系数构造. 令
+	\[
+	g_n=\min(g_+,n\eta),
+	\qquad n=1,2,\ldots.
+	\]
+	则 \(g_n\in L^q_\mu\), 且 \(0\leq g_n\uparrow g_+\). 由于
+	\[
+	g_n\mu\leq g_+\mu=\nu^+,
+	\]
+	对任意 \(0\leq f\in L^p_\mu\), 由 \eqref{eq:positive-part-controlled-by-lp} 和 \(L^p\) 中 \(\C_0\) 的稠密性可得
+	\[
+	\int f g_n\,\dd\mu\leq C\|f\|_{p,\mu}.
+	\]
+	根据 H\"older 不等式的反向刻画,
+	\[
+	\|g_n\|_{q,\mu}\leq C,
+	\qquad n=1,2,\ldots.
+	\]
+	令 \(n\to\infty\), 由单调收敛定理得到
+	\[
+	\|g_+\|_{q,\mu}\leq C.
+	\]
+	所以 \(g_+\in L^q_\mu\). 同理 \(g_-\in L^q_\mu\).
+	
+	令
+	\[
+	g=g_+-g_-.
+	\]
+	则 \(g\in L^q_\mu\). 由 \eqref{eq:theta-c0-density-before-lq} 知
+	\eqref{eq:lp-dual-representation-radon} 对所有 \(f\in\C_0(\R^d)\) 成立. 又 \(\C_0(\R^d)\) 在 \(L^p_\mu\) 中稠密, 两边作为 \(L^p_\mu\) 上的连续线性泛函相等, 因而 \eqref{eq:lp-dual-representation-radon} 对所有 \(f\in L^p_\mu\) 成立.
+	
+	最后, 若 \(g_1,g_2\in L^q_\mu\) 都给出同一个泛函, 则
+	\[
+	\int f(g_1-g_2)\,\dd\mu=0,
+	\qquad f\in L^p_\mu.
+	\]
+	取
+	\[
+	f=\operatorname{sgn}(g_1-g_2)|g_1-g_2|^{q-1},
+	\]
+	便得 \(g_1=g_2\) \(\mu\)-几乎处处. 唯一性得证. 范数等式
+	\eqref{eq:lp-dual-norm-equality-radon} 已在证明开头说明.
+\end{proof}
+
+\begin{rem}
+	定理 \ref{thm:lp-dual-representation-radon} 可以写成通常的形式
+	\[
+	(L^p_\mu)^*=L^q_\mu,
+	\qquad 1<p<+\infty,
+	\quad \frac1p+\frac1q=1.
+	\]
+	这里等号的含义是等距同构: 每个 \(g\in L^q_\mu\) 对应泛函
+	\[
+	f\longmapsto \int fg\,\dd\mu,
+	\]
+	并且这个对应保持范数.
+\end{rem}
+
+\clearpage
+
+\section{古典情形的 Lebesgue 分解}
+\label{sec:classical-lebesgue-decomposition}
+
+在本节中, 我们把定理 \ref{thm:lebesgue-decomposition} 放回到最熟悉的情形中讨论: 基测度 \(\mu\) 取为 \(\R^d\) 上的 Lebesgue 测度. 设 \(\nu\) 是 \(\R^d\) 上的 Radon 测度, 并考虑它关于 Lebesgue 测度的 Lebesgue 分解
+\begin{equation}
+	\nu=g\mu+\nu_s,
+	\label{eq:classical-lebesgue-decomposition}
+\end{equation}
+其中 \(g\in L^1_{\operatorname{loc}}(\R^d)\), 且 \(\nu_s\perp\mu\). 我们要说明, 这个分解与第二章中 Lebesgue 微分定理之间有直接联系: 密度 \(g\) 正是测度 \(\nu\) 对 Lebesgue 体积的微商.
+
+若 \(S\) 是球, 记
+\[
+\nu(S)=\int_S \dd\nu.
+\]
+当 \(\nu\) 为有符号测度时, 这按其 Jordan 分解理解.
+
+\begin{thm}\label{thm:classical-lebesgue-decomposition-derivative}
+	设 \(\mu\) 为 \(\R^d\) 上的 Lebesgue 测度, \(\nu\) 为 Radon 测度, 并作分解 \eqref{eq:classical-lebesgue-decomposition}. 则对几乎所有的 \(x\in\R^d\), 有
+	\begin{equation}
+		g(x)=
+		\lim_{\substack{\mu(S)\to0\\ x\in S}}
+		\frac{\nu(S)}{\mu(S)},
+		\label{eq:rn-density-as-derivative}
+	\end{equation}
+	其中 \(S\) 取遍包含 \(x\) 的球.
+\end{thm}
+
+\begin{proof}
+	先看 \(g\mu\) 这一部分. 由 Lebesgue 微分定理, 对几乎所有 \(x\), 有
+	\[
+	\lim_{\substack{\mu(S)\to0\\x\in S}}
+	\frac{1}{\mu(S)}\int_S g(y)\,\dd y=g(x).
+	\]
+	因此只需证明: 若 \(\nu\perp\mu\), 则
+	\begin{equation}
+		\lim_{\substack{\mu(S)\to0\\x\in S}}
+		\frac{\nu(S)}{\mu(S)}=0
+		\label{eq:singular-measure-derivative-zero}
+	\end{equation}
+	对几乎所有 \(x\) 成立. 对一般有符号测度, 对全变差测度 \(|\nu|\) 证明即可, 因为
+	\[
+	|\nu(S)|\leq |\nu|(S).
+	\]
+	所以以下设 \(\nu\) 为 Radon 正测度, 且 \(\nu\perp\mu\).
+	
+	首先回忆 Hardy 最大定理的测度版本. 对 Radon 正测度 \(\rho\), 定义
+	\[
+	\rho^\natural(x)=
+	\sup_{S\ni x}\frac{\rho(S)}{\mu(S)},
+	\]
+	其中 \(S\) 取遍包含 \(x\) 的球. 若 \(\rho(\R^d)<+\infty\), 则对任意 \(s>0\), 有
+	\begin{equation}
+		\mu^*\{x:\rho^\natural(x)>s\}
+		\leq
+		\frac{4^d}{s}\rho(\R^d).
+		\label{eq:measure-maximal-weak-type}
+	\end{equation}
+	这个证明与 Hardy 最大定理完全相同, 只是把 \(\int_S |f|\,\dd x\) 换成 \(\rho(S)\).
+	
+	由 \(\nu\perp\mu\), 存在互余集合 \(E_1,E_2\), 使得
+	\[
+	\mu(E_1)=0,
+	\qquad
+	\nu(E_2)=0.
+	\]
+	给定 \(s>0\). 令
+	\[
+	M_s=
+	\left\{x:
+	\limsup_{\substack{\mu(S)\to0\\x\in S}}
+	\frac{\nu(S)}{\mu(S)}>s
+	\right\}.
+	\]
+	取开集 \(O\supset E_2\), 且 \(\nu(O)<+\infty\). 令
+	\[
+	\nu_O=\chi_O\nu.
+	\]
+	因为 \(\nu(E_2)=0\), 可以进一步把 \(O\) 取得使 \(\nu(O)=\nu_O(\R^d)\) 任意小.
+	
+	若 \(x\in M_s\cap E_2\), 由于 \(O\) 是包含 \(E_2\) 的开集, 当包含 \(x\) 的球 \(S\) 足够小时有 \(S\subset O\). 因此
+	\[
+	\nu(S)=\nu_O(S)
+	\]
+	对足够小的 \(S\) 成立, 从而 \(\nu_O^\natural(x)>s\). 于是
+	\[
+	M_s\cap E_2\subset \{x:\nu_O^\natural(x)>s\}.
+	\]
+	又因 \(E_1\) 是 \(\mu\)-零集, 有
+	\[
+	\mu^*(M_s)=\mu^*(M_s\cap E_2).
+	\]
+	结合 \eqref{eq:measure-maximal-weak-type}, 得
+	\[
+	\mu^*(M_s)
+	\leq
+	\mu^*\{x:\nu_O^\natural(x)>s\}
+	\leq
+	\frac{4^d}{s}\nu(O).
+	\]
+	由于 \(O\supset E_2\) 可以取得使 \(\nu(O)\) 任意小, 得
+	\[
+	\mu^*(M_s)=0.
+	\]
+	令 \(s\) 取遍正有理数, 即得 \eqref{eq:singular-measure-derivative-zero}. 定理得证.
+\end{proof}
+
+\begin{rem}
+	定理 \ref{thm:classical-lebesgue-decomposition-derivative} 的意思是: 在古典 Lebesgue 测度背景下, Radon--Nikodym 密度不是一个抽象存在的函数, 而是测度 \(\nu\) 对体积测度 \(\mu\) 的局部变化率. 奇异部分的局部体积密度几乎处处为零.
+\end{rem}
+
+在一维情形, Radon 测度可以用 Stieltjes 积分表示. 因此定理 \ref{thm:classical-lebesgue-decomposition-derivative} 给出有界变差函数几乎处处可微的另一种解释.
+
+\begin{thm}\label{thm:bv-function-ae-derivative-from-decomposition}
+	若 \(\varphi\) 是一维区间上的有界变差函数, 则它的微商 \(\varphi'(x)\) 几乎处处存在, 并且 \(\varphi'\) 是关于 Lebesgue 测度的局部可积函数.
+\end{thm}
+
+\begin{proof}
+	设 \(\dd\varphi\) 是由 \(\varphi\) 定义的 Stieltjes 测度. 对 \(\dd\varphi\) 作关于 Lebesgue 测度的 Lebesgue 分解:
+	\[
+	\dd\varphi=g(x)\,\dd x+\dd\varphi_s.
+	\]
+	由定理 \ref{thm:classical-lebesgue-decomposition-derivative}, 对几乎所有的 \(x\), 有
+	\[
+	g(x)=
+	\lim_{|I|\to0,\ x\in I}
+	\frac{\dd\varphi(I)}{|I|}.
+	\]
+	而当 \(I=[a,b]\) 时,
+	\[
+	\dd\varphi(I)=\varphi(b)-\varphi(a)
+	\]
+	按端点处的左右连续约定理解. 因此上述极限正是 \(\varphi\) 的微商. 又 \(g\in L^1_{\operatorname{loc}}\), 所以 \(\varphi'\in L^1_{\operatorname{loc}}\).
+\end{proof}
+
+\begin{exer}\label{exer:classical-decomposition-total-variation-derivative}
+	在定理 \ref{thm:classical-lebesgue-decomposition-derivative} 的假设下, 证明对几乎所有的 \(x\) 和任意实数 \(a\), 有
+	\[
+	\lim_{\substack{\mu(S)\to0\\x\in S}}
+	\frac{|\nu-a\mu|(S)}{\mu(S)}
+	=
+	|g(x)-a|.
+	\]
+	提示: 先考察 \(a=g(x)\) 的情形.
+\end{exer}
+
+\begin{exer}\label{exer:approximate-identity-measure-density}
+	设 \(h\in L^\infty(\R^d)\cap L^1(\R^d)\), 且 \(h\) 在无穷远处趋于零. 令
+	\[
+	h_\varepsilon(x)=\varepsilon^{-d}h(x/\varepsilon),
+	\qquad \varepsilon>0.
+	\]
+	证明
+	\[
+	\lim_{\varepsilon\to0}
+	\int h_\varepsilon(x-y)\,\dd\nu(y)
+	=
+	g(x)\int h(y)\,\dd y
+	\]
+	对几乎所有的 \(x\) 成立. 其中 \(\nu\) 和 \(g\) 的含义与定理 \ref{thm:classical-lebesgue-decomposition-derivative} 相同.
+\end{exer}
+
+\begin{exer}\label{exer:direct-proof-density-of-measure}
+	仿照第二章第十节结尾处理单调函数微商的方法, 直接证明
+	\[
+	g(x)=
+	\lim_{\substack{\mu(S)\to0\\x\in S}}
+	\frac{1}{\mu(S)}\int_S\dd\nu
+	\]
+	几乎处处存在. 在 \(\mu\) 为 Lebesgue 测度的情形下, 这给出定理 \ref{thm:classical-lebesgue-decomposition-derivative} 的另一种证明.
+\end{exer}
+
+\clearpage
+
+\section{各种各样的推广}
+\label{sec:miscellaneous-generalizations}
+
+到目前为止, 我们主要讨论的是实值函数的积分. 事实上, 前面建立的许多构造并不依赖于函数值必须是实数. 只要把实数值换成 Banach 空间中的向量值, 积分理论仍然可以相当自然地展开.
+
+设 \(B\) 是一个实 Banach 空间. 记
+\[
+\C_0(\R^d,B)
+\]
+为所有从 \(\R^d\) 到 \(B\) 的连续函数全体, 并要求它们具有紧致支集. 若 \(f\in\C_0(\R^d,B)\), 则可以用 Riemann 和定义
+\[
+\int_{\R^d}f(x)\,\dd x\in B.
+\]
+具体地说, 取包含 \(\operatorname{supp}f\) 的有限区间 \(I\), 对 \(I\) 作剖分, 并在每个小区间 \(I_k\) 中取点 \(\xi_k\), 考察 Riemann 和
+\[
+\sum_k f(\xi_k)m(I_k).
+\]
+由于 \(f\) 在紧集上一致连续, 当剖分细度趋于零时, 这些 Riemann 和在 \(B\) 中收敛. 因为 \(B\) 是 Banach 空间, 极限存在并与剖分及取点方式无关. 这个极限就定义为 \(\int f\,\dd x\).
+
+这个向量值积分具有与实值情形相同的线性性质:
+\[
+\int_{\R^d}(af+bg)(x)\,\dd x
+=
+a\int_{\R^d}f(x)\,\dd x
++
+b\int_{\R^d}g(x)\,\dd x,
+\]
+其中 \(a,b\in\R\), \(f,g\in\C_0(\R^d,B)\). 此外还有估计
+\[
+\left\|\int_{\R^d}f(x)\,\dd x\right\|
+\leq
+\int_{\R^d}\|f(x)\|_B\,\dd x.
+\]
+
+由此可以定义 \(B\) 值的 \(L^1\) 函数. 若 \(f\) 是几乎处处定义的 \(B\) 值函数, 并且对任意 \(\varepsilon>0\), 存在 \(g\in\C_0(\R^d,B)\), 使得
+\[
+\int_{\R^d}^{*}\|f(x)-g(x)\|_B\,\dd x<\varepsilon,
+\]
+则称 \(f\) 是 \(B\) 值可积函数, 记作
+\[
+f\in L^1(\R^d,B).
+\]
+若 \(g_n\in\C_0(\R^d,B)\) 且
+\[
+\int_{\R^d}^{*}\|f(x)-g_n(x)\|_B\,\dd x\to0,
+\]
+则 \(\int g_n\,\dd x\) 在 \(B\) 中是 Cauchy 列, 因而收敛. 定义
+\[
+\int_{\R^d}f(x)\,\dd x
+=
+\lim_{n\to\infty}\int_{\R^d}g_n(x)\,\dd x.
+\]
+这个定义与逼近列的选择无关, 因为
+\[
+\left\|\int g_n\,\dd x-\int h_n\,\dd x\right\|
+\leq
+\int^{*}\|g_n-h_n\|_B\,\dd x.
+\]
+
+于是, \(B\) 值积分仍然满足线性性、三角不等式、控制收敛定理等形式. 例如, 若 \(f_n\to f\) 几乎处处, 且存在 \(G\in L^1(\R^d)\) 使得
+\[
+\|f_n(x)\|_B\leq G(x)
+\]
+几乎处处成立, 则
+\[
+\int_{\R^d}\|f_n(x)-f(x)\|_B\,\dd x\to0,
+\]
+从而
+\[
+\int_{\R^d}f_n(x)\,\dd x
+\longrightarrow
+\int_{\R^d}f(x)\,\dd x
+\]
+在 \(B\) 的范数意义下成立.
+
+\begin{rem}
+	向量值积分与实值积分的一个重要差别是: 一般 Banach 空间没有天然的序结构, 因而不能直接谈论 ``\(f\geq0\)'' 或 ``单调收敛''. 所以在向量值情形中, 很多定理要通过范数估计来表达. 例如, 正函数的单调收敛定理通常被控制收敛定理和 \(L^1\) 完备性所替代.
+\end{rem}
+
+上面的讨论还可以进一步推广. 实际上, 除了 \(\R^d\) 是一个具有可数基的局部紧致拓扑空间以外, 我们在建立积分理论时并没有使用太多欧氏空间的特殊性质. 这里所谓局部紧致, 是指每个点都有一个紧致邻域; 所谓具有可数基, 是指存在一个可数的开集族, 使得任意开集都可以写成其中某些开集的并.
+
+因此, 若 \(X\) 是一个具有可数基的局部紧致 Hausdorff 空间, 可以令 \(\C_0(X)\) 表示 \(X\) 上具有紧致支集的连续实值函数全体. 只要给定一个正线性泛函
+\[
+\mu:\C_0(X)\longrightarrow\R,
+\]
+即
+\[
+\mu(af+bg)=a\mu(f)+b\mu(g),
+\qquad
+\mu(f)\geq0\quad(f\geq0),
+\]
+便可以仿照前面的方法定义上积分、零集、可测函数、可积函数以及关于 \(\mu\) 的积分. 这样得到的正线性泛函同样称为 \(X\) 上的 Radon 正测度.
+
+更抽象地说, 甚至可以暂时把拓扑结构也放在一边. 设 \(E\) 是一个集合, \(\C_0\) 是定义在 \(E\) 上的一个实值函数线性空间, 并假定
+\[
+f\in\C_0
+\quad\Longrightarrow\quad
+|f|\in\C_0.
+\]
+于是对 \(f,g\in\C_0\), 也有
+\[
+\max(f,g)=\frac{f+g+|f-g|}{2}\in\C_0,
+\]
+以及
+\[
+\min(f,g)=\frac{f+g-|f-g|}{2}\in\C_0.
+\]
+也就是说, \(\C_0\) 是一个函数格.
+
+若 \(\mu\) 是 \(\C_0\) 上的正线性泛函, 并且满足适当的从上连续性条件, 即当
+\[
+f_n\in\C_0^+,
+\qquad
+f_n\downarrow0
+\]
+时有
+\[
+\mu(f_n)\to0,
+\]
+则可以令 \(\mathcal I^+\) 为 \(\C_0^+\) 中上升序列极限所组成的函数类. 在这种抽象框架下, 仍然可以定义非负函数的上积分、零函数、零集合、可测函数和可积函数. 前面许多关于积分的基本性质仍然成立.
+
+不过, 在这种完全抽象的形式中, 理论是否有内容, 取决于 \(\mathcal I^+\) 中函数类是否足够丰富, 以及它是否能有效刻画所研究的问题. 因此, 本书不再继续展开这个一般框架.
+
+\begin{rem}
+	概率论教材中常常从类似的抽象观点开始. 那里通常先给定一个集合 \(E\) 和一个由某些集合的特征函数生成的函数类, 例如由某个集合代数中集合的特征函数的有限线性组合构成的函数类, 然后在这个函数类上定义正线性泛函, 再逐步扩张为积分. 这与本书从 \(\C_0\) 和正线性泛函出发的路线在思想上是一致的.
+\end{rem}
+
+\begin{rem}
+	本节的意义在于说明: 积分理论的核心并不局限于 \(\R^d\) 上的体积测度. 一旦抓住 ``正线性泛函'' 和 ``从简单函数类扩张到更大函数类'' 这两个结构, 就可以得到许多不同背景下的积分理论. 前面关于 Lebesgue 积分、Radon 测度、Stieltjes 积分和 Radon--Nikodym 定理的讨论, 都是这个共同思想的具体实现.
+\end{rem}

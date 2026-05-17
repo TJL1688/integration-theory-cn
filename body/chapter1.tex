@@ -1,0 +1,1408 @@
+\chapter{黎曼积分}
+
+\section{黎曼积分的定义}
+
+本章先在一个有限闭区间上建立黎曼积分. 这里``区间"指
+\(\mathbb{R}^d\) 中边与坐标轴平行的闭长方体, 即
+\[
+I=[a_1,b_1]\times\cdots\times [a_d,b_d]
+=\{x=(x_1,\ldots,x_d): a_j\leq x_j\leq b_j,\ 1\leq j\leq d\}.
+\]
+它的体积定义为
+\[
+m(I)=\prod_{j=1}^{d}(b_j-a_j).
+\]
+对于这类区间的子区间, 体积也按同样方式定义.
+
+\subsection{分片常数函数及其积分}
+
+设 \(f\) 是定义在 \(I\) 上的实值函数. 若存在 \(I\) 的一个有限剖分
+\[
+I=\bigcup_{k=1}^{N}I_k,
+\]
+其中各 \(I_k\) 的内部互不相交, 且 \(f\) 在每个 \(I_k\) 上为常数, 则称
+\(f\) 为 \(I\) 上的分片常数函数. 记所有这类函数构成的集合为 \(\T\).
+若 \(f\) 在 \(I_k\) 上的常值为 \(c_k\), 则定义
+\[
+\int_I f(x)\,\dd x=\sum_{k=1}^{N}c_k m(I_k).
+\]
+这个定义与剖分的选取无关. 事实上, 如果换用另一个剖分, 只要取两个
+剖分的公共加细, 上式右端便化为同一个有限和.
+
+由定义立刻得到以下两个基本性质:
+\begin{enumerate}
+	\item $\int_I f(x)\,\dd x\geq 0$, $f\in\T,\ f\geq 0$, \label{eq:step-positive}
+	\item $\int_I \bigl(af(x)+bg(x)\bigr)\,\dd x
+	=a\int_I f(x)\,\dd x+b\int_I g(x)\,\dd x$, $f,g\in\T,\ a,b\in\R$. \label{eq:step-linear}
+\end{enumerate}
+也就是说, 在分片常数函数上, 积分已经是一个正线性泛函.
+
+\subsection{上积分与下积分}
+
+现在令 \(f\) 为 \(I\) 上的有界实值函数. 用分片常数函数从上、从下夹住
+\(f\), 定义它的上黎曼积分和下黎曼积分分别为
+\begin{align}
+	\overline{\int_I} f(x)\,\dd x
+	&=\inf\left\{\int_I h(x)\,\dd x: h\in\T,\ f\leq h\right\},\label{eq:upper-riemann}\\
+	\underline{\int_I} f(x)\,\dd x
+	&=\sup\left\{\int_I h(x)\,\dd x: h\in\T,\ h\leq f\right\}.\label{eq:lower-riemann}
+\end{align}
+其中, 上确界与下确界是对所有满足相应不等式的分片常数函数取的.
+
+显然总有
+\[
+\underline{\int_I} f(x)\,\dd x
+\leq
+\overline{\int_I} f(x)\,\dd x.
+\]
+事实上, 若 \(h_1,h_2\in\T\) 且 \(h_1\leq f\leq h_2\), 则
+\[
+0\leq \int_I \bigl(h_2(x)-h_1(x)\bigr)\,\dd x
+=\int_I h_2(x)\,\dd x-\int_I h_1(x)\,\dd x.
+\]
+这说明任何从下逼近的积分值都不超过任何从上逼近的积分值.
+
+\begin{defn}[黎曼可积]
+	若
+	\[
+	\underline{\int_I} f(x)\,\dd x
+	=
+	\overline{\int_I} f(x)\,\dd x,
+	\]
+	则称 \(f\) 在 \(I\) 上黎曼可积. 此时二者的共同值记作
+	\[
+	\int_I f(x)\,\dd x,
+	\]
+	称为 \(f\) 在 \(I\) 上的黎曼积分.
+\end{defn}
+
+上述定义等价于下面的 \(\varepsilon\)-夹逼形式: \(f\) 黎曼可积当且仅当对任意
+\(\varepsilon>0\), 存在 \(h_1,h_2\in\T\), 使得
+\[
+h_1\leq f\leq h_2,
+\qquad
+\int_I \bigl(h_2(x)-h_1(x)\bigr)\,\dd x<\varepsilon.
+\]
+这一定义的意义在于: 若一个有界函数可以被两个分片常数函数以任意小的
+积分误差夹住, 那么它的积分就是确定的.
+
+\begin{prop}
+	若 \(f\) 在 \(I\) 上连续, 则 \(f\) 在 \(I\) 上黎曼可积.
+\end{prop}
+
+\begin{proof}
+	由于 \(I\) 是紧集, 连续函数 \(f\) 在 \(I\) 上一致连续. 给定
+	\(\varepsilon>0\), 取足够细的剖分 \(I=\bigcup I_k\), 使得 \(f\) 在每个
+	\(I_k\) 上的振幅都小于 \(\varepsilon/m(I)\). 在每个 \(I_k\) 上分别取
+	\[
+	m_k=\inf_{x\in I_k}f(x),\qquad M_k=\sup_{x\in I_k}f(x),
+	\]
+	并令 \(h_1=m_k\), \(h_2=M_k\) 于 \(I_k\) 上. 则
+	\(h_1,h_2\in\T\), \(h_1\leq f\leq h_2\), 且
+	\[
+	\int_I(h_2-h_1)\,\dd x
+	=\sum_k(M_k-m_k)m(I_k)<\varepsilon.
+	\]
+	故 \(f\) 黎曼可积.
+\end{proof}
+
+进一步, 当剖分的细度趋于零时, 对任意选取的点 \(\xi_k\in I_k\), 连续函数
+\(f\) 的黎曼和满足
+\[
+\sum_k f(\xi_k)m(I_k)\longrightarrow \int_I f(x)\,\dd x.
+\]
+这说明上下积分定义与通常的黎曼和定义相容.
+
+\subsection{黎曼可积函数的线性性质}
+
+若 \(a,b\geq 0\), 且 \(f,g\) 为有界实值函数, 则由上下积分的定义可得
+\begin{align}
+	\overline{\int_I} (af+bg)\,\dd x
+	&\leq a\overline{\int_I} f\,\dd x
+	+b\overline{\int_I} g\,\dd x,\label{eq:upper-sublinear}\\
+	\underline{\int_I} (af+bg)\,\dd x
+	&\geq a\underline{\int_I} f\,\dd x
+	+b\underline{\int_I} g\,\dd x.\label{eq:lower-superlinear}
+\end{align}
+因此, 若 \(f\) 与 \(g\) 均黎曼可积, 则 \(af+bg\) 也黎曼可积, 且
+\[
+\int_I(af+bg)\,\dd x
+=a\int_I f\,\dd x+b\int_I g\,\dd x.
+\]
+再由 \(-f\) 的情形可知, 上式对任意 \(a,b\in\R\) 都成立.
+
+\begin{thm}[黎曼积分的线性性]
+	设 \(f,g\) 在 \(I\) 上黎曼可积, \(a,b\in\R\). 则 \(af+bg\) 在 \(I\) 上黎曼可积, 且
+	\[
+	\int_I(af+bg)(x)\,\dd x
+	=a\int_I f(x)\,\dd x+b\int_I g(x)\,\dd x.
+	\]
+\end{thm}
+
+\begin{exer}
+	证明: 若 \(f\) 或 \(g\) 中至少有一个是黎曼可积的, 则式
+	\eqref{eq:upper-sublinear} 中相应的不等式可以强化为含有一个等号的形式.
+	进一步证明: 若 \(f\) 为有界函数, 且对任意有界函数 \(g\) 都有
+	\[
+	\overline{\int_I}(f+g)\,\dd x
+	=\overline{\int_I}f\,\dd x+
+	\overline{\int_I}g\,\dd x,
+	\]
+	则 \(f\) 必为黎曼可积.
+\end{exer}
+
+\subsection{用连续函数逼近}
+
+前面用分片常数函数定义黎曼积分. 事实上, 也可以用连续函数来定义同样的
+上下积分. 记 \(\C(I)\) 为 \(I\) 上的连续函数全体, 则有
+\begin{align*}
+	\overline{\int_I} f\,\dd x
+	&=\inf\left\{\int_I h\,\dd x: h\in\C(I),\ f\leq h\right\},\\
+	\underline{\int_I} f\,\dd x
+	&=\sup\left\{\int_I h\,\dd x: h\in\C(I),\ h\leq f\right\}.
+\end{align*}
+
+简要说明如下. 一方面, 连续函数也是可积函数, 所以用连续函数从上或从下逼近不会给出比原定义更强的结果. 另一方面, 任意分片常数函数都可以在积分意义下由连续函数逼近. 比如, 在每个小区间内部保持常值, 在边界附近作线性过渡, 由于边界附近可以取得任意薄, 因而由此带来的积分误差可以任意小.
+
+因此 \(f\) 黎曼可积当且仅当对任意 \(\varepsilon>0\), 存在
+\(h_1,h_2\in\C(I)\), 使得
+\[
+h_1\leq f\leq h_2,
+\qquad
+\int_I(h_2-h_1)\,\dd x<\varepsilon.
+\]
+由此还可推出一个常用判别准则:
+
+\begin{prop}
+	有界函数 \(f\) 在 \(I\) 上黎曼可积的充分必要条件是: 对任意
+	\(\varepsilon>0\), 存在 \(g\in\C(I)\), 使得
+	\[
+	\overline{\int_I}|f-g|\,\dd x<\varepsilon.
+	\]
+\end{prop}
+
+\begin{exer}[Darboux 定理]
+	设 \(f\) 是 \(I\) 上有界函数. 对剖分 \(\mathcal{P}: I=\bigcup I_k\), 记
+	\[
+	M_k=\sup_{x\in I_k}f(x),\qquad m_k=\inf_{x\in I_k}f(x).
+	\]
+	证明: 当剖分细度趋于零时,
+	\[
+	\sum_k M_km(I_k)\longrightarrow \overline{\int_I} f\,\dd x,
+	\qquad
+	\sum_k m_km(I_k)\longrightarrow \underline{\int_I} f\,\dd x.
+	\]
+	提示: 可先对连续函数证明, 再利用连续函数逼近一般有界函数.
+\end{exer}
+
+\subsection{Jordan 测度}
+
+黎曼积分还给出了测量集合大小的一种方法. 设 \(E\subset I\), 令
+\(\chi_E\) 为 \(E\) 的特征函数, 即
+\[
+\chi_E(x)=
+\begin{cases}
+	1, & x\in E,\\
+	0, & x\notin E.
+\end{cases}
+\]
+定义 \(E\) 的 Jordan 外测度与 Jordan 内测度分别为
+\[
+m^*(E)=\overline{\int_I}\chi_E(x)\,\dd x,
+\qquad
+m_*(E)=\underline{\int_I}\chi_E(x)\,\dd x.
+\]
+若二者相等, 即 \(\chi_E\) 黎曼可积, 则称 \(E\) 为 Jordan 可测集, 并定义
+\[
+m(E)=\int_I\chi_E(x)\,\dd x.
+\]
+更一般地, 对任意有界函数 \(f\), 可定义它在 \(E\) 上的积分为
+\[
+\int_E f(x)\,\dd x:=\int_I f(x)\chi_E(x)\,\dd x,
+\]
+只要右端积分存在.
+
+\begin{exam}[有理点集不是 Jordan 可测]
+	令 \(E\) 为区间 \(I\) 中所有坐标均为有理数的点组成的集合. 任意非空开子区间
+	都同时含有 \(E\) 中的点和 \(I\setminus E\) 中的点. 因而
+	\[
+	\overline{\int_I}\chi_E\,\dd x=m(I),
+	\qquad
+	\underline{\int_I}\chi_E\,\dd x=0.
+	\]
+	所以 \(E\) 不是 Jordan 可测集.
+\end{exam}
+
+\begin{exam}[Cantor 集]
+	从 \([0,1]\) 出发, 第一步删去中间三分之一开区间, 得
+	\[
+	E_1=\left[0,\frac13\right]\cup\left[\frac23,1\right].
+	\]
+	第二步从剩下的两个闭区间中各删去中间三分之一开区间, 得
+	\[
+	E_2=\left[0,\frac19\right]\cup\left[\frac29,\frac13\right]
+	\cup\left[\frac23,\frac79\right]\cup\left[\frac89,1\right].
+	\]
+	如此继续, 令
+	\[
+	C=\bigcap_{n=1}^{\infty}E_n.
+	\]
+	则 \(C\) 为 Cantor 集. 因为 \(E_n\) 由 \(2^n\) 个长度为 \(3^{-n}\) 的闭区间组成,
+	所以
+	\[
+	m^*(C)\leq m(E_n)=\left(\frac23\right)^n,
+	\qquad n=1,2,\ldots.
+	\]
+	令 \(n\to\infty\), 得 \(m^*(C)=0\). 因此 \(C\) 是 Jordan 可测集且
+	\[
+	m(C)=0.
+	\]
+	另一方面, Cantor 集不可数. 例如, 每个二进制序列 \((\varepsilon_n)\),
+	\(\varepsilon_n\in\{0,2\}\), 都对应一个三进制展开
+	\[
+	x=\sum_{n=1}^{\infty}\frac{\varepsilon_n}{3^n},
+	\]
+	这些点均属于 \(C\), 由此可见 \(C\) 至少与二进制序列全体等势, 因而不可数.
+\end{exam}
+
+\subsection{一致极限与积分}
+
+最后给出一个关于积分号下取极限的基本事实.
+
+\begin{thm}
+	设 \(f_n\) 是 \(I\) 上的黎曼可积函数, 且 \(f_n\) 在 \(I\) 上一致收敛到
+	\(f\). 则 \(f\) 也黎曼可积, 并且
+	\[
+	\lim_{n\to\infty}\int_I f_n(x)\,\dd x
+	=\int_I f(x)\,\dd x.
+	\]
+\end{thm}
+
+\begin{proof}
+	给定 \(\varepsilon>0\). 由于 \(f_n\to f\) 一致收敛, 存在 \(N\), 使得当
+	\(n\geq N\) 时,
+	\[
+	f_n(x)-\varepsilon\leq f(x)\leq f_n(x)+\varepsilon,
+	\qquad x\in I.
+	\]
+	于是
+	\[
+	\underline{\int_I} f_n\,\dd x-\varepsilon m(I)
+	\leq
+	\underline{\int_I} f\,\dd x
+	\leq
+	\overline{\int_I} f\,\dd x
+	\leq
+	\overline{\int_I} f_n\,\dd x+\varepsilon m(I).
+	\]
+	因为 \(f_n\) 黎曼可积, 上式左右两端相差不超过 \(2\varepsilon m(I)\).
+	令 \(\varepsilon\to0\), 得 \(f\) 黎曼可积. 同时由
+	\[
+	\left|\int_I f\,\dd x-\int_I f_n\,\dd x\right|
+	\leq \varepsilon m(I)
+	\]
+	可知积分收敛.
+\end{proof}
+
+\clearpage
+
+\section{正项级数的积分}
+\label{sec:positive-series-integration}
+
+在处理非负项级数时, 有一个基本事实: 若 \(a_{mn}\geq 0\), 则
+\[
+\sum_{n=1}^{\infty}\sum_{m=1}^{\infty}a_{mn}
+=
+\sum_{m=1}^{\infty}\sum_{n=1}^{\infty}a_{mn}.
+\]
+这里允许两端同时取值为 \(+\infty\). 这是因为正项级数的和可以看作有限部分和的上确界, 而对非负数求和时, 有限求和的次序不会影响结果.
+
+自然地, 我们希望把上式中的某一个求和号替换成积分号. 但是, 如果仍然局限于黎曼积分, 情形就没有这么完美. 本节的定理正是说明这一点: 对非负黎曼可积函数列, 逐项积分在“下积分”意义下仍然成立; 但即使每一项都是连续函数, 级数和也未必黎曼可积. 这正是引入勒贝格积分的一个重要动机.
+
+\subsection{Dini 引理}
+
+先给出一个将在证明中使用的紧致性结论.
+
+\begin{lem}[Dini 引理]
+	\label{lem:dini-riemann}
+	设 \(f_n\) 是 \(I\) 上的非负连续函数. 若对每个 \(x\in I\),
+	\[
+	f_1(x)\geq f_2(x)\geq \cdots \geq 0,
+	\qquad
+	\lim_{n\to\infty}f_n(x)=0,
+	\]
+	则 \(f_n\) 在 \(I\) 上一致收敛于 \(0\). 因而
+	\[
+	\lim_{n\to\infty}\int_I f_n(x)\,\dd x=0.
+	\]
+\end{lem}
+
+\begin{proof}
+	给定 \(\varepsilon>0\). 对每个 \(x\in I\), 由 \(f_n(x)\downarrow 0\) 可取整数
+	\(N_x\), 使得
+	\[
+	f_{N_x}(x)<\varepsilon.
+	\]
+	由于 \(f_{N_x}\) 连续, 存在 \(x\) 的一个邻域 \(U_x\), 使得当 \(y\in U_x\) 时,
+	\[
+	f_{N_x}(y)<\varepsilon.
+	\]
+	又由单调性, 当 \(n\geq N_x\) 且 \(y\in U_x\) 时,
+	\[
+	f_n(y)\leq f_{N_x}(y)<\varepsilon.
+	\]
+	这些 \(U_x\) 覆盖紧集 \(I\). 由有限覆盖定理, 存在有限个点
+	\(x_1,\ldots,x_k\), 使得
+	\[
+	I\subset U_{x_1}\cup\cdots\cup U_{x_k}.
+	\]
+	令
+	\[
+	N=\max\{N_{x_1},\ldots,N_{x_k}\},
+	\]
+	则当 \(n\geq N\) 时, 对任意 \(y\in I\), 都有 \(f_n(y)<\varepsilon\). 因此
+	\(f_n\to 0\) 一致收敛. 由上一节的一致极限定理,
+	\[
+	\int_I f_n(x)\,\dd x\longrightarrow 0.
+	\]
+\end{proof}
+
+\subsection{正项级数的逐项积分}
+
+本节中会遇到非负函数的无穷和, 它未必有界. 因此, 我们需要把下积分的定义稍微扩展一下: 若 \(F\) 是 \(I\) 上的下方有界函数, 定义
+\[
+\underline{\int_I}F(x)\,\dd x
+=
+\sup\left\{
+\int_I h(x)\,\dd x:
+h\in \C(I),\ h\leq F
+\right\}.
+\]
+当 \(F\) 有界时, 这与上一节的下积分定义一致.
+
+\begin{thm}[非负项级数的下积分]
+	\label{thm:positive-series-riemann}
+	设 \(u_n\) 是 \(I\) 上的非负黎曼可积函数, \(n=1,2,\ldots\). 令
+	\[
+	U(x)=\sum_{n=1}^{\infty}u_n(x),
+	\]
+	其中允许 \(U(x)=+\infty\). 则
+	\[
+	\underline{\int_I}U(x)\,\dd x
+	=
+	\sum_{n=1}^{\infty}\int_I u_n(x)\,\dd x.
+	\]
+	但是, 即使所有 \(u_n\) 都连续, 并且右端为有限值, 仍可能出现
+	\(\sum_{n=1}^{\infty}u_n\) 不是黎曼可积的情形.
+\end{thm}
+
+\begin{proof}
+	先证明等式.
+	
+	记
+	\[
+	S(x)=\sum_{n=1}^{\infty}u_n(x).
+	\]
+	由于对任意 \(N\),
+	\[
+	\sum_{n=1}^{N}u_n(x)\leq S(x),
+	\]
+	且有限和 \(\sum_{n=1}^{N}u_n\) 黎曼可积, 所以由下积分的定义可得
+	\[
+	\underline{\int_I}S(x)\,\dd x
+	\geq
+	\int_I \sum_{n=1}^{N}u_n(x)\,\dd x
+	=
+	\sum_{n=1}^{N}\int_I u_n(x)\,\dd x.
+	\]
+	令 \(N\to\infty\), 得
+	\[
+	\underline{\int_I}S(x)\,\dd x
+	\geq
+	\sum_{n=1}^{\infty}\int_I u_n(x)\,\dd x.
+	\]
+	
+	下面证明反向不等式. 给定 \(\varepsilon>0\). 由下积分的定义, 可取连续函数
+	\(H\in\C(I)\), 使得
+	\[
+	H(x)\leq S(x),
+	\qquad
+	\underline{\int_I}S(x)\,\dd x
+	<
+	\int_I H(x)\,\dd x+\frac{\varepsilon}{2}.
+	\]
+	由于每个 \(u_n\) 黎曼可积, 又由上一节的连续函数逼近准则, 对每个 \(n\) 可取连续函数 \(h_n\in\C(I)\), 使得
+	\[
+	u_n(x)\leq h_n(x),
+	\qquad
+	\int_I h_n(x)\,\dd x
+	<
+	\int_I u_n(x)\,\dd x+\frac{\varepsilon}{2^{n+1}}.
+	\]
+	于是对每个 \(x\in I\),
+	\[
+	\sum_{n=1}^{\infty}h_n(x)\geq \sum_{n=1}^{\infty}u_n(x)=S(x)\geq H(x).
+	\]
+	定义
+	\[
+	F_N(x)
+	=
+	\max\left\{
+	H(x)-\sum_{n=1}^{N}h_n(x),\,0
+	\right\}.
+	\]
+	则 \(F_N\) 是 \(I\) 上的非负连续函数, 且 \(F_N(x)\downarrow 0\). 由引理
+	\ref{lem:dini-riemann},
+	\[
+	\int_I F_N(x)\,\dd x\longrightarrow 0.
+	\]
+	另一方面,
+	\[
+	H(x)\leq \sum_{n=1}^{N}h_n(x)+F_N(x),
+	\]
+	从而
+	\[
+	\int_I H(x)\,\dd x
+	\leq
+	\sum_{n=1}^{N}\int_I h_n(x)\,\dd x
+	+
+	\int_I F_N(x)\,\dd x.
+	\]
+	于是
+	\begin{align*}
+		\underline{\int_I}S(x)\,\dd x
+		&<
+		\int_I H(x)\,\dd x+\frac{\varepsilon}{2}\\
+		&\leq
+		\sum_{n=1}^{N}\int_I h_n(x)\,\dd x
+		+
+		\int_I F_N(x)\,\dd x
+		+\frac{\varepsilon}{2}\\
+		&<
+		\sum_{n=1}^{N}\int_I u_n(x)\,\dd x
+		+
+		\sum_{n=1}^{N}\frac{\varepsilon}{2^{n+1}}
+		+
+		\int_I F_N(x)\,\dd x
+		+\frac{\varepsilon}{2}.
+	\end{align*}
+	令 \(N\to\infty\), 得
+	\[
+	\underline{\int_I}S(x)\,\dd x
+	\leq
+	\sum_{n=1}^{\infty}\int_I u_n(x)\,\dd x+\varepsilon.
+	\]
+	由于 \(\varepsilon>0\) 任意, 反向不等式成立. 因此
+	\[
+	\underline{\int_I}\sum_{n=1}^{\infty}u_n(x)\,\dd x
+	=
+	\sum_{n=1}^{\infty}\int_I u_n(x)\,\dd x.
+	\]
+	
+	下面构造反例, 说明级数和不一定黎曼可积. 为简单起见, 假设 \(m(I)>0\). 将 \(I\) 中所有坐标均为有理数的点排成一个序列
+	\[
+	y_1,y_2,\ldots.
+	\]
+	对每个 \(n\), 取连续函数 \(f_n\in\C(I)\), 使得
+	\[
+	0\leq f_n\leq 1,
+	\qquad
+	f_n(y_n)=1,
+	\qquad
+	\int_I f_n(x)\,\dd x<\frac{m(I)}{2^{n+1}}.
+	\]
+	这样的函数可以取为以 \(y_n\) 为中心、支集足够小的连续尖峰函数.
+	
+	定义
+	\[
+	u_1=f_1,
+	\qquad
+	u_n=f_n(1-f_1)(1-f_2)\cdots(1-f_{n-1}),
+	\quad n\geq 2.
+	\]
+	则每个 \(u_n\) 都是非负连续函数, 且
+	\[
+	0\leq u_n\leq f_n,
+	\]
+	因此
+	\[
+	\sum_{n=1}^{\infty}\int_I u_n(x)\,\dd x
+	\leq
+	\sum_{n=1}^{\infty}\int_I f_n(x)\,\dd x
+	<
+	\frac{m(I)}{2}.
+	\]
+	另一方面, 对任意 \(N\),
+	\[
+	\sum_{n=1}^{N}u_n(x)
+	=
+	1-\prod_{n=1}^{N}\bigl(1-f_n(x)\bigr).
+	\]
+	因此
+	\[
+	0\leq \sum_{n=1}^{\infty}u_n(x)\leq 1.
+	\]
+	并且, 如果 \(x=y_k\), 则 \(f_k(y_k)=1\), 所以
+	\[
+	\sum_{n=1}^{\infty}u_n(y_k)=1.
+	\]
+	也就是说, 级数和
+	\[
+	U(x)=\sum_{n=1}^{\infty}u_n(x)
+	\]
+	在所有有理坐标点上都等于 \(1\).
+	
+	由于 \(I\) 的任一非空子区间都含有有理坐标点, 所以在任一这样的子区间上 \(U\) 的上确界都是 \(1\). 因而
+	\[
+	\overline{\int_I}U(x)\,\dd x=m(I).
+	\]
+	但是由已经证明的逐项积分公式,
+	\[
+	\underline{\int_I}U(x)\,\dd x
+	=
+	\sum_{n=1}^{\infty}\int_I u_n(x)\,\dd x
+	<
+	\frac{m(I)}{2}.
+	\]
+	于是
+	\[
+	\underline{\int_I}U(x)\,\dd x
+	<
+	\overline{\int_I}U(x)\,\dd x,
+	\]
+	所以 \(U\) 不是黎曼可积的.
+\end{proof}
+
+\begin{rem}
+	\label{rem:riemann-defect-positive-series}
+	定理 \ref{thm:positive-series-riemann} 表明, 对非负函数列逐项积分时, 黎曼积分存在一个本质缺陷: 级数和这一端不得不用下积分来理解, 而逐项积分那一端却是通常的黎曼积分. 因此, 等式虽然成立, 但两端的“积分”并不是同一种意义下的积分.
+	
+	下一章将通过推广积分概念来弥补这一缺陷. 在勒贝格积分框架下, 非负函数列的逐项积分将具有更自然的形式.
+\end{rem}
+
+\clearpage
+
+\section{累次积分}
+\label{sec:iterated-riemann-integrals}
+
+设 \(I\subset\R^d\) 和 \(J\subset\R^e\) 都是有限闭区间. 我们分别用 \(x\) 和 \(y\) 表示其中的变量, 即
+\[
+I\times J=\bigl\{(x,y):x\in I,\ y\in J\bigr\}\subset\R^{d+e}.
+\]
+若 \(f\) 是 \(I\times J\) 上的有界实值函数, 则对固定的 \(x\in I\), 可以把
+\(y\mapsto f(x,y)\) 看成 \(J\) 上的有界函数, 从而可以讨论它关于 \(y\) 的上积分和下积分. 因此得到两个关于 \(x\) 的函数:
+\[
+\Phi(x)=\overline{\int_J} f(x,y)\,\dd y,
+\qquad
+\phi(x)=\underline{\int_J} f(x,y)\,\dd y.
+\]
+一般来说, \(\Phi\) 与 \(\phi\) 未必相等; 也就是说, 即使 \(f\) 在乘积区间上表现良好, 固定 \(x\) 后得到的截面函数也未必黎曼可积. 本节的目的就是说明这种现象, 并给出黎曼积分框架下能够成立的累次积分结论.
+
+\subsection{上下积分的不等式}
+
+先证明一个基本不等式. 它是后面所有结论的出发点.
+
+\begin{prop}\label{prop:upper-lower-iterated-riemann}
+	设 \(f\) 是 \(I\times J\) 上的有界实值函数. 则
+	\begin{align}
+		\overline{\int_I}\left(\overline{\int_J}f(x,y)\,\dd y\right)\dd x
+		&\leq
+		\overline{\int_{I\times J}} f(x,y)\,\dd x\dd y,\label{eq:upper-iterated-riemann}\\
+		\underline{\int_I}\left(\underline{\int_J}f(x,y)\,\dd y\right)\dd x
+		&\geq
+		\underline{\int_{I\times J}} f(x,y)\,\dd x\dd y.\label{eq:lower-iterated-riemann}
+	\end{align}
+\end{prop}
+
+\begin{proof}
+	先证 \eqref{eq:upper-iterated-riemann}. 若 \(h\) 是 \(I\times J\) 上的分片常数函数且 \(f\leq h\), 则对每个固定的 \(x\), 有
+	\[
+	\overline{\int_J}f(x,y)\,\dd y
+	\leq
+	\int_J h(x,y)\,\dd y.
+	\]
+	于是
+	\[
+	\overline{\int_I}\left(\overline{\int_J}f(x,y)\,\dd y\right)\dd x
+	\leq
+	\int_I\left(\int_J h(x,y)\,\dd y\right)\dd x.
+	\]
+	当 \(h\) 为分片常数函数时, 累次积分与乘积区间上的积分显然相等, 即
+	\[
+	\int_I\left(\int_J h(x,y)\,\dd y\right)\dd x
+	=
+	\int_{I\times J}h(x,y)\,\dd x\dd y.
+	\]
+	这里用到的只是体积公式
+	\[
+	m(I_k\times J_l)=m(I_k)m(J_l).
+	\]
+	对所有满足 \(f\leq h\) 的分片常数函数 \(h\) 取下确界, 即得
+	\[
+	\overline{\int_I}\left(\overline{\int_J}f(x,y)\,\dd y\right)\dd x
+	\leq
+	\overline{\int_{I\times J}} f(x,y)\,\dd x\dd y.
+	\]
+	这就是 \eqref{eq:upper-iterated-riemann}.
+	
+	至于 \eqref{eq:lower-iterated-riemann}, 可以仿照上面的论证直接证明; 也可以将 \eqref{eq:upper-iterated-riemann} 应用于 \(-f\), 再利用上下积分之间的关系
+	\[
+	\overline{\int}(-f)=-\underline{\int}f.
+	\]
+\end{proof}
+
+\subsection{连续函数的累次积分}
+
+对于连续函数, 上述不等式立即给出通常形式的累次积分公式.
+
+\begin{thm}[连续函数的累次积分]\label{thm:continuous-fubini-riemann}
+	若 \(f\) 是 \(I\times J\) 上的连续函数, 则
+	\[
+	F(x)=\int_J f(x,y)\,\dd y
+	\]
+	是 \(I\) 上的连续函数, 并且
+	\[
+	\int_I\left(\int_J f(x,y)\,\dd y\right)\dd x
+	=
+	\int_{I\times J}f(x,y)\,\dd x\dd y.
+	\]
+\end{thm}
+
+\begin{proof}
+	因为 \(I\times J\) 是紧集, \(f\) 在 \(I\times J\) 上一致连续. 若 \(x_n\to x\), 则
+	\[
+	f(x_n,y)\longrightarrow f(x,y)
+	\]
+	关于 \(y\in J\) 一致成立. 由上一节关于一致极限与积分交换的定理可知
+	\[
+	\int_J f(x_n,y)\,\dd y
+	\longrightarrow
+	\int_J f(x,y)\,\dd y.
+	\]
+	因此 \(F\) 连续.
+	
+	由于连续函数黎曼可积, 对每个 \(x\in I\) 都有
+	\[
+	\overline{\int_J}f(x,y)\,\dd y
+	=
+	\underline{\int_J}f(x,y)\,\dd y
+	=
+	\int_J f(x,y)\,\dd y.
+	\]
+	同时 \(f\) 在 \(I\times J\) 上黎曼可积. 将命题 \ref{prop:upper-lower-iterated-riemann} 中的两个不等式合在一起, 就得到
+	\[
+	\int_I F(x)\,\dd x
+	=
+	\int_{I\times J}f(x,y)\,\dd x\dd y.
+	\]
+\end{proof}
+
+\begin{rem}
+	由对称性, 定理 \ref{thm:continuous-fubini-riemann} 中也可以先对 \(x\) 积分再对 \(y\) 积分. 因而连续函数满足
+	\[
+	\int_I\left(\int_J f(x,y)\,\dd y\right)\dd x
+	=
+	\int_J\left(\int_I f(x,y)\,\dd x\right)\dd y
+	=
+	\int_{I\times J}f(x,y)\,\dd x\dd y.
+	\]
+\end{rem}
+
+\subsection{一般黎曼可积函数的情形}
+
+现在设 \(f\) 是 \(I\times J\) 上的黎曼可积函数. 这时不能贸然断言
+\(y\mapsto f(x,y)\) 对每个 \(x\) 都黎曼可积, 因而不能直接写出普通意义下的累次积分. 但是上下积分仍然给出一个可用的结论.
+
+\begin{thm}[乘积可积函数的上下累次积分]\label{thm:riemann-integrable-iterated-upper-lower}
+	设 \(f\) 在 \(I\times J\) 上黎曼可积. 定义
+	\[
+	\Phi(x)=\overline{\int_J}f(x,y)\,\dd y,
+	\qquad
+	\phi(x)=\underline{\int_J}f(x,y)\,\dd y.
+	\]
+	则 \(\Phi\) 与 \(\phi\) 都在 \(I\) 上黎曼可积, 且
+	\[
+	\int_I \Phi(x)\,\dd x
+	=
+	\int_I \phi(x)\,\dd x
+	=
+	\int_{I\times J}f(x,y)\,\dd x\dd y.
+	\]
+	特别地, 若对每个 \(x\in I\), 函数 \(y\mapsto f(x,y)\) 都在 \(J\) 上黎曼可积, 则
+	\[
+	\int_I\left(\int_J f(x,y)\,\dd y\right)\dd x
+	=
+	\int_{I\times J}f(x,y)\,\dd x\dd y.
+	\]
+\end{thm}
+
+\begin{proof}
+	由命题 \ref{prop:upper-lower-iterated-riemann} 得
+	\[
+	\overline{\int_I}\Phi(x)\,\dd x
+	\leq
+	\overline{\int_{I\times J}}f(x,y)\,\dd x\dd y,
+	\]
+	和
+	\[
+	\underline{\int_I}\phi(x)\,\dd x
+	\geq
+	\underline{\int_{I\times J}}f(x,y)\,\dd x\dd y.
+	\]
+	由于 \(f\) 在 \(I\times J\) 上黎曼可积, 乘积区间上的上积分与下积分都等于
+	\[
+	A=\int_{I\times J}f(x,y)\,\dd x\dd y.
+	\]
+	另一方面, 对每个 \(x\in I\), 都有 \(\phi(x)\leq \Phi(x)\), 因此
+	\[
+	\underline{\int_I}\phi(x)\,\dd x
+	\leq
+	\overline{\int_I}\phi(x)\,\dd x
+	\leq
+	\overline{\int_I}\Phi(x)\,\dd x.
+	\]
+	综合以上不等式, 得
+	\[
+	A
+	\leq
+	\underline{\int_I}\phi(x)\,\dd x
+	\leq
+	\overline{\int_I}\phi(x)\,\dd x
+	\leq
+	\overline{\int_I}\Phi(x)\,\dd x
+	\leq A.
+	\]
+	于是所有项都等于 \(A\). 特别地, \(\phi\) 黎曼可积且
+	\[
+	\int_I\phi(x)\,\dd x=A.
+	\]
+	又由于 \(\phi\leq \Phi\), 且 \(\overline{\int_I}\Phi\leq A\), 同时
+	\[
+	A=\int_I\phi(x)\,\dd x\leq \underline{\int_I}\Phi(x)\,\dd x,
+	\]
+	所以 \(\Phi\) 也黎曼可积, 且
+	\[
+	\int_I\Phi(x)\,\dd x=A.
+	\]
+	若每个截面函数 \(y\mapsto f(x,y)\) 均黎曼可积, 则
+	\[
+	\Phi(x)=\phi(x)=\int_J f(x,y)\,\dd y,
+	\]
+	从而得到最后的公式.
+\end{proof}
+
+\begin{rem}
+	定理 \ref{thm:riemann-integrable-iterated-upper-lower} 的重点在于: 乘积区间上的黎曼可积性并不保证每个截面都黎曼可积. 因此, 在黎曼积分理论中, 累次积分公式必须谨慎表述. 后面的勒贝格积分会把这件事处理得更自然.
+\end{rem}
+
+\subsection{一个说明截面不可积的例子}
+
+下面的例子说明: 即使 \(f\) 在 \(I\times J\) 上黎曼可积, 对某些固定的 \(x\), 内层积分
+\[
+\int_J f(x,y)\,\dd y
+\]
+仍然可能没有定义.
+
+\begin{exam}\label{exam:riemann-product-integrable-bad-sections}
+	令 \(I=J=[0,1]\). 定义
+	\[
+	g(x)=
+	\begin{cases}
+		\dfrac{1}{q}, & x=\dfrac{p}{q},\ p,q\text{互质},\ q>0,\\[0.6em]
+		0, & x\text{为无理数},
+	\end{cases}
+	\]
+	以及
+	\[
+	h(y)=
+	\begin{cases}
+		1, & y\text{为有理数},\\
+		0, & y\text{为无理数}.
+	\end{cases}
+	\]
+	则 \(g\) 是黎曼可积函数, 且
+	\[
+	\int_0^1 g(x)\,\dd x=0.
+	\]
+	另一方面,
+	\[
+	\overline{\int_0^1}h(y)\,\dd y=1,
+	\qquad
+	\underline{\int_0^1}h(y)\,\dd y=0.
+	\]
+	令
+	\[
+	f(x,y)=g(x)h(y).
+	\]
+	由于
+	\[
+	0\leq f(x,y)\leq g(x),
+	\]
+	而 \((x,y)\mapsto g(x)\) 在 \([0,1]\times[0,1]\) 上黎曼可积且积分为 \(0\), 所以 \(f\) 在 \(I\times J\) 上黎曼可积, 并且
+	\[
+	\int_{I\times J}f(x,y)\,\dd x\dd y=0.
+	\]
+	但是, 固定 \(x\) 后,
+	\[
+	\overline{\int_0^1}f(x,y)\,\dd y
+	-
+	\underline{\int_0^1}f(x,y)\,\dd y
+	=g(x).
+	\]
+	因此, 当 \(x\) 为有理数时, \(g(x)\neq 0\), 函数 \(y\mapsto f(x,y)\) 不是黎曼可积的. 于是
+	\[
+	\int_0^1 f(x,y)\,\dd y
+	\]
+	对这些 \(x\) 没有定义. 这说明在一般黎曼积分理论中, 公式
+	\[
+	\int_{I\times J}f(x,y)\,\dd x\dd y
+	=
+	\int_I\left(\int_J f(x,y)\,\dd y\right)\dd x
+	\]
+	未必有意义.
+\end{exam}
+
+\begin{proof}
+	这里只补充说明 \(g\) 的可积性. 显然 \(g\geq0\), 且任意子区间都含有无理点, 所以任意剖分对应的下和都是 \(0\), 从而
+	\[
+	\underline{\int_0^1}g(x)\,\dd x=0.
+	\]
+	给定 \(\varepsilon>0\). 取 \(Q\) 足够大, 使 \(1/Q<\varepsilon/2\). 在 \([0,1]\) 中, 分母 \(q\leq Q\) 的既约有理数只有有限多个. 用总长度小于 \(\varepsilon/2\) 的有限个小区间覆盖这些点. 在余下部分, 若 \(x=p/q\) 且 \(q>Q\), 则
+	\[
+	g(x)<\frac{1}{Q}<\frac{\varepsilon}{2};
+	\]
+	若 \(x\) 为无理数, 则 \(g(x)=0\). 因此可使上和任意小, 从而
+	\[
+	\overline{\int_0^1}g(x)\,\dd x=0.
+	\]
+	故 \(g\) 黎曼可积且积分为 \(0\).
+\end{proof}
+
+\begin{exer}\label{exer:product-function-upper-lower-equality}
+	设
+	\[
+	f(x,y)=g(x)h(y),
+	\]
+	其中 \(g\) 和 \(h\) 分别是 \(I\) 与 \(J\) 上的非负有界函数. 证明命题 \ref{prop:upper-lower-iterated-riemann} 中的两个不等式实际上都是等式.
+	
+	特别地, 若取 \(g=\chi_E\), \(h=\chi_F\), 其中 \(E\subset I\), \(F\subset J\), 则
+	\[
+	m^*(E\times F)=m^*(E)m^*(F),
+	\qquad
+	m_*(E\times F)=m_*(E)m_*(F).
+	\]
+	若 \(E\) 和 \(F\) 都是 Jordan 可测集, 则
+	\[
+	m(E\times F)=m(E)m(F).
+	\]
+\end{exer}
+
+\begin{exer}\label{exer:nonnegative-assumption-essential}
+	上一题中条件 \(g,h\geq0\) 是本质的. 令 \(I=[0,1]\), \(J=[0,2]\), 并定义
+	\[
+	g(x)=
+	\begin{cases}
+		1, & x\text{为有理数},\\
+		-x, & x\text{为无理数},
+	\end{cases}
+	\qquad
+	h(y)=
+	\begin{cases}
+		-1, & y\text{为有理数},\\
+		y, & y\text{为无理数}.
+	\end{cases}
+	\]
+	令
+	\[
+	f(x,y)=g(x)h(y)+c,
+	\]
+	其中 \(c\) 为任意常数. 证明下面三个上积分互不相等:
+	\[
+	\overline{\int_{I\times J}} f(x,y)\,\dd x\dd y,
+	\qquad
+	\overline{\int_I}\left(\overline{\int_J}f(x,y)\,\dd y\right)\dd x,
+	\qquad
+	\overline{\int_J}\left(\overline{\int_I}f(x,y)\,\dd x\right)\dd y.
+	\]
+\end{exer}
+
+\clearpage
+
+\section{变量替换}
+\label{sec:change-of-variables-riemann}
+
+在本节中, 我们把黎曼积分从有限区间上的函数推广到整个空间中具有紧致支集的连续函数, 然后讨论变量替换公式. 这种处理方式的好处是: 平移、线性变换和一般的微分同胚都可以放在统一的框架中讨论.
+
+记 \(\C_0(\R^d)\) 为 \(\R^d\) 上所有具有紧致支集的连续实值函数全体, 记 \(\C_0^+(\R^d)\) 为其中的非负函数全体. 若 \(f\in \C_0(\R^d)\), 取一个有限闭区间 \(I\subset\R^d\), 使得
+\[
+\operatorname{supp} f\subset I.
+\]
+定义
+\[
+\int_{\R^d}f(x)\,\dd x:=\int_I f(x)\,\dd x.
+\]
+这个定义与 \(I\) 的选择无关. 事实上, 若 \(I_1\) 与 \(I_2\) 都包含 \(\operatorname{supp} f\), 则在一个共同包含二者的区间上比较即可.
+
+由有限区间上黎曼积分的性质, 立即得到
+\begin{align}
+	\int_{\R^d}\bigl(af(x)+bg(x)\bigr)\,\dd x
+	&=a\int_{\R^d}f(x)\,\dd x
+	+b\int_{\R^d}g(x)\,\dd x,
+	\label{eq:c0-integral-linear}\\
+	\int_{\R^d}f(x)\,\dd x&\geq 0,
+	\qquad f\in\C_0^+(\R^d),
+	\label{eq:c0-integral-positive}
+\end{align}
+其中 \(a,b\in\R\), \(f,g\in\C_0(\R^d)\).
+
+\subsection{仿射变换与积分}
+
+设
+\[
+\phi:\R^d\longrightarrow \R^d
+\]
+为一个仿射变换, 即
+\[
+\phi(x)=Ax+x_0,
+\label{eq:affine-map}
+\]
+其中 \(x_0\in\R^d\), \(A\in \operatorname{GL}(d,\R)\). 若 \(f\) 是 \(\R^d\) 上的函数, 我们记
+\[
+\phi^*f=f\circ\phi,
+\qquad
+(\phi^*f)(x)=f(\phi(x)).
+\]
+显然, 若 \(f\in\C_0(\R^d)\), 则
+\[
+\phi^*f\in\C_0(\R^d).
+\]
+
+先考虑最简单的情形: \(A\) 为对角矩阵. 此时若 \(f\) 是一个区间的特征函数, 则 \(\phi^*f\) 仍是一个区间的特征函数. 例如, 若
+\[
+I=\{x:a_j\leq x_j\leq b_j,
+\quad j=1,\ldots,d\},
+\]
+且 \(f=\chi_I\), 而 \(A=\operatorname{diag}(\alpha_1,\ldots,\alpha_d)\), 则 \(\phi^{-1}(I)\) 仍是一个坐标区间. 由区间体积的定义可得
+\[
+\int_{\R^d}\phi^*f(x)\,\dd x
+=\frac{1}{|\det A|}\int_{\R^d}f(x)\,\dd x.
+\]
+也就是说
+\begin{equation}
+	|\det A|\int_{\R^d}\phi^*f(x)\,\dd x
+	=
+	\int_{\R^d}f(x)\,\dd x.
+	\label{eq:affine-change-diagonal}
+\end{equation}
+由线性性, 公式 \eqref{eq:affine-change-diagonal} 对所有分片常数函数成立. 再由连续函数的黎曼积分定义, 它也对所有 \(f\in\C_0(\R^d)\) 成立.
+
+特别地, 若
+\[
+f_h(x)=f(x-h),
+\qquad h\in\R^d,
+\]
+则由 \eqref{eq:affine-change-diagonal} 在 \(A=I_d\) 的情形得到平移不变性:
+\begin{equation}
+	\int_{\R^d}f_h(x)\,\dd x
+	=
+	\int_{\R^d}f(x)\,\dd x.
+	\label{eq:translation-invariance-riemann}
+\end{equation}
+
+下面说明: 线性性、正性和平移不变性几乎完全刻画了 \(\C_0(\R^d)\) 上的黎曼积分.
+
+\begin{thm}\label{thm:translation-invariant-positive-functional}
+	设 \(L:\C_0(\R^d)\to\R\) 是一个泛函, 满足:
+	\begin{enumerate}
+		\item \(L(af+bg)=aL(f)+bL(g)\), 对任意 \(f,g\in\C_0(\R^d)\) 与 \(a,b\in\R\) 成立;
+		\item 若 \(f\in\C_0^+(\R^d)\), 则 \(L(f)\geq 0\);
+		\item \(L(f_h)=L(f)\), 对任意 \(f\in\C_0(\R^d)\) 与 \(h\in\R^d\) 成立, 其中 \(f_h(x)=f(x-h)\).
+	\end{enumerate}
+	则存在常数 \(C\), 使得
+	\[
+	L(f)=C\int_{\R^d}f(x)\,\dd x,
+	\qquad f\in\C_0(\R^d).
+	\]
+\end{thm}
+
+\begin{proof}
+	先注意, 由正性和线性性可知, 若 \(f\leq g\), 则
+	\[
+	L(f)\leq L(g).
+	\]
+	因此 \(L\) 关于函数的逐点大小是单调的.
+	
+	进一步, 若一列函数 \(f_n\in\C_0(\R^d)\) 的支集都包含在同一个紧集 \(K\) 中, 且 \(f_n\) 一致收敛到 \(f\), 则
+	\[
+	L(f_n)\longrightarrow L(f).
+	\]
+	事实上, 取 \(g\in\C_0^+(\R^d)\), 使得 \(g\geq 1\) 于 \(K\) 上. 令
+	\[
+	\varepsilon_n=\sup_{x\in\R^d}|f_n(x)-f(x)|.
+	\]
+	则
+	\[
+	-\varepsilon_n g\leq f_n-f\leq \varepsilon_n g,
+	\]
+	从而
+	\[
+	|L(f_n)-L(f)|\leq \varepsilon_n L(g)\to0.
+	\]
+	
+	现在取 \(f,g\in\C_0(\R^d)\), 且假设它们的支集都包含于某个区间 \(I\) 中. 设
+	\[
+	I=\bigcup_{j=1}^{N}I_j
+	\]
+	是一个剖分, 各 \(I_j\) 没有公共内点. 在每个 \(I_j\) 中任取一点 \(h_j\), 并定义
+	\[
+	F(x)=\sum_{j=1}^{N}f(x-h_j)g(h_j)m(I_j).
+	\]
+	由平移不变性和线性性,
+	\begin{equation}
+		L(F)=L(f)\sum_{j=1}^{N}g(h_j)m(I_j).
+		\label{eq:functional-riemann-sum}
+	\end{equation}
+	当剖分充分细时, \(F(x)\) 逼近卷积函数
+	\[
+	(f*g)(x)=\int_{\R^d}f(x-h)g(h)\,\dd h.
+	\]
+	更具体地说, 因为 \((x,h)\mapsto f(x-h)g(h)\) 在一个紧集上一致连续, 所以当剖分细度趋于零时,
+	\[
+	F\longrightarrow f*g
+	\]
+	一致收敛. 令剖分细度趋于零, 由 \eqref{eq:functional-riemann-sum} 得
+	\begin{equation}
+		L(f*g)=L(f)\int_{\R^d}g(h)\,\dd h.
+		\label{eq:functional-convolution-1}
+	\end{equation}
+	
+	另一方面, 由变量替换 \(h=x-y\), 可知
+	\[
+	(f*g)(x)=(g*f)(x).
+	\]
+	将 \eqref{eq:functional-convolution-1} 中 \(f\) 与 \(g\) 对调, 得
+	\begin{equation}
+		L(f)\int_{\R^d}g(x)\,\dd x
+		=
+		L(g)\int_{\R^d}f(x)\,\dd x.
+		\label{eq:functional-convolution-2}
+	\end{equation}
+	固定一个 \(g\in\C_0(\R^d)\), 使得
+	\[
+	\int_{\R^d}g(x)\,\dd x\neq0.
+	\]
+	于是由 \eqref{eq:functional-convolution-2} 得
+	\[
+	L(f)=C\int_{\R^d}f(x)\,\dd x,
+	\qquad
+	C=\frac{L(g)}{\int_{\R^d}g(x)\,\dd x}.
+	\]
+\end{proof}
+
+\begin{rem}
+	定理 \ref{thm:translation-invariant-positive-functional} 的意思是: 除了一个常数因子以外, \(\R^d\) 上的黎曼积分正是 \(\C_0(\R^d)\) 上的平移不变正线性泛函. 这说明平移不变性不是积分的附属性质, 而是积分概念的核心结构之一.
+\end{rem}
+
+现在回到一般可逆线性变换. 对 \(A\in\operatorname{GL}(d,\R)\), 考虑泛函
+\[
+L_A(f)=\int_{\R^d}f(Ax)\,\dd x,
+\qquad f\in\C_0(\R^d).
+\]
+它显然是正线性的. 而且
+\[
+L_A(f_h)=\int_{\R^d}f(Ax-h)\,\dd x
+=\int_{\R^d}f(A(x-A^{-1}h))\,\dd x
+=L_A(f),
+\]
+所以它也平移不变. 由定理 \ref{thm:translation-invariant-positive-functional}, 存在只依赖于 \(A\) 的常数 \(C(A)\), 使得
+\begin{equation}
+	\int_{\R^d}f(Ax)\,\dd x
+	=C(A)\int_{\R^d}f(x)\,\dd x.
+	\label{eq:linear-transform-constant}
+\end{equation}
+
+若 \(A,B\in\operatorname{GL}(d,\R)\), 则
+\[
+\int_{\R^d}f(ABx)\,\dd x
+=C(B)\int_{\R^d}f(Ax)\,\dd x
+=C(A)C(B)\int_{\R^d}f(x)\,\dd x,
+\]
+故
+\begin{equation}
+	C(AB)=C(A)C(B).
+	\label{eq:C-multiplicative}
+\end{equation}
+若 \(A\) 是正交矩阵, 则 \(C(A)=1\). 事实上, 对形如
+\[
+f(x)=\psi(\|x\|)
+\]
+的非零函数, 有 \(f(Ax)=f(x)\), 从而由 \eqref{eq:linear-transform-constant} 得 \(C(A)=1\). 又前面已经知道, 当 \(D\) 为可逆对角矩阵时,
+\[
+C(D)=\frac{1}{|\det D|}.
+\]
+
+任意 \(A\in\operatorname{GL}(d,\R)\) 都可以写成
+\[
+A=O_1DO_2,
+\]
+其中 \(O_1,O_2\) 为正交矩阵, \(D\) 为可逆对角矩阵. 因此
+\[
+C(A)=C(O_1)C(D)C(O_2)=\frac{1}{|\det D|}
+=\frac{1}{|\det A|}.
+\]
+所以对任意 \(A\in\operatorname{GL}(d,\R)\), 有
+\begin{equation}
+	\int_{\R^d}f(Ax)\,\dd x
+	=\frac{1}{|\det A|}\int_{\R^d}f(x)\,\dd x.
+	\label{eq:linear-change-c0}
+\end{equation}
+更一般地, 对仿射变换 \(\phi(x)=Ax+x_0\), 有
+\begin{equation}
+	|\det A|\int_{\R^d}\phi^*f(x)\,\dd x
+	=
+	\int_{\R^d}f(x)\,\dd x,
+	\qquad f\in\C_0(\R^d).
+	\label{eq:affine-change-c0}
+\end{equation}
+
+\begin{rem}
+	上面用到的分解 \(A=O_1DO_2\) 可由如下事实得到: 正对称矩阵 \(A^TA\) 可以通过正交变换化为正对角矩阵. 即存在正交矩阵 \(O_2\) 和正对角矩阵 \(D^2\), 使得
+	\[
+	A^TA=O_2^TD^2O_2.
+	\]
+	令
+	\[
+	O_1=AO_2^TD^{-1},
+	\]
+	则 \(O_1\) 也是正交矩阵, 且 \(A=O_1DO_2\).
+\end{rem}
+
+公式 \eqref{eq:affine-change-c0} 也适用于具有紧致支集的有界函数的上积分和下积分. 因而, 若 \(u\) 为这类函数, 则 \(\phi^*u\) 黎曼可积当且仅当 \(u\) 黎曼可积. 特别地, 若 \(E\subset\R^d\) 是 Jordan 可测集, 则 \(A(E)\) 也是 Jordan 可测集, 且
+\begin{equation}
+	m(A(E))=|\det A|m(E).
+	\label{eq:det-volume-ratio}
+\end{equation}
+这严格解释了行列式作为体积比的意义.
+
+若 \(\det A=0\), 公式 \eqref{eq:det-volume-ratio} 对区间 \(E=I\) 仍然成立. 此时 \(A(I)\) 包含在某个超平面中, 通过正交变换可以把这个超平面化为坐标超平面 \(x_d=0\), 所以它的 Jordan 测度为零.
+
+\subsection{一个体积估计}
+
+下面的估计将在处理一般连续可微映射时用到.
+
+设矩阵范数定义为
+\[
+\|A\|=\max_{x\neq0}\frac{\|Ax\|}{\|x\|}.
+\]
+若 \(A\) 可逆, 由上面的正交--对角--正交分解可知
+\[
+|\det A|\leq \|A\|^d.
+\]
+所以线性像 \(A(I)\) 的体积不超过 \(\|A\|^d m(I)\). 若 \(I\) 是边长为 \(\delta\) 的立方体, 则 \(A(I)\) 被包含在一个边长为 \(\delta\sqrt d\|A\|\) 的立方体中.
+
+\begin{lem}\label{lem:linear-image-neighborhood-estimate}
+	设 \(A\) 为一个 \(d\times d\) 实矩阵, \(I\subset\R^d\) 是边长为 \(\delta\) 的立方体. 对 \(\eta>0\), 记
+	\[
+	A(I)_\eta=\{x\in\R^d:\operatorname{dist}(x,A(I))\leq \eta\}.
+	\]
+	则
+	\begin{equation}
+		m^*\bigl(A(I)_\eta\bigr)
+		\leq
+		\delta^d|\det A|
+		+4d\eta\bigl(2\eta+\delta\sqrt{d-1}\|A\|\bigr)^{d-1}.
+		\label{eq:linear-image-neighborhood-estimate}
+	\end{equation}
+\end{lem}
+
+\begin{proof}
+	若 \(\det A\neq0\), 则 \(A\) 把 \(I\) 的内点映为 \(A(I)\) 的内点, 因而 \(A(I)\) 的边界包含在 \(A(\partial I)\) 中. 若 \(\det A=0\), 则过 \(I\) 中每一点都有一条直线被 \(A\) 压缩为一点, 这条直线必与 \(\partial I\) 相交, 从而
+	\[
+	A(I)=A(\partial I).
+	\]
+	所以, 除去 \(A(I)\) 本身的体积 \(\delta^d|\det A|\), 只需估计 \(A(\partial I)\) 的 \(\eta\)-邻域.
+	
+	边界 \(\partial I\) 由 \(2d\) 个 \((d-1)\)-维面组成. 取其中一个面 \(I'\). 由正交不变性和平移不变性, 可设 \(A(I')\) 位于超平面 \(x_d=0\) 内. 又 \(A(I')\) 包含在该超平面内一个边长不超过 \(\delta\sqrt{d-1}\|A\|\) 的 \((d-1)\)-维立方体中.
+	
+	若点 \(x=(x',x_d)\) 到 \(A(I')\) 的距离不超过 \(\eta\), 则 \(|x_d|\leq \eta\), 且 \(x'\) 到 \(A(I')\) 在超平面中的距离不超过 \(\eta\). 因此这些点被包含在一个集合中, 其体积不超过
+	\[
+	2\eta\bigl(2\eta+\delta\sqrt{d-1}\|A\|\bigr)^{d-1}.
+	\]
+	将 \(2d\) 个面相加, 得到
+	\[
+	4d\eta\bigl(2\eta+\delta\sqrt{d-1}\|A\|\bigr)^{d-1}.
+	\]
+	再加上 \(A(I)\) 自身的体积上界 \(\delta^d|\det A|\), 即得 \eqref{eq:linear-image-neighborhood-estimate}.
+\end{proof}
+
+\subsection{连续可微映射下的体积估计}
+
+现在讨论一般的连续可微映射. 这里暂时不要求映射是一一的.
+
+\begin{thm}\label{thm:c1-map-upper-estimate}
+	设 \(\Omega_1,\Omega_2\subset\R^d\) 是开集, \(\phi:\Omega_1\to\Omega_2\) 是连续可微映射. 若 \(K\subset\Omega_1\) 为紧集, 则对任意 \(u\in\C_0^+(\Omega_2)\), 有
+	\begin{equation}
+		\overline{\int_{\R^d}}\chi_{\phi(K)}(y)u(y)\,\dd y
+		\leq
+		\int_K u(\phi(x))|\det\phi'(x)|\,\dd x.
+		\label{eq:c1-map-upper-estimate}
+	\end{equation}
+	这里
+	\[
+	\phi'(x)=\left(\frac{\partial\phi_j}{\partial x_k}(x)\right)_{j,k=1}^{d}.
+	\]
+\end{thm}
+
+\begin{proof}
+	给定 \(\varepsilon>0\). 因为 \(K\) 紧且 \(\phi'\) 连续, \(\phi'\) 在 \(K\) 上一致连续. 取足够细的立方体剖分 \(\{I_j\}\) 覆盖 \(K\), 并在每个与 \(K\) 相交的 \(I_j\) 中取一点 \(y_j\in K\cap I_j\). 当 \(x\in I_j\) 时, 由 Taylor 公式和一致连续性, 有
+	\[
+	\|\phi(x)-\phi(y_j)-\phi'(y_j)(x-y_j)\|
+	\leq \varepsilon\delta,
+	\]
+	其中 \(\delta\) 为立方体边长.
+	于是
+	\[
+	\phi(I_j\cap K)\subset \bigl(\phi(y_j)+\phi'(y_j)(I_j-y_j)\bigr)_{C\varepsilon\delta},
+	\]
+	这里常数 \(C\) 与维数和 \(K\) 附近的有界性有关.
+	
+	由引理 \ref{lem:linear-image-neighborhood-estimate}, 当 \(\delta\) 足够小时,
+	\[
+	m^*(\phi(I_j\cap K))
+	\leq
+	m(I_j)\bigl(|\det\phi'(y_j)|+C\varepsilon\bigr).
+	\]
+	在每个 \(I_j\) 中再取 \(y_j\) 使得 \(u(\phi(y_j))\) 接近该小块上的最大值, 则
+	\[
+	\overline{\int_{\R^d}}\chi_{\phi(K)}(y)u(y)\,\dd y
+	\leq
+	\sum_j m(I_j)\bigl(|\det\phi'(y_j)|+C\varepsilon\bigr)u(\phi(y_j)).
+	\]
+	令剖分细度趋于零, 再令 \(\varepsilon\to0\), 右端趋于
+	\[
+	\int_K u(\phi(x))|\det\phi'(x)|\,\dd x.
+	\]
+	于是得到 \eqref{eq:c1-map-upper-estimate}.
+\end{proof}
+
+\begin{cor}[Morse--Sard 型推论]
+	\label{cor:morse-sard-c1-riemann}
+	在定理 \ref{thm:c1-map-upper-estimate} 的假设下, 集合
+	\[
+	\bigl\{\phi(x):x\in K,\ \det\phi'(x)=0\bigr\}
+	\]
+	的 Jordan 外测度为零.
+\end{cor}
+
+\begin{proof}
+	记
+	\[
+	E=\{x\in K:\det\phi'(x)=0\}.
+	\]
+	对任意 \(n\), 令
+	\[
+	E_n=\{x\in K:|\det\phi'(x)|<1/n\}.
+	\]
+	则 \(E\subset E_n\). 由定理 \ref{thm:c1-map-upper-estimate}, 对任意 \(u\in\C_0^+(\Omega_2)\) 有
+	\[
+	\overline{\int_{\R^d}}\chi_{\phi(E)}u\,\dd y
+	\leq
+	\overline{\int_{\R^d}}\chi_{\phi(E_n)}u\,\dd y
+	\leq
+	\int_{E_n}u(\phi(x))|\det\phi'(x)|\,\dd x.
+	\]
+	由于 \(u\) 有界, 右端不超过
+	\[
+	\frac{\|u\|_\infty}{n}m(K).
+	\]
+	令 \(n\to\infty\), 得
+	\[
+	\overline{\int_{\R^d}}\chi_{\phi(E)}u\,\dd y=0.
+	\]
+	取 \(u\) 在 \(\phi(K)\) 的一个邻域上恒等于 \(1\), 即得 \(m^*(\phi(E))=0\).
+\end{proof}
+
+\begin{rem}
+	推论 \ref{cor:morse-sard-c1-riemann} 说明, 在一个紧集上, 雅可比行列式为零的点所产生的像集体积为零. 因此, 对绝大多数 \(y\in\Omega_2\), 若 \(y=\phi(x)\), 则在相应点处 \(\det\phi'(x)\neq0\), 可以使用反函数定理.
+\end{rem}
+
+\subsection{变量替换公式}
+
+现在可以证明多重积分的变量替换公式.
+
+\begin{thm}[变量替换公式]
+	\label{thm:change-of-variables-riemann}
+	设 \(\Omega_1,\Omega_2\subset\R^d\) 是开集, \(\phi:\Omega_1\to\Omega_2\) 是一一映射, 且 \(\phi\) 与 \(\phi^{-1}\) 都连续可微. 若 \(u\) 是 \(\Omega_2\) 上的有界函数, 且在 \(\Omega_2\) 的某个紧子集之外为零, 则 \(u\) 黎曼可积的充分必要条件是
+	\[
+	(\phi^*u)|\det\phi'|
+	\]
+	在 \(\Omega_1\) 上黎曼可积. 此时
+	\begin{equation}
+		\int_{\Omega_2}u(y)\,\dd y
+		=
+		\int_{\Omega_1}u(\phi(x))|\det\phi'(x)|\,\dd x.
+		\label{eq:change-of-variables-riemann}
+	\end{equation}
+\end{thm}
+
+\begin{proof}
+	先设 \(u\in\C_0^+(\Omega_2)\). 取紧集 \(K\subset\Omega_1\), 使得在 \(\phi(K)\) 之外有 \(u=0\). 对 \(\phi\) 应用定理 \ref{thm:c1-map-upper-estimate}, 得
+	\[
+	\int_{\Omega_2}u(y)\,\dd y
+	\leq
+	\int_{\Omega_1}u(\phi(x))|\det\phi'(x)|\,\dd x.
+	\]
+	再对 \(\phi^{-1}\) 应用同一结论, 并注意
+	\[
+	\det (\phi^{-1})'(\phi(x))\cdot \det\phi'(x)=1,
+	\]
+	得到反向不等式. 因而当 \(u\in\C_0^+(\Omega_2)\) 时, \eqref{eq:change-of-variables-riemann} 成立.
+	
+	由线性性, 公式对所有 \(u\in\C_0(\Omega_2)\) 成立. 进一步, 与前面由连续函数逼近黎曼可积函数的论证相同, 该公式对有界且具有紧致支集的函数的上积分和下积分都成立. 因此, \(u\) 黎曼可积当且仅当 \((\phi^*u)|\det\phi'|\) 黎曼可积, 并且此时公式 \eqref{eq:change-of-variables-riemann} 成立.
+\end{proof}
+
+\begin{rem}
+	公式 \eqref{eq:change-of-variables-riemann} 中的因子 \(|\det\phi'(x)|\) 可以理解为 \(\phi\) 在点 \(x\) 附近的局部体积伸缩率. 仿射情形中它退化为常数 \(|\det A|\), 而一般情形则是把每一点处的线性近似累积起来.
+\end{rem}
+
+\subsection{关于非紧支集函数的补充}
+
+若希望把本节的变量替换公式推广到不一定具有紧致支集的函数, 可以按如下方式扩展黎曼积分.
+
+设 \(\Omega\subset\R^d\) 为开集. 若 \(f\geq0\) 是 \(\Omega\) 上的连续函数, 定义
+\[
+\int_\Omega f(x)\,\dd x
+=
+\sup\left\{
+\int_\Omega g(x)\,\dd x:
+0\leq g\leq f,
+\ g\in\C_0(\Omega)
+\right\}.
+\]
+这个值允许为 \(+\infty\). 当 \(f\in\C_0(\Omega)\) 时, 这个定义与前面的定义一致.
+
+若 \(f\geq0\) 在 \(\Omega\) 上局部有界, 即在每个紧子集上有界, 则可以定义它的上积分为
+\[
+\overline{\int_\Omega}f(x)\,\dd x
+=
+\inf\left\{
+\int_\Omega g(x)\,\dd x:
+f\leq g,
+\ g\geq0,
+\ g\text{连续}
+\right\}.
+\]
+最后, 对一般局部有界函数 \(f\), 若对任意 \(\varepsilon>0\), 存在 \(g_\varepsilon\in\C_0(\Omega)\), 使得
+\[
+\overline{\int_\Omega}|f(x)-g_\varepsilon(x)|\,\dd x<\varepsilon,
+\]
+则称 \(f\) 在 \(\Omega\) 上黎曼可积, 并把
+\[
+\int_\Omega f(x)\,\dd x
+:=
+\lim_{\varepsilon\to0}
+\int_\Omega g_\varepsilon(x)\,\dd x
+\]
+作为它的积分. 这里极限与逼近函数的选取无关.
+
+在这个扩展意义下, 定理 \ref{thm:change-of-variables-riemann} 可以推广到任意局部有界且可积的函数. 本书下一章的重点是勒贝格积分, 因而这里不再展开这些细节.

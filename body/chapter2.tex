@@ -1,0 +1,3602 @@
+\chapter{勒贝格积分}
+
+\section{下方半连续正函数的积分}
+\label{sec:lsc-positive-integral}
+
+在第一章中, 我们已经把黎曼积分从有限区间推广到 \(\C_0(\R^d)\) 中的函数. 后面将经常只使用下面两个基本性质:
+\begin{align}
+	\int_{\R^d}\bigl(af(x)+bg(x)\bigr)\,\dd x
+	&=a\int_{\R^d}f(x)\,\dd x
+	+b\int_{\R^d}g(x)\,\dd x,
+	\label{eq:c0-linear-lebesgue-start}\\
+	\int_{\R^d}f(x)\,\dd x&\geq 0,
+	\qquad f\in \C_0^+(\R^d),
+	\label{eq:c0-positive-lebesgue-start}
+\end{align}
+其中 \(a,b\in\R\), \(f,g\in\C_0(\R^d)\). 由这两个性质又立即得到单调性: 若 \(f,g\in\C_0(\R^d)\) 且 \(f\leq g\), 则
+\[
+\int_{\R^d}f(x)\,\dd x
+\leq
+\int_{\R^d}g(x)\,\dd x.
+\]
+请注意, 到目前为止这里并没有用到黎曼积分关于坐标平移的不变性. 这一点在第三章讨论更一般的 Radon 测度时会变得很重要.
+
+本节的目标是把积分从 \(\C_0^+(\R^d)\) 扩展到更大的函数类. 这个函数类正是下方半连续的非负函数.
+
+\begin{defn}[下方半连续函数]
+	\label{def:lsc-function}
+	设 \(f\) 是定义在 \(\R^d\) 上、取值于 \((-\infty,+\infty]\) 的函数. 若对任意 \(x\in\R^d\) 和任意实数 \(a<f(x)\), 都存在 \(x\) 的一个邻域 \(U\), 使得
+	\[
+	f(y)>a,
+	\qquad y\in U,
+	\]
+	则称 \(f\) 为下方半连续函数. 若 \(-f\) 为下方半连续函数, 则称 \(f\) 为上方半连续函数.
+	
+	所有非负下方半连续函数构成的集合记作 \(\mathcal I^+\).
+\end{defn}
+
+这里允许函数取值 \(+\infty\). 以后采用通常约定:
+\[
+a<+\infty \quad (a\in\R),
+\]
+并且
+\[
+(+\infty)+a=+\infty,
+\qquad
+(+\infty)+(+\infty)=+\infty,
+\]
+其中 \(-\infty<a\leq+\infty\). 若 \(0<a<+\infty\), 则
+\[
+a\cdot(+\infty)=(+\infty)\cdot a=+\infty.
+\]
+允许 \(+\infty\) 作为函数值的一个好处是: 非空实数集总有上确界, 这样在处理极限和上确界时记号会更自然.
+
+由开集的定义可知, 定义 \ref{def:lsc-function} 等价于说: 对任意实数 \(a\), 集合
+\[
+\{x\in\R^d:f(x)>a\}
+\]
+都是开集.
+
+\begin{lem}\label{lem:lsc-stability}
+	设 \(\{f_\alpha\}_{\alpha\in A}\) 是一族下方半连续函数. 则
+	\[
+	\sup_{\alpha\in A}f_\alpha
+	\]
+	仍是下方半连续函数. 若 \(A\) 为有限集, 则
+	\[
+	\inf_{\alpha\in A}f_\alpha
+	\]
+	也是下方半连续函数.
+\end{lem}
+
+\begin{proof}
+	若
+	\[
+	F(x)=\sup_{\alpha\in A}f_\alpha(x),
+	\]
+	则
+	\[
+	\{x:F(x)>a\}
+	=\bigcup_{\alpha\in A}\{x:f_\alpha(x)>a\},
+	\]
+	右端是开集的并, 因而是开集. 所以 \(F\) 下方半连续.
+	
+	若 \(A=\{1,\ldots,N\}\), 且
+	\[
+	G(x)=\min_{1\leq j\leq N}f_j(x),
+	\]
+	则
+	\[
+	\{x:G(x)>a\}
+	=\bigcap_{j=1}^{N}\{x:f_j(x)>a\},
+	\]
+	右端是有限个开集的交, 因而是开集. 所以 \(G\) 下方半连续.
+\end{proof}
+
+下面的定理说明, \(\mathcal I^+\) 中函数正好可以看成 \(\C_0^+(\R^d)\) 中函数的非负级数和.
+
+\begin{thm}\label{thm:lsc-as-sum-c0-positive}
+	设 \(f:\R^d\to[0,+\infty]\). 则 \(f\in\mathcal I^+\) 的充分必要条件是存在 \(u_n\in\C_0^+(\R^d)\), 使得
+	\begin{equation}
+		f(x)=\sum_{n=1}^{\infty}u_n(x),
+		\qquad x\in\R^d.
+		\label{eq:lsc-sum-c0-positive}
+	\end{equation}
+\end{thm}
+
+\begin{proof}
+	若 \(f\) 具有表示式 \eqref{eq:lsc-sum-c0-positive}, 则它是部分和
+	\[
+	S_N(x)=\sum_{n=1}^{N}u_n(x)
+	\]
+	的上确界. 每个 \(S_N\) 连续, 因而下方半连续. 由引理 \ref{lem:lsc-stability}, \(f=\sup_N S_N\) 下方半连续.
+	
+	反过来, 设 \(f\in\mathcal I^+\). 我们先构造一列非负连续函数, 它单调上升到 \(f\). 对 \(n=1,2,\ldots\), 定义
+	\begin{equation}
+		s_n(x)=\min\left\{n,\inf_{z\in\R^d}\bigl(f(z)+n\|z-x\|\bigr)\right\}.
+		\label{eq:lsc-inf-convolution}
+	\end{equation}
+	这里加入外层的 \(\min\{n,\cdot\}\), 是为了允许 \(f\) 在某些点甚至所有点取值为 \(+\infty\). 显然
+	\[
+	0\leq s_n(x)\leq f(x),
+	\qquad x\in\R^d.
+	\]
+	并且 \(s_n\) 关于 \(n\) 单调递增.
+	
+	又因为对任意 \(x,y,z\in\R^d\), 有
+	\[
+	\bigl|\|z-x\|-\|z-y\|\bigr|\leq \|x-y\|,
+	\]
+	所以由 \eqref{eq:lsc-inf-convolution} 可得
+	\[
+	|s_n(x)-s_n(y)|\leq n\|x-y\|.
+	\]
+	因此 \(s_n\) 是连续函数.
+	
+	下面证明 \(s_n(x)\uparrow f(x)\). 若 \(f(x)<+\infty\), 任取 \(a<f(x)\). 由下方半连续性, 存在 \(x\) 的邻域 \(U\), 使得当 \(z\in U\) 时
+	\[
+	f(z)>a.
+	\]
+	另一方面, 当 \(z\notin U\) 时, \(\|z-x\|\) 有正下界. 因而当 \(n\) 足够大时,
+	\[
+	n\|z-x\|>a,
+	\qquad z\notin U.
+	\]
+	于是对所有 \(z\in\R^d\) 都有
+	\[
+	f(z)+n\|z-x\|>a,
+	\]
+	从而 \(s_n(x)>a\) 对充分大的 \(n\) 成立. 由 \(a<f(x)\) 的任意性, 得 \(s_n(x)\to f(x)\).
+	
+	若 \(f(x)=+\infty\), 对任意 \(A>0\), 同样由下方半连续性可取 \(x\) 的邻域 \(U\), 使得 \(f(z)>A\) 于 \(U\) 内. 再令 \(n\) 足够大, 使得 \(n>A\), 且 \(n\|z-x\|>A\) 对 \(z\notin U\) 成立. 于是 \(s_n(x)>A\). 因 \(A\) 任意, 得 \(s_n(x)\to+\infty=f(x)\).
+	
+	现在还要把这些连续函数改造成具有紧致支集的函数. 取一个函数 \(\theta\in\C_0^+(\R^d)\), 满足
+	\[
+	0\leq\theta\leq1,
+	\qquad
+	\theta(x)=1\quad (\|x\|\leq1),
+	\qquad
+	\theta(x)=0\quad (\|x\|\geq2),
+	\]
+	并且 \(\theta(x)\) 只依赖于 \(\|x\|\), 且随 \(\|x\|\) 单调下降. 令
+	\[
+	\widetilde S_n(x)=s_n(x)\theta\left(\frac{x}{n}\right).
+	\]
+	由于 \(s_n\geq0\) 关于 \(n\) 单调递增, 而 \(\theta(x/n)\) 也关于 \(n\) 单调递增并趋于 \(1\), 所以 \(\widetilde S_n\) 关于 \(n\) 单调递增, 且
+	\[
+	\widetilde S_n(x)\uparrow f(x).
+	\]
+	同时 \(\widetilde S_n\in\C_0^+(\R^d)\). 令 \(\widetilde S_0=0\), 并定义
+	\[
+	u_n=\widetilde S_n-\widetilde S_{n-1},
+	\qquad n=1,2,\ldots.
+	\]
+	则 \(u_n\in\C_0^+(\R^d)\), 且
+	\[
+	\sum_{n=1}^{\infty}u_n(x)
+	=
+	\lim_{N\to\infty}\widetilde S_N(x)
+	=f(x).
+	\]
+	定理得证.
+\end{proof}
+
+\begin{exer}
+	在 \(f\) 处处有限的情形, 证明 \eqref{eq:lsc-inf-convolution} 中不加外层截断时, 下确界可以实际达到. 即证明对每个 \(x\in\R^d\) 和每个 \(n\), 存在 \(z_x\in\R^d\), 使得
+	\[
+	\inf_{z\in\R^d}\bigl(f(z)+n\|z-x\|\bigr)
+	=f(z_x)+n\|z_x-x\|.
+	\]
+\end{exer}
+
+\subsection{下方半连续正函数的上积分}
+
+根据定理 \ref{thm:lsc-as-sum-c0-positive}, 若 \(f\in\mathcal I^+\), 它可以写成 \(\C_0^+(\R^d)\) 中函数的级数. 定理 \ref{thm:positive-series-riemann} 的证明稍加修改便说明: 对任意这样的表示式, 积分和都由 \(f\) 本身决定. 因此自然引入如下定义.
+
+\begin{defn}[上积分]
+	\label{def:upper-integral-lsc-positive}
+	设 \(f\in\mathcal I^+\). 定义 \(f\) 的上积分为
+	\begin{equation}
+		\int_{\R^d}^{*}f(x)\,\dd x
+		=
+		\sup\left\{
+		\int_{\R^d}g(x)\,\dd x:
+		g\in\C_0(\R^d),\ 0\leq g\leq f
+		\right\}.
+		\label{eq:upper-integral-lsc-positive}
+	\end{equation}
+\end{defn}
+
+上式右端允许取值为 \(+\infty\). 事实上, 只让 \(g\) 取遍 \(\C_0^+(\R^d)\) 即可. 以后会看到, 如果 \(f\in\mathcal I^+\) 且
+\[
+\int_{\R^d}^{*}f(x)\,\dd x<+\infty,
+\]
+那么 \(f\) 将是勒贝格可积的. 因此在这种情形下, 这个“上积分”实际上就是积分.
+
+下面的引理是处理上积分的基本工具.
+
+\begin{lem}\label{lem:directed-sup-integral}
+	设 \(M\subset \C_0^+(\R^d)\), 并假定 \(M\) 关于向上取大是有向的: 对任意 \(g_1,g_2\in M\), 存在 \(g\in M\), 使得
+	\[
+	g_1\leq g,
+	\qquad
+	g_2\leq g.
+	\]
+	令
+	\[
+	f(x)=\sup_{g\in M}g(x).
+	\]
+	则 \(f\in\mathcal I^+\), 且
+	\begin{equation}
+		\int_{\R^d}^{*}f(x)\,\dd x
+		=
+		\sup_{g\in M}\int_{\R^d}g(x)\,\dd x.
+		\label{eq:directed-sup-integral}
+	\end{equation}
+\end{lem}
+
+\begin{proof}
+	由引理 \ref{lem:lsc-stability}, \(f=\sup_{g\in M}g\) 下方半连续, 所以 \(f\in\mathcal I^+\). 公式 \eqref{eq:directed-sup-integral} 的右端显然不超过左端.
+	
+	为证反向不等式, 任取 \(h\in\C_0^+(\R^d)\), 且 \(h\leq f\). 再取 \(\eta\in\C_0^+(\R^d)\), 使得 \(\eta>0\) 于 \(\operatorname{supp}h\) 上. 给定 \(\varepsilon>0\). 对每个 \(x\in\operatorname{supp}h\), 因 \(h(x)\leq f(x)=\sup_{g\in M}g(x)\), 可取 \(g_x\in M\), 使得
+	\[
+	g_x(x)>h(x)-\varepsilon\eta(x).
+	\]
+	由连续性, 此不等式在 \(x\) 的某个邻域 \(U_x\) 内仍成立. 由于 \(\operatorname{supp}h\) 紧, 可取有限个点 \(x_1,\ldots,x_N\), 使得这些邻域覆盖 \(\operatorname{supp}h\). 根据 \(M\) 的有向性, 存在 \(G\in M\), 使得
+	\[
+	G\geq g_{x_j},
+	\qquad j=1,\ldots,N.
+	\]
+	于是
+	\[
+	G\geq h-\varepsilon\eta
+	\]
+	在 \(\operatorname{supp}h\) 上成立, 在 \(\operatorname{supp}h\) 外也有 \(h=0\), 因而
+	\[
+	\int_{\R^d}G(x)\,\dd x
+	\geq
+	\int_{\R^d}h(x)\,\dd x
+	-
+	\varepsilon\int_{\R^d}\eta(x)\,\dd x.
+	\]
+	令 \(\varepsilon\to0\), 得
+	\[
+	\sup_{g\in M}\int_{\R^d}g(x)\,\dd x
+	\geq
+	\int_{\R^d}h(x)\,\dd x.
+	\]
+	再对所有 \(0\leq h\in\C_0(\R^d)\), \(h\leq f\) 取上确界, 即得反向不等式.
+\end{proof}
+
+特别地, 若 \(f_n\in\C_0^+(\R^d)\) 且 \(f_n\uparrow f\), 则
+\[
+\int_{\R^d}^{*}f(x)\,\dd x
+=
+\lim_{n\to\infty}\int_{\R^d}f_n(x)\,\dd x.
+\]
+
+\begin{thm}\label{thm:basic-properties-upper-integral-lsc}
+	上积分具有如下性质:
+	\begin{enumerate}
+		\item 若 \(f,g\in\mathcal I^+\) 且 \(f\leq g\), 则
+		\[
+		\int_{\R^d}^{*}f(x)\,\dd x
+		\leq
+		\int_{\R^d}^{*}g(x)\,\dd x.
+		\]
+		\item 若 \(f\in\mathcal I^+\), \(a>0\), 则
+		\[
+		\int_{\R^d}^{*}af(x)\,\dd x
+		=
+		a\int_{\R^d}^{*}f(x)\,\dd x.
+		\]
+		\item 若 \(f_n\in\mathcal I^+\), 则 \(\sum_{n=1}^{\infty}f_n\in\mathcal I^+\), 且
+		\begin{equation}
+			\int_{\R^d}^{*}\left(\sum_{n=1}^{\infty}f_n(x)\right)\dd x
+			=
+			\sum_{n=1}^{\infty}\int_{\R^d}^{*}f_n(x)\,\dd x.
+			\label{eq:upper-integral-countable-additivity-lsc}
+		\end{equation}
+		\item 若 \(f_n\in\mathcal I^+\) 且 \(f_n\uparrow f\), 则 \(f\in\mathcal I^+\), 且
+		\begin{equation}
+			\int_{\R^d}^{*}f(x)\,\dd x
+			=
+			\lim_{n\to\infty}\int_{\R^d}^{*}f_n(x)\,\dd x.
+			\label{eq:upper-integral-monotone-lsc}
+		\end{equation}
+	\end{enumerate}
+\end{thm}
+
+\begin{proof}
+	前两个结论由定义立即得到. 下面证明 \eqref{eq:upper-integral-countable-additivity-lsc}. 对每个 \(n\), 由定理 \ref{thm:lsc-as-sum-c0-positive}, 可取 \(u_{n,k}\in\C_0^+(\R^d)\), 使得
+	\[
+	f_n=\sum_{k=1}^{\infty}u_{n,k},
+	\qquad
+	\int_{\R^d}^{*}f_n\,\dd x
+	=
+	\sum_{k=1}^{\infty}\int_{\R^d}u_{n,k}\,\dd x.
+	\]
+	将双重序列 \(\{u_{n,k}\}\) 重新排成一个单序列, 并应用引理 \ref{lem:directed-sup-integral}, 即得
+	\[
+	\int_{\R^d}^{*}\left(\sum_{n=1}^{\infty}f_n\right)\dd x
+	=
+	\sum_{n=1}^{\infty}\int_{\R^d}^{*}f_n\,\dd x.
+	\]
+	
+	最后, 若 \(f_n\uparrow f\), 则由引理 \ref{lem:lsc-stability} 可知 \(f\in\mathcal I^+\). 令
+	\[
+	M=\{g\in\C_0^+(\R^d):\text{存在某个 }n\text{ 使 }g\leq f_n\}.
+	\]
+	这个集合是向上有向的, 且 \(\sup_{g\in M}g=f\). 由引理 \ref{lem:directed-sup-integral} 得
+	\[
+	\int_{\R^d}^{*}f\,\dd x
+	=\sup_n\int_{\R^d}^{*}f_n\,\dd x,
+	\]
+	这正是 \eqref{eq:upper-integral-monotone-lsc}.
+\end{proof}
+
+\clearpage
+
+\section{正函数的上积分}
+\label{sec:upper-integral-positive-functions}
+
+上一节已经把积分定义到了下方半连续的非负函数类 \(\mathcal I^+\) 上. 现在我们进一步把上积分定义到任意非负函数上. 这一步与黎曼积分中用分片常数函数或连续函数去夹逼一个函数的思想相似; 不同的是, 这里用来控制函数的是 \(\mathcal I^+\) 中的函数.
+
+\begin{defn}[非负函数的上积分]
+	\label{def:upper-integral-positive-functions}
+	设 \(f:\R^d\to[0,+\infty]\) 为任意非负函数. 定义 \(f\) 的上积分为
+	\begin{equation}
+		\int_{\R^d}^{*}f(x)\,\dd x
+		=
+		\inf\left\{
+		\int_{\R^d}^{*}h(x)\,\dd x:
+		h\in\mathcal I^+,\ f\leq h
+		\right\}.
+		\label{eq:upper-integral-positive-functions}
+	\end{equation}
+	这里允许右端取值为 \(+\infty\).
+\end{defn}
+
+若 \(f\in\mathcal I^+\), 则定义 \ref{def:upper-integral-positive-functions} 与上一节的定义一致. 事实上, 因为可以取 \(h=f\), 由单调性立刻得到两种定义相同.
+
+还要注意, 若 \(f\geq0\) 有界且具有紧致支集, 则
+\begin{equation}
+	\int_{\R^d}^{*}f(x)\,\dd x
+	\leq
+	\overline{\int_{\R^d}}f(x)\,\dd x.
+	\label{eq:new-upper-integral-less-riemann-upper}
+\end{equation}
+这是因为黎曼上积分可以用连续函数从上方逼近来定义, 而连续函数属于 \(\mathcal I^+\). 因此, 现在的上积分是在更大的上方控制函数类中取下确界, 所以不会比黎曼上积分更大.
+
+下面的引理用于处理单调极限中出现``非递增上控制函数".
+
+\begin{lem}
+	\label{lem:upper-integral-max-majorant}
+	设 \(0\leq f_i\leq g_i\), \(g_i\in\mathcal I^+\), 且
+	\[
+	\int_{\R^d}^{*}g_i(x)\,\dd x
+	<
+	\int_{\R^d}^{*}f_i(x)\,\dd x+\varepsilon_i,
+	\qquad i=1,2.
+	\]
+	若 \(f_1\leq f_2\), 则
+	\[
+	\int_{\R^d}^{*}\max(g_1,g_2)(x)\,\dd x
+	<
+	\int_{\R^d}^{*}f_2(x)\,\dd x+
+	\varepsilon_1+
+	\varepsilon_2.
+	\]
+\end{lem}
+
+\begin{proof}
+	因为 \(g_1,g_2\in\mathcal I^+\), 所以 \(\max(g_1,g_2)\) 和 \(\min(g_1,g_2)\) 都属于 \(\mathcal I^+\). 又有恒等式
+	\[
+	\max(g_1,g_2)+\min(g_1,g_2)=g_1+g_2.
+	\]
+	由上一节关于 \(\mathcal I^+\) 中函数积分的可加性, 得
+	\begin{align*}
+		&\int_{\R^d}^{*}\max(g_1,g_2)(x)\,\dd x
+		+
+		\int_{\R^d}^{*}\min(g_1,g_2)(x)\,\dd x\\
+		&\qquad=
+		\int_{\R^d}^{*}g_1(x)\,\dd x
+		+
+		\int_{\R^d}^{*}g_2(x)\,\dd x\\
+		&\qquad<
+		\int_{\R^d}^{*}f_1(x)\,\dd x
+		+
+		\int_{\R^d}^{*}f_2(x)\,\dd x
+		+
+		\varepsilon_1+\varepsilon_2.
+	\end{align*}
+	由于 \(f_1\leq f_2\), 有
+	\[
+	f_1=\min(f_1,f_2)\leq \min(g_1,g_2).
+	\]
+	因此
+	\[
+	\int_{\R^d}^{*}f_1(x)\,\dd x
+	\leq
+	\int_{\R^d}^{*}\min(g_1,g_2)(x)\,\dd x.
+	\]
+	代入上式并消去公共项, 得
+	\[
+	\int_{\R^d}^{*}\max(g_1,g_2)(x)\,\dd x
+	<
+	\int_{\R^d}^{*}f_2(x)\,\dd x+
+	\varepsilon_1+
+	\varepsilon_2.
+	\]
+\end{proof}
+
+\begin{thm}[上积分的基本性质]
+	\label{thm:basic-properties-upper-integral-positive}
+	设 \(f,g,f_n\) 都是 \(\R^d\) 上的非负函数. 则有:
+	\begin{enumerate}
+		\item 若 \(0\leq f\leq g\), 则
+		\[
+		\int_{\R^d}^{*}f(x)\,\dd x
+		\leq
+		\int_{\R^d}^{*}g(x)\,\dd x.
+		\]
+		\item 若 \(a>0\), 则
+		\[
+		\int_{\R^d}^{*}af(x)\,\dd x
+		=
+		a\int_{\R^d}^{*}f(x)\,\dd x.
+		\]
+		\item 对任意非负函数列 \(\{f_n\}\), 有
+		\begin{equation}
+			\int_{\R^d}^{*}\left(\sum_{n=1}^{\infty}f_n(x)\right)\dd x
+			\leq
+			\sum_{n=1}^{\infty}\int_{\R^d}^{*}f_n(x)\,\dd x.
+			\label{eq:upper-integral-subadditivity-positive}
+		\end{equation}
+		\item 若 \(0\leq f_n\uparrow f\), 即 \(f_n(x)\uparrow f(x)\) 对每个 \(x\) 成立, 则
+		\begin{equation}
+			\int_{\R^d}^{*}f_n(x)\,\dd x
+			\longrightarrow
+			\int_{\R^d}^{*}f(x)\,\dd x.
+			\label{eq:upper-integral-monotone-positive}
+		\end{equation}
+	\end{enumerate}
+\end{thm}
+
+\begin{proof}
+	前两个结论由定义直接得到.
+	
+	下面证明 \eqref{eq:upper-integral-subadditivity-positive}. 给定 \(\varepsilon>0\). 对每个 \(n\), 由定义可取 \(g_n\in\mathcal I^+\), 使得
+	\[
+	f_n\leq g_n,
+	\qquad
+	\int_{\R^d}^{*}g_n(x)\,\dd x
+	<
+	\int_{\R^d}^{*}f_n(x)\,\dd x+\frac{\varepsilon}{2^n}.
+	\]
+	令
+	\[
+	g(x)=\sum_{n=1}^{\infty}g_n(x).
+	\]
+	由上一节的定理, \(\sum_{n=1}^{\infty}g_n\in\mathcal I^+\), 且
+	\[
+	\int_{\R^d}^{*}g(x)\,\dd x
+	=
+	\sum_{n=1}^{\infty}\int_{\R^d}^{*}g_n(x)\,\dd x.
+	\]
+	又因为
+	\[
+	\sum_{n=1}^{\infty}f_n(x)\leq g(x),
+	\]
+	由定义可得
+	\begin{align*}
+		\int_{\R^d}^{*}\left(\sum_{n=1}^{\infty}f_n(x)\right)\dd x
+		&\leq
+		\int_{\R^d}^{*}g(x)\,\dd x\\
+		&=
+		\sum_{n=1}^{\infty}\int_{\R^d}^{*}g_n(x)\,\dd x\\
+		&<
+		\sum_{n=1}^{\infty}\int_{\R^d}^{*}f_n(x)\,\dd x+\varepsilon.
+	\end{align*}
+	令 \(\varepsilon\to0\), 得到 \eqref{eq:upper-integral-subadditivity-positive}.
+	
+	最后证明单调收敛性质 \eqref{eq:upper-integral-monotone-positive}. 显然, 由 \(f_n\leq f\) 可知
+	\[
+	\int_{\R^d}^{*}f_n(x)\,\dd x
+	\leq
+	\int_{\R^d}^{*}f(x)\,\dd x,
+	\]
+	所以只需证明反向估计.
+	
+	给定 \(\varepsilon>0\). 对每个 \(n\), 取 \(g_n\in\mathcal I^+\), 使得
+	\[
+	f_n\leq g_n,
+	\qquad
+	\int_{\R^d}^{*}g_n(x)\,\dd x
+	<
+	\int_{\R^d}^{*}f_n(x)\,\dd x+\frac{\varepsilon}{2^n}.
+	\]
+	由于 \(g_n\) 不一定是递增的, 令
+	\[
+	G_n=\max(g_1,\ldots,g_n).
+	\]
+	反复应用引理 \ref{lem:upper-integral-max-majorant}, 得
+	\begin{equation}
+		\int_{\R^d}^{*}G_n(x)\,\dd x
+		<
+		\int_{\R^d}^{*}f_n(x)\,\dd x+
+		\varepsilon.
+		\label{eq:Gn-majorant-estimate}
+	\end{equation}
+	显然 \(G_n\in\mathcal I^+\), 且 \(G_n\uparrow G\in\mathcal I^+\). 又因为 \(f_n\leq G_n\), 对每个 \(x\) 令 \(n\to\infty\), 得
+	\[
+	f(x)\leq G(x).
+	\]
+	于是由定义和上一节的单调收敛性质,
+	\begin{align*}
+		\int_{\R^d}^{*}f(x)\,\dd x
+		&\leq
+		\int_{\R^d}^{*}G(x)\,\dd x\\
+		&=
+		\lim_{n\to\infty}
+		\int_{\R^d}^{*}G_n(x)\,\dd x\\
+		&\leq
+		\lim_{n\to\infty}
+		\int_{\R^d}^{*}f_n(x)\,\dd x+
+		\varepsilon.
+	\end{align*}
+	因为 \(\varepsilon>0\) 任意, 得
+	\[
+	\int_{\R^d}^{*}f(x)\,\dd x
+	\leq
+	\lim_{n\to\infty}
+	\int_{\R^d}^{*}f_n(x)\,\dd x.
+	\]
+	反向不等式已经由单调性得到. 所以 \eqref{eq:upper-integral-monotone-positive} 成立.
+\end{proof}
+
+\begin{rem}
+	不等式 \eqref{eq:upper-integral-subadditivity-positive} 和单调收敛性质 \eqref{eq:upper-integral-monotone-positive} 是黎曼上积分所不具备的. 这正是本节引入的上积分比黎曼上积分更适合处理极限过程的地方.
+\end{rem}
+
+\clearpage
+
+\section{零集合和零函数}
+\label{sec:null-sets-and-null-functions}
+
+在本节中, 我们研究这样一个问题: 在哪些点集上改变一个函数的取值, 不会改变它的积分? 这将引出零函数、零集合以及``几乎处处''这些基本概念.
+
+\begin{defn}[零函数]
+	\label{def:null-function}
+	设 \(f\geq0\). 若
+	\[
+	\int_{\R^d}^{*}f(x)\,\dd x=0,
+	\]
+	则称 \(f\) 为零函数.
+\end{defn}
+
+由上积分的单调性与可数次可加性, 立刻得到下面的结论.
+
+\begin{lem}\label{lem:null-function-basic}
+	若 \(0\leq f\leq g\), 且 \(g\) 是零函数, 则 \(f\) 也是零函数. 若 \(f_1,f_2,\ldots\) 都是零函数, 则
+	\[
+	\sum_{n=1}^{\infty}f_n
+	\]
+	也是零函数.
+\end{lem}
+
+\begin{proof}
+	第一部分由单调性直接得到. 第二部分由上积分的次可加性得到:
+	\[
+	\int_{\R^d}^{*}\left(\sum_{n=1}^{\infty}f_n(x)\right)\dd x
+	\leq
+	\sum_{n=1}^{\infty}\int_{\R^d}^{*}f_n(x)\,\dd x=0.
+	\]
+	因此 \(\sum_{n=1}^{\infty}f_n\) 是零函数.
+\end{proof}
+
+\begin{thm}\label{thm:null-function-supported-on-null-function}
+	设 \(f,g\geq0\), 且 \(g\) 是零函数. 若
+	\[
+	f(x)\neq0\quad \Longrightarrow\quad g(x)\neq0,
+	\]
+	则 \(f\) 是零函数.
+\end{thm}
+
+\begin{proof}
+	由引理 \ref{lem:null-function-basic}, 对每个 \(n\), 函数 \(ng\) 是零函数. 因而
+	\[
+	G(x)=\sum_{n=1}^{\infty}g(x)
+	\]
+	也是零函数. 但当 \(g(x)>0\) 时, 有 \(G(x)=+\infty\); 当 \(g(x)=0\) 时, 有 \(G(x)=0\). 由假设, 若 \(f(x)\neq0\), 则 \(g(x)\neq0\), 从而 \(G(x)=+\infty\geq f(x)\); 若 \(f(x)=0\), 则当然有 \(G(x)\geq f(x)\). 因此
+	\[
+	0\leq f\leq G.
+	\]
+	再由引理 \ref{lem:null-function-basic}, \(f\) 是零函数.
+\end{proof}
+
+定理 \ref{thm:null-function-supported-on-null-function} 表明, 判断一个非负函数是否是零函数, 只需要看它在哪些点上不为零. 因此自然引入零集合的概念.
+
+\begin{defn}[零集合]
+	\label{def:null-set}
+	设 \(E\subset\R^d\). 若 \(E\) 的特征函数 \(\chi_E\) 是零函数, 即
+	\[
+	\int_{\R^d}^{*}\chi_E(x)\,\dd x=0,
+	\]
+	则称 \(E\) 为零集合.
+\end{defn}
+
+\begin{thm}\label{thm:null-set-basic}
+	零集合具有如下性质:
+	\begin{enumerate}
+		\item 零集合的任意子集仍是零集合;
+		\item 可数多个零集合的并仍是零集合;
+		\item 非负函数 \(f\) 是零函数的充分必要条件是集合
+		\[
+		\{x:f(x)\neq0\}
+		\]
+		是零集合.
+	\end{enumerate}
+\end{thm}
+
+\begin{proof}
+	若 \(A\subset E\) 且 \(E\) 是零集合, 则
+	\[
+	0\leq \chi_A\leq \chi_E,
+	\]
+	所以 \(A\) 是零集合.
+	
+	若 \(E_n\) 都是零集合, 则
+	\[
+	\chi_{\bigcup_{n=1}^{\infty}E_n}
+	\leq
+	\sum_{n=1}^{\infty}\chi_{E_n}.
+	\]
+	右端是零函数, 故 \(\bigcup_{n=1}^{\infty}E_n\) 是零集合.
+	
+	最后, 若 \(f\) 是零函数, 令
+	\[
+	E=\{x:f(x)\neq0\}.
+	\]
+	由定理 \ref{thm:null-function-supported-on-null-function}, 取 \(g=f\) 可知 \(\chi_E\) 是零函数, 所以 \(E\) 是零集合. 反过来, 若 \(E=\{x:f(x)\neq0\}\) 是零集合, 则
+	\[
+	f(x)\neq0\quad\Longrightarrow\quad \chi_E(x)\neq0.
+	\]
+	由定理 \ref{thm:null-function-supported-on-null-function}, \(f\) 是零函数.
+\end{proof}
+
+\begin{rem}
+	每个点都是零集合. 因而, 由定理 \ref{thm:null-set-basic}, 任意可数集合都是零集合.
+	
+	若一个有界集合的 Jordan 外测度为零, 则它也是这里意义下的零集合. 但是反过来不一定成立: 有界可数集一定是零集合, 但它的 Jordan 外测度可以为正. 例如 \([0,1]\cap\mathbb Q\) 是可数集, 因而是零集合; 但它在任意非空子区间中都稠密, 其 Jordan 外测度等于 \(1\).
+\end{rem}
+
+\begin{exer}\label{exer:compact-null-set-jordan-measure-zero}
+	设 \(K\subset\R^d\) 是紧零集. 证明 \(K\) 的 Jordan 外测度为零.
+	
+	提示: 若 \(g_n\in\C_0^+(\R^d)\), \(g_n\downarrow g\), 且 \(g\geq\chi_K\), 证明当 \(n\) 充分大时, 有
+	\[
+	g_n\geq (1-\varepsilon)\chi_K.
+	\]
+\end{exer}
+
+由上面的练习可以得到一个熟悉的结论: 区间 \([0,1]\) 不可数. 否则 \([0,1]\) 作为可数集将是零集合; 又因为它是紧集, 按练习应有 Jordan 测度为零, 这与 \(m([0,1])=1\) 矛盾.
+
+\begin{defn}[几乎处处]
+	\label{def:almost-everywhere}
+	设 \(P(x)\) 是一个依赖于 \(x\in\R^d\) 的命题. 若 \(P(x)\) 在除去某个零集合以外的所有点上成立, 则称 \(P(x)\) 几乎处处成立, 简记为 a.e.
+\end{defn}
+
+用这个术语, 定理 \ref{thm:null-set-basic} 的第三部分可以表述为: 一个非负函数是零函数, 当且仅当它几乎处处等于零.
+
+\begin{thm}\label{thm:ae-equal-same-upper-integral}
+	设 \(f,g\geq0\). 若 \(f=g\) 几乎处处成立, 则
+	\[
+	\int_{\R^d}^{*}f(x)\,\dd x
+	=
+	\int_{\R^d}^{*}g(x)\,\dd x.
+	\]
+\end{thm}
+
+\begin{proof}
+	令
+	\[
+	h=\min(f,g),
+	\qquad
+	H=\max(f,g).
+	\]
+	则 \(H-h\) 只可能在 \(f\neq g\) 的点上不为零, 而集合 \(\{x:f(x)\neq g(x)\}\) 是零集合. 因此 \(H-h\) 是零函数. 由上积分的次可加性,
+	\[
+	\int_{\R^d}^{*}H\,\dd x
+	\leq
+	\int_{\R^d}^{*}h\,\dd x
+	+
+	\int_{\R^d}^{*}(H-h)\,\dd x
+	=
+	\int_{\R^d}^{*}h\,\dd x.
+	\]
+	又因 \(h\leq H\), 单调性给出反向不等式, 故
+	\[
+	\int_{\R^d}^{*}H\,\dd x
+	=
+	\int_{\R^d}^{*}h\,\dd x.
+	\]
+	由于
+	\[
+	h\leq f,g\leq H,
+	\]
+	再次利用单调性, 得
+	\[
+	\int_{\R^d}^{*}f\,\dd x
+	=
+	\int_{\R^d}^{*}g\,\dd x.
+	\]
+\end{proof}
+
+\begin{thm}\label{thm:finite-upper-integral-finite-ae}
+	若 \(f\geq0\), 且
+	\[
+	\int_{\R^d}^{*}f(x)\,\dd x<+\infty,
+	\]
+	则 \(f\) 几乎处处有限.
+\end{thm}
+
+\begin{proof}
+	令
+	\[
+	E=\{x:f(x)=+\infty\}.
+	\]
+	对任意正整数 \(n\), 有
+	\[
+	n\chi_E\leq f.
+	\]
+	由单调性和齐次性,
+	\[
+	n\int_{\R^d}^{*}\chi_E(x)\,\dd x
+	=
+	\int_{\R^d}^{*}n\chi_E(x)\,\dd x
+	\leq
+	\int_{\R^d}^{*}f(x)\,\dd x<+\infty.
+	\]
+	令 \(n\to\infty\), 只能有
+	\[
+	\int_{\R^d}^{*}\chi_E(x)\,\dd x=0.
+	\]
+	因此 \(E\) 是零集合. 即 \(f<+\infty\) 几乎处处成立.
+\end{proof}
+
+结合定理 \ref{thm:basic-properties-upper-integral-positive} 的次可加性, 可以得到下面的重要推论.
+
+\begin{cor}\label{cor:summable-integrals-finite-ae}
+	设 \(f_n\geq0\). 若
+	\[
+	\sum_{n=1}^{\infty}\int_{\R^d}^{*}f_n(x)\,\dd x<+\infty,
+	\]
+	则级数
+	\[
+	\sum_{n=1}^{\infty}f_n(x)
+	\]
+	在 \(\R^d\) 上几乎处处收敛到有限值.
+\end{cor}
+
+\begin{proof}
+	由上积分的次可加性,
+	\[
+	\int_{\R^d}^{*}\left(\sum_{n=1}^{\infty}f_n(x)\right)\dd x
+	\leq
+	\sum_{n=1}^{\infty}\int_{\R^d}^{*}f_n(x)\,\dd x<+\infty.
+	\]
+	于是由定理 \ref{thm:finite-upper-integral-finite-ae}, 函数
+	\[
+	F(x)=\sum_{n=1}^{\infty}f_n(x)
+	\]
+	几乎处处有限. 这正说明该非负级数几乎处处收敛.
+\end{proof}
+
+\clearpage
+
+\section{勒贝格积分的定义及其重要性质}
+\label{sec:definition-properties-lebesgue-integral}
+
+前面已经为任意非负函数定义了上积分. 现在我们开始定义真正的勒贝格可积函数. 思路与第一章中黎曼积分的定义相似: 若一个函数能够被紧支连续函数在上积分意义下任意逼近, 就把它称为可积函数.
+
+\begin{defn}[勒贝格可积函数]
+	\label{def:lebesgue-integrable-function}
+	设 \(f\) 是取值于 \([-\infty,+\infty]\) 的函数. 若对任意 \(\varepsilon>0\), 存在 \(g\in\C_0(\R^d)\), 使得
+	\begin{equation}
+		\int_{\R^d}^{*}|f(x)-g(x)|\,\dd x<\varepsilon,
+		\label{eq:lebesgue-integrable-definition}
+	\end{equation}
+	则称 \(f\) 在勒贝格意义下可积, 简称 \(f\) 可积.
+\end{defn}
+
+等价地, \(f\) 可积当且仅当对任意 \(\varepsilon>0\), 存在 \(g\in\C_0(\R^d)\) 与 \(h\in\mathcal I^+\), 使得
+\[
+|f-g|\leq h,
+\qquad
+\int_{\R^d}^{*}h(x)\,\dd x<\varepsilon.
+\]
+事实上, 若 \(\int^*|f-g|<\varepsilon\), 由上积分的定义可取 \(h\in\mathcal I^+\) 控制 \(|f-g|\), 并使 \(\int^*h\) 任意接近 \(\int^*|f-g|\); 反向则由单调性立即得到.
+
+\begin{thm}[可积函数的稳定性准则]
+	\label{thm:integrable-approx-by-integrable}
+	设 \(f\) 为一个函数. 若对任意 \(\varepsilon>0\), 都存在一个可积函数 \(g\), 使得
+	\[
+	\int_{\R^d}^{*}|f(x)-g(x)|\,\dd x<\varepsilon,
+	\]
+	则 \(f\) 可积.
+\end{thm}
+
+\begin{proof}
+	给定 \(\varepsilon>0\). 由假设可取可积函数 \(g\), 使得
+	\[
+	\int_{\R^d}^{*}|f-g|\,\dd x<\frac{\varepsilon}{2}.
+	\]
+	又因为 \(g\) 可积, 可取 \(u\in\C_0(\R^d)\), 使得
+	\[
+	\int_{\R^d}^{*}|g-u|\,\dd x<\frac{\varepsilon}{2}.
+	\]
+	由上积分的次可加性,
+	\[
+	\int_{\R^d}^{*}|f-u|\,\dd x
+	\leq
+	\int_{\R^d}^{*}|f-g|\,\dd x
+	+
+	\int_{\R^d}^{*}|g-u|\,\dd x
+	<\varepsilon.
+	\]
+	因此 \(f\) 可积.
+\end{proof}
+
+\begin{thm}\label{thm:lsc-positive-integrable-iff-finite-upper-integral}
+	设 \(f\in\mathcal I^+\). 则 \(f\) 可积的充分必要条件是
+	\[
+	\int_{\R^d}^{*}f(x)\,\dd x<+\infty.
+	\]
+\end{thm}
+
+\begin{proof}
+	若 \(f\) 可积, 则存在 \(g\in\C_0(\R^d)\), 使得 \(\int^*|f-g|<1\). 于是
+	\[
+	f\leq |f-g|+|g|,
+	\]
+	故由次可加性得
+	\[
+	\int^*f\leq \int^*|f-g|+\int |g|<+\infty.
+	\]
+	
+	反过来, 若 \(f\in\mathcal I^+\) 且 \(\int^*f<+\infty\), 则由上一节下方半连续正函数的逼近定理, 可取 \(g_n\in\C_0^+(\R^d)\), 使得
+	\[
+	0\leq g_n\uparrow f,
+	\qquad
+	\int_{\R^d}g_n(x)\,\dd x\uparrow \int_{\R^d}^{*}f(x)\,\dd x.
+	\]
+	于是
+	\[
+	\int_{\R^d}^{*}(f-g_n)(x)\,\dd x
+	=
+	\int_{\R^d}^{*}f(x)\,\dd x-
+	\int_{\R^d}g_n(x)\,\dd x\longrightarrow0.
+	\]
+	因此 \(f\) 可由 \(\C_0\) 中函数按定义 \ref{def:lebesgue-integrable-function} 逼近, 从而可积.
+\end{proof}
+
+现在设 \(f\) 可积. 由定义, 可取 \(g_n\in\C_0(\R^d)\), 使得
+\begin{equation}
+	\int_{\R^d}^{*}|f(x)-g_n(x)|\,\dd x\longrightarrow0.
+	\label{eq:gn-approx-f-l1}
+\end{equation}
+则 \(\int g_n\) 是一个 Cauchy 数列. 事实上,
+\[
+\left|\int_{\R^d}g_n\,\dd x-
+\int_{\R^d}g_m\,\dd x\right|
+\leq
+\int_{\R^d}^{*}|g_n-g_m|\,\dd x
+\leq
+\int_{\R^d}^{*}|g_n-f|\,\dd x+
+\int_{\R^d}^{*}|f-g_m|\,\dd x.
+\]
+由 \eqref{eq:gn-approx-f-l1}, 右端趋于 \(0\). 因此 \(\int g_n\) 收敛.
+
+如果 \(h_n\in\C_0(\R^d)\) 是另一列满足 \(\int^*|f-h_n|\to0\) 的函数, 则
+\[
+\left|\int_{\R^d}g_n\,\dd x-
+\int_{\R^d}h_n\,\dd x\right|
+\leq
+\int_{\R^d}^{*}|g_n-f|\,\dd x+
+\int_{\R^d}^{*}|f-h_n|\,\dd x\to0.
+\]
+所以极限值与逼近列的选取无关.
+
+\begin{defn}[勒贝格积分]
+	\label{def:lebesgue-integral}
+	设 \(f\) 可积, 并取 \(g_n\in\C_0(\R^d)\), 使得
+	\[
+	\int_{\R^d}^{*}|f-g_n|\,\dd x\to0.
+	\]
+	定义
+	\[
+	\int_{\R^d}f(x)\,\dd x
+	=
+	\lim_{n\to\infty}\int_{\R^d}g_n(x)\,\dd x.
+	\]
+\end{defn}
+
+由第二章第三节的结果, 在一个零集合上改变函数值, 不影响函数的可积性, 也不影响积分值. 因此, 若两个可积函数几乎处处相等, 便把它们看成同一个 \(L^1\) 元素. 所有这些等价类组成的集合记作 \(L^1(\R^d)\), 简记为 \(L^1\).
+
+\begin{exer}\label{exer:l1-integral-equals-upper-for-nonnegative}
+	设 \(f\in L^1\) 且 \(f\geq0\). 证明
+	\[
+	\int_{\R^d}f(x)\,\dd x
+	=
+	\int_{\R^d}^{*}f(x)\,\dd x.
+	\]
+\end{exer}
+
+\begin{thm}[线性、格运算与单调性]
+	\label{thm:basic-properties-l1}
+	若 \(f,g\in L^1\), \(a,b\in\R\), 则 \(af+bg\in L^1\), 并且
+	\begin{equation}
+		\int_{\R^d}(af+bg)(x)\,\dd x
+		=a\int_{\R^d}f(x)\,\dd x
+		+b\int_{\R^d}g(x)\,\dd x.
+		\label{eq:l1-linearity}
+	\end{equation}
+	此外,
+	\[
+	\max(f,g),\ \min(f,g),\ |f|\in L^1.
+	\]
+	若 \(f\leq g\) 几乎处处成立, 则
+	\begin{equation}
+		\int_{\R^d}f(x)\,\dd x
+		\leq
+		\int_{\R^d}g(x)\,\dd x.
+		\label{eq:l1-monotonicity}
+	\end{equation}
+\end{thm}
+
+\begin{proof}
+	线性性由定义直接得到. 例如, 取 \(f_n,g_n\in\C_0(\R^d)\), 使得
+	\[
+	\int^*|f-f_n|\to0,
+	\qquad
+	\int^*|g-g_n|\to0.
+	\]
+	则 \(af_n+bg_n\in\C_0(\R^d)\), 且由次可加性,
+	\[
+	\int^*|(af+bg)-(af_n+bg_n)|
+	\leq |a|\int^*|f-f_n|+|b|\int^*|g-g_n|\to0.
+	\]
+	于是 \(af+bg\in L^1\), 并且积分线性性由 \(\C_0\) 中函数积分的线性性传递而来.
+	
+	下面证明 \(\max(f,g)\in L^1\). 对 \(f_0,g_0\in\C_0(\R^d)\), 有
+	\[
+	\bigl|\max(f,g)-\max(f_0,g_0)\bigr|
+	\leq |f-f_0|+|g-g_0|.
+	\]
+	因此若 \(f_0\) 与 \(g_0\) 分别逼近 \(f\) 与 \(g\), 则 \(\max(f_0,g_0)\in\C_0(\R^d)\) 逼近 \(\max(f,g)\). 所以 \(\max(f,g)\in L^1\). 类似可证 \(\min(f,g)\in L^1\). 特别地,
+	\[
+	|f|=\max(f,-f)\in L^1.
+	\]
+	
+	若 \(f\leq g\) 几乎处处成立, 则 \(g-f\geq0\) 且 \(g-f\in L^1\). 由练习 \ref{exer:l1-integral-equals-upper-for-nonnegative},
+	\[
+	\int_{\R^d}(g-f)\,\dd x\geq0.
+	\]
+	结合线性性即得 \eqref{eq:l1-monotonicity}.
+\end{proof}
+
+\begin{exer}\label{exer:l1-translation-continuity}
+	设 \(f\in L^1(\R^d)\). 证明
+	\[
+	h\longmapsto \int_{\R^d}|f(x+h)-f(x)|\,\dd x
+	\]
+	是 \(h\) 的连续函数, 并且当 \(h\to0\) 时, 上式趋于 \(0\).
+\end{exer}
+
+\begin{exer}\label{exer:linearity-characterizes-l1-positive}
+	设 \(f\geq0\), 且 \(\int^* f<+\infty\). 证明等式
+	\[
+	\int_{\R^d}^{*}(f+g)(x)\,\dd x
+	=
+	\int_{\R^d}^{*}f(x)\,\dd x+
+	\int_{\R^d}^{*}g(x)\,\dd x
+	\]
+	对任意 \(g\geq0\) 成立的充分必要条件是 \(f\in L^1\).
+\end{exer}
+
+\subsection{单调收敛定理}
+
+\begin{thm}[Beppo Levi 单调收敛定理]
+	\label{thm:beppo-levi-l1}
+	设 \(f_n\in L^1\), 且
+	\[
+	f_1\leq f_2\leq\cdots,
+	\qquad
+	f_n(x)\uparrow f(x)
+	\]
+	几乎处处成立. 若
+	\begin{equation}
+		\lim_{n\to\infty}\int_{\R^d}f_n(x)\,\dd x<+\infty,
+		\label{eq:beppo-levi-finite-limit}
+	\end{equation}
+	则 \(f\in L^1\), 且
+	\begin{equation}
+		\int_{\R^d}f(x)\,\dd x
+		=
+		\lim_{n\to\infty}\int_{\R^d}f_n(x)\,\dd x.
+		\label{eq:beppo-levi-conclusion}
+	\end{equation}
+	反之, 若 \(f\in L^1\), 则右端极限有限, 并且 \eqref{eq:beppo-levi-conclusion} 成立.
+\end{thm}
+
+\begin{proof}
+	由于 \(f_n\leq f_{n+1}\), 数列 \(\int f_n\) 单调递增. 下面先从 \eqref{eq:beppo-levi-finite-limit} 出发证明主要部分.
+	
+	令
+	\[
+	A=\lim_{n\to\infty}\int_{\R^d}f_n(x)\,\dd x<+\infty.
+	\]
+	固定 \(m\). 因为 \(f_n-f_m\uparrow f-f_m\), 且 \(f_n-f_m\geq0\), 上积分的单调收敛性质给出
+	\[
+	\int_{\R^d}^{*}(f-f_m)(x)\,\dd x
+	=
+	\lim_{n\to\infty}\int_{\R^d}(f_n-f_m)(x)\,\dd x
+	=
+	A-
+	\int_{\R^d}f_m(x)\,\dd x.
+	\]
+	右端当 \(m\to\infty\) 时趋于 \(0\). 由定理 \ref{thm:integrable-approx-by-integrable}, 以 \(f_m\) 逼近 \(f\), 得 \(f\in L^1\). 又
+	\[
+	\int_{\R^d}|f-f_m|\,\dd x
+	=
+	\int_{\R^d}^{*}(f-f_m)\,\dd x\to0,
+	\]
+	所以根据积分定义,
+	\[
+	\int_{\R^d}f(x)\,\dd x
+	=
+	\lim_{m\to\infty}\int_{\R^d}f_m(x)\,\dd x.
+	\]
+	
+	反过来, 若 \(f\in L^1\), 则 \(f_n\leq f\), 从而 \(\int f_n\leq \int f\), 所以 \(\int f_n\) 的极限有限. 令
+	\[
+	h_n=f-f_n\geq0.
+	\]
+	则 \(h_n\downarrow0\), 且 \(h_1\in L^1\). 又
+	\[
+	h_1-h_n=f_n-f_1\uparrow h_1.
+	\]
+	把刚才已经证明的部分应用于递增列 \(h_1-h_n\), 得
+	\[
+	\int_{\R^d}(h_1-h_n)\,\dd x\to \int_{\R^d}h_1\,\dd x.
+	\]
+	于是 \(\int h_n\,\dd x\to0\). 因此
+	\[
+	\int_{\R^d}f_n\,\dd x
+	=
+	\int_{\R^d}f\,\dd x-
+	\int_{\R^d}h_n\,\dd x
+	\longrightarrow
+	\int_{\R^d}f\,\dd x.
+	\]
+\end{proof}
+
+等价地, 单调收敛定理也可以写成正项级数的形式: 若 \(u_n\in L^1\) 且 \(u_n\geq0\), 则
+\[
+\sum_{n=1}^{\infty}u_n\in L^1
+\]
+的充分必要条件是
+\[
+\sum_{n=1}^{\infty}\int_{\R^d}u_n(x)\,\dd x<+\infty.
+\]
+此时
+\begin{equation}
+	\int_{\R^d}\left(\sum_{n=1}^{\infty}u_n(x)\right)\dd x
+	=
+	\sum_{n=1}^{\infty}\int_{\R^d}u_n(x)\,\dd x.
+	\label{eq:beppo-levi-series-form}
+\end{equation}
+这正是第一章正项级数逐项积分定理在勒贝格积分框架下的自然改进.
+
+\begin{thm}\label{thm:lsc-majorant-for-positive-finite-upper}
+	设 \(f\geq0\), 且
+	\[
+	\int_{\R^d}^{*}f(x)\,\dd x<+\infty.
+	\]
+	则存在函数列 \(g_n\in\mathcal I^+\), 使得
+	\[
+	f\leq g_n\downarrow g,
+	\qquad
+	g\in L^1,
+	\qquad
+	g\geq f,
+	\]
+	并且
+	\begin{equation}
+		\int_{\R^d}^{*}f(x)\,\dd x
+		=
+		\int_{\R^d}g(x)\,\dd x.
+		\label{eq:lsc-majorant-integral-equality}
+	\end{equation}
+	若 \(f\in L^1\), 则 \(f=g\) 几乎处处成立.
+\end{thm}
+
+\begin{proof}
+	由上积分定义, 可取 \(h_n\in\mathcal I^+\), 使得
+	\[
+	f\leq h_n,
+	\qquad
+	\int^*h_n<\int^*f+\frac1n.
+	\]
+	令
+	\[
+	g_n=\inf_{1\leq k\leq n}h_k.
+	\]
+	由于有限个下方半连续函数的下确界仍下方半连续, 所以 \(g_n\in\mathcal I^+\), 且
+	\[
+	f\leq g_n\downarrow g:=\inf_{n}g_n.
+	\]
+	又有 \(g_n\leq h_n\), 因而
+	\[
+	\int^*g_n\leq \int^*h_n<\int^*f+\frac1n.
+	\]
+	因为 \(g_1-g_n\uparrow g_1-g\), 单调收敛定理给出 \(g_1-g\in L^1\), 并且可知 \(g\in L^1\). 同时
+	\[
+	\int g=\lim_{n\to\infty}\int^*g_n=\int^*f.
+	\]
+	若 \(f\in L^1\), 则 \(0\leq g-f\in L^1\), 且
+	\[
+	\int(g-f)\,\dd x=
+	\int g\,\dd x-
+	\int f\,\dd x=0.
+	\]
+	故 \(g=f\) 几乎处处成立.
+\end{proof}
+
+\subsection{Fatou 引理与控制收敛定理}
+
+\begin{thm}[Fatou 引理]
+	\label{thm:fatou-lemma}
+	若 \(f_n\geq0\), 则
+	\begin{equation}
+		\int_{\R^d}^{*}\bigl(\liminf_{n\to\infty}f_n(x)\bigr)\,\dd x
+		\leq
+		\liminf_{n\to\infty}\int_{\R^d}^{*}f_n(x)\,\dd x.
+		\label{eq:fatou-lemma}
+	\end{equation}
+	进一步, 若每个 \(f_n\in L^1\), 且右端有限, 则 \(\liminf_{n\to\infty}f_n\in L^1\).
+\end{thm}
+
+\begin{proof}
+	对 \(m\geq n\), 令
+	\[
+	h_{n,m}(x)=\min\{f_n(x),f_{n+1}(x),\ldots,f_m(x)\}.
+	\]
+	记
+	\[
+	h_n(x)=\inf_{m\geq n}f_m(x).
+	\]
+	则对固定的 \(n\), 有 \(h_{n,m}\downarrow h_n\), 并且
+	\[
+	h_n\uparrow \liminf_{n\to\infty}f_n.
+	\]
+	又因为 \(h_n\leq h_{n,m}\leq f_m\) 对任意 \(m\geq n\) 成立, 由单调性得
+	\[
+	\int^*h_n\leq \int^*f_m,
+	\qquad m\geq n.
+	\]
+	于是
+	\[
+	\int^*h_n\leq \inf_{m\geq n}\int^*f_m.
+	\]
+	令 \(n\to\infty\), 并利用上积分的单调收敛性质, 得
+	\[
+	\int^*\liminf_{n\to\infty}f_n
+	=
+	\lim_{n\to\infty}\int^*h_n
+	\leq
+	\liminf_{n\to\infty}\int^*f_n.
+	\]
+	
+	若 \(f_n\in L^1\) 且右端有限, 则对固定的 \(n\), 有 \(0\leq h_{n,m}\leq f_n\), 且 \(h_{n,m}\downarrow h_n\). 由 Beppo Levi 定理的递减形式可知 \(h_n\in L^1\). 再由 \(h_n\uparrow \liminf f_n\) 以及上面得到的有限积分上界, 再次应用 Beppo Levi 定理, 得 \(\liminf f_n\in L^1\).
+\end{proof}
+
+\begin{exer}\label{exer:fatou-example-nexp}
+	设一维函数
+	\[
+	f_n(x)=n^a|x|e^{-n|x|},
+	\]
+	其中 \(a\in\R\). 分别计算 Fatou 引理 \eqref{eq:fatou-lemma} 两端, 并讨论不同 \(a\) 下的情形.
+\end{exer}
+
+\begin{thm}[Lebesgue 控制收敛定理]
+	\label{thm:dominated-convergence}
+	设 \(f_n\in L^1\), 且
+	\[
+	f_n(x)\to f(x)
+	\]
+	几乎处处成立. 若存在非负函数 \(g\), 使得
+	\[
+	|f_n(x)|\leq g(x)\quad\text{对所有 }n\text{ 几乎处处成立},
+	\qquad
+	\int_{\R^d}^{*}g(x)\,\dd x<+\infty,
+	\]
+	则 \(f\in L^1\), 并且
+	\begin{equation}
+		\int_{\R^d}f(x)\,\dd x
+		=
+		\lim_{n\to\infty}\int_{\R^d}f_n(x)\,\dd x.
+		\label{eq:dominated-convergence-integral-limit}
+	\end{equation}
+	事实上还有
+	\[
+	\int_{\R^d}|f_n(x)-f(x)|\,\dd x\to0.
+	\]
+\end{thm}
+
+\begin{proof}
+	由定理 \ref{thm:lsc-majorant-for-positive-finite-upper}, 可用一个 \(L^1\) 函数 \(G\geq g\) 几乎处处替代 \(g\). 因此不妨设 \(g\in L^1\). 由 \(|f_n|\leq g\) 和 \(f_n\to f\), 得 \(|f|\leq g\) 几乎处处, 从而 \(f\in L^1\).
+	
+	对非负函数列
+	\[
+	2g-|f_n-f|\geq0
+	\]
+	应用 Fatou 引理, 得
+	\[
+	\int 2g\,\dd x
+	\leq
+	\liminf_{n\to\infty}\int (2g-|f_n-f|)\,\dd x.
+	\]
+	因此
+	\[
+	\limsup_{n\to\infty}\int |f_n-f|\,\dd x\leq0.
+	\]
+	所以
+	\[
+	\int |f_n-f|\,\dd x\to0.
+	\]
+	最后,
+	\[
+	\left|\int f_n\,\dd x-
+	\int f\,\dd x\right|
+	\leq
+	\int |f_n-f|\,\dd x\to0.
+	\]
+\end{proof}
+
+\begin{exer}
+	验证练习 \ref{exer:fatou-example-nexp} 中某些参数取值下, 公式
+	\[
+	\int f_n\,\dd x\to \int f\,\dd x
+	\]
+	不成立, 并说明控制函数条件不可缺少.
+\end{exer}
+
+\begin{exer}
+	在练习 \ref{exer:fatou-example-nexp} 中, 直接验证 \(\sup_n f_n\) 的上积分为无穷大.
+\end{exer}
+
+\subsection{级数与完备性}
+
+\begin{thm}\label{thm:absolute-summable-series-l1}
+	设 \(u_n\in L^1\), 且
+	\begin{equation}
+		\sum_{n=1}^{\infty}\int_{\R^d}|u_n(x)|\,\dd x<+\infty.
+		\label{eq:absolute-l1-summable-assumption}
+	\end{equation}
+	则级数
+	\begin{equation}
+		f(x)=\sum_{n=1}^{\infty}u_n(x)
+		\label{eq:l1-series-pointwise}
+	\end{equation}
+	几乎处处绝对收敛, 且 \(f\in L^1\). 此外, 若
+	\[
+	S_N(x)=\sum_{n=1}^{N}u_n(x),
+	\]
+	则
+	\begin{equation}
+		\int_{\R^d}|f(x)-S_N(x)|\,\dd x\to0.
+		\label{eq:l1-series-tail}
+	\end{equation}
+\end{thm}
+
+\begin{proof}
+	由 Beppo Levi 定理,
+	\[
+	F(x)=\sum_{n=1}^{\infty}|u_n(x)|
+	\]
+	属于 \(L^1\). 因此 \(F(x)<+\infty\) 几乎处处, 这说明 \(\sum u_n(x)\) 几乎处处绝对收敛. 记其和为 \(f\). 因 \(|S_N|\leq F\), 且 \(S_N\to f\) 几乎处处, 由控制收敛定理知 \(f\in L^1\), 且
+	\[
+	\int |S_N-f|\,\dd x\to0.
+	\]
+\end{proof}
+
+\begin{exer}
+	利用分解
+	\[
+	u_n^+=\max(u_n,0),
+	\qquad
+	u_n^-=\max(-u_n,0)
+	\]
+	以及 Beppo Levi 定理, 重新证明定理 \ref{thm:absolute-summable-series-l1}.
+\end{exer}
+
+\begin{exer}\label{exer:l1-decomposition-i-plus}
+	设 \(f\in L^1\). 证明存在 \(f_1,f_2\in\mathcal I^+\), 使得
+	\[
+	f=f_1-f_2
+	\]
+	几乎处处成立. 提示: 先把 \(f\) 几乎处处表示成 \(\C_0\) 中函数的绝对收敛级数, 再利用正负部分分解.
+\end{exer}
+
+\begin{exer}
+	设 \(f\in L^1(\R)\). 证明
+	\[
+	\sum_{n=1}^{\infty}f(x+n)
+	\]
+	几乎处处收敛.
+\end{exer}
+
+\begin{thm}[Riesz--Fischer 定理]
+	\label{thm:riesz-fischer-l1}
+	设 \(f_n\in L^1\), 且
+	\begin{equation}
+		\int_{\R^d}|f_n(x)-f_m(x)|\,\dd x\to0,
+		\qquad n,m\to\infty.
+		\label{eq:l1-cauchy-condition}
+	\end{equation}
+	则存在 \(f\in L^1\), 使得
+	\begin{equation}
+		\int_{\R^d}|f_n(x)-f(x)|\,\dd x\to0.
+		\label{eq:l1-converges-to-f}
+	\end{equation}
+	反过来, \eqref{eq:l1-converges-to-f} 当然推出 \eqref{eq:l1-cauchy-condition}.
+\end{thm}
+
+\begin{proof}
+	反向结论由三角不等式立即得到. 下面证明正向结论.
+	
+	由 \eqref{eq:l1-cauchy-condition}, 可取严格递增的整数列 \(n_k\), 使得
+	\[
+	\int_{\R^d}|f_{n_{k+1}}-f_{n_k}|\,\dd x<2^{-k},
+	\qquad k=1,2,\ldots.
+	\]
+	于是
+	\[
+	\sum_{k=1}^{\infty}\int_{\R^d}|f_{n_{k+1}}-f_{n_k}|\,\dd x<+\infty.
+	\]
+	由定理 \ref{thm:absolute-summable-series-l1}, 级数
+	\[
+	f_{n_1}+\sum_{k=1}^{\infty}(f_{n_{k+1}}-f_{n_k})
+	\]
+	在 \(L^1\) 中收敛到某个函数 \(f\). 也就是说,
+	\[
+	\int_{\R^d}|f_{n_k}-f|\,\dd x\to0.
+	\]
+	最后, 对任意 \(n\), 有
+	\[
+	\int |f_n-f|\,\dd x
+	\leq
+	\int |f_n-f_{n_k}|\,\dd x+
+	\int |f_{n_k}-f|\,\dd x.
+	\]
+	先取 \(k\) 充分大, 再令 \(n\) 充分大, 由 Cauchy 条件得到 \eqref{eq:l1-converges-to-f}.
+\end{proof}
+
+\begin{rem}
+	Riesz--Fischer 定理说明: 若用
+	\[
+	\|f\|_1=\int_{\R^d}|f(x)|\,\dd x
+	\]
+	定义距离, 那么 \(L^1\) 是完备空间. 这与实数的 Cauchy 收敛准则完全平行; 证明的关键也是``绝对收敛级数必收敛''.
+\end{rem}
+
+\begin{exer}
+	在一维情形中, 设 \(n\) 为正整数, 并令 \(m\) 是满足
+	\[
+	m^2\leq n<(m+1)^2
+	\]
+	的整数. 定义
+	\[
+	f_n(x)=
+	\begin{cases}
+		1, & 0<n-m^2-mx<1,\\
+		0, & \text{其他情形}.
+	\end{cases}
+	\]
+	证明 \(\int |f_n|\,\dd x\to0\), 但 \(\lim_{n\to\infty}f_n(x)\) 对某些 \(x\) 不存在.
+\end{exer}
+
+\clearpage
+
+\section{可测和局部可积函数}
+\label{sec:measurable-and-locally-integrable-functions}
+
+为了刻画可积性, 除了整体的积分有限性之外, 还需要把函数本身的正则性分离出来. 这就引出可测函数的概念. 粗略地说, 可测函数是可以被可积函数局部截断逼近的函数.
+
+若 \(g\in\C_0^+(\R^d)\), 定义截断函数
+\[
+T_g f(x)=\max\{-g(x),\min(g(x),f(x))\}.
+\]
+也就是说, \(T_g f\) 把 \(f\) 的值限制在区间 \([-g(x),g(x)]\) 内. 当 \(f(x)=+\infty\) 时, 约定 \(T_g f(x)=g(x)\); 当 \(f(x)=-\infty\) 时, 约定 \(T_g f(x)=-g(x)\).
+
+\begin{defn}[可测函数]
+	\label{def:measurable-function}
+	设 \(f\) 是 \(\R^d\) 上几乎处处定义并取值于 \([-\infty,+\infty]\) 的函数. 若对任意 \(g\in\C_0^+(\R^d)\), 都有
+	\[
+	T_g f\in L^1(\R^d),
+	\]
+	则称 \(f\) 为可测函数.
+\end{defn}
+
+显然, 在一个零集合上改变 \(f\) 的取值不会影响可测性. 此外, 连续函数是可测的, 可积函数也是可测的. 后者是因为若 \(f\in L^1\), 则由 \(L^1\) 对 \(\max\) 与 \(\min\) 运算封闭可知 \(T_g f\in L^1\).
+
+\begin{thm}\label{thm:l1-iff-measurable-finite-upper-abs}
+	函数 \(f\) 可积的充分必要条件是 \(f\) 可测, 并且
+	\[
+	\int_{\R^d}^{*}|f(x)|\,\dd x<+\infty.
+	\]
+\end{thm}
+
+\begin{proof}
+	若 \(f\in L^1\), 则上面已经说明 \(f\) 可测. 又因为 \(|f|\in L^1\), 故
+	\[
+	\int_{\R^d}^{*}|f(x)|\,\dd x
+	=
+	\int_{\R^d}|f(x)|\,\dd x<+\infty.
+	\]
+	
+	反过来, 设 \(f\) 可测且 \(\int^*|f|<+\infty\). 由前一节的结论, 可取 \(G\in L^1\), 使得
+	\[
+	|f|\leq G
+	\]
+	几乎处处成立. 取函数列 \(g_n\in\C_0^+(\R^d)\), 使得
+	\[
+	0\leq g_n(x)\to +\infty
+	\]
+	对每个 \(x\in\R^d\) 成立. 例如可以取 \(g_n\) 在 \(\|x\|\leq n\) 上等于 \(n\), 在 \(\|x\|\geq n+1\) 上等于 \(0\), 并在中间连续过渡.
+	
+	由可测性的定义,
+	\[
+	T_{g_n}f\in L^1.
+	\]
+	同时 \(T_{g_n}f\to f\) 几乎处处, 且
+	\[
+	|T_{g_n}f|\leq |f|\leq G.
+	\]
+	由 Lebesgue 控制收敛定理,
+	\[
+	\int_{\R^d}|T_{g_n}f-f|\,\dd x\to0.
+	\]
+	因此 \(f\) 是 \(L^1\) 函数列 \(T_{g_n}f\) 的 \(L^1\) 极限, 从而 \(f\in L^1\).
+\end{proof}
+
+\begin{thm}\label{thm:ae-limit-measurable}
+	设 \(f_n\) 是一列可测函数. 若
+	\[
+	f_n(x)\to f(x)
+	\]
+	几乎处处成立, 则 \(f\) 可测.
+\end{thm}
+
+\begin{proof}
+	任取 \(g\in\C_0^+(\R^d)\). 因 \(f_n\) 可测, 有
+	\[
+	T_g f_n\in L^1.
+	\]
+	并且
+	\[
+	T_g f_n(x)\to T_g f(x)
+	\]
+	几乎处处成立, 同时
+	\[
+	|T_g f_n(x)|\leq g(x).
+	\]
+	由于 \(g\in L^1\), 由控制收敛定理得 \(T_g f\in L^1\). 因 \(g\) 任意, \(f\) 可测.
+\end{proof}
+
+根据定理 \ref{thm:l1-iff-measurable-finite-upper-abs} 的证明, 一个函数 \(f\) 可测的充分必要条件是: 存在一列有界的 \(L^1\) 函数 \(f_n\), 使得
+\[
+f_n(x)\to f(x)
+\]
+几乎处处成立. 事实上, 若 \(f\) 可测, 可以取 \(f_n=T_{g_n}f\), 其中 \(g_n\in\C_0^+\) 逐点趋于 \(+\infty\); 反过来则由定理 \ref{thm:ae-limit-measurable} 得到.
+
+\begin{thm}\label{thm:measurable-closed-lattice-algebra}
+	设 \(f,g\) 可测. 则
+	\[
+	\max(f,g),
+	\qquad
+	\min(f,g)
+	\]
+	都是可测函数. 若 \(f,g\) 几乎处处有限, 则
+	\[
+	f+g,
+	\qquad
+	fg
+	\]
+	也是可测函数.
+\end{thm}
+
+\begin{proof}
+	由上面的等价刻画, 可取有界 \(L^1\) 函数列 \(f_n,g_n\), 使得
+	\[
+	f_n\to f,
+	\qquad
+	g_n\to g
+	\]
+	几乎处处成立. 因为 \(L^1\) 对 \(\max\) 与 \(\min\) 运算封闭, 所以
+	\[
+	\max(f_n,g_n),
+	\qquad
+	\min(f_n,g_n)
+	\]
+	都是 \(L^1\) 函数, 且分别几乎处处收敛到 \(\max(f,g)\) 与 \(\min(f,g)\). 由定理 \ref{thm:ae-limit-measurable}, 二者可测.
+	
+	若 \(f,g\) 几乎处处有限, 则 \(f_n+g_n\to f+g\) 几乎处处, 且每个 \(f_n+g_n\in L^1\), 因而 \(f+g\) 可测.
+	
+	最后证明乘积. 由恒等式
+	\[
+	fg=\frac{(f+g)^2-(f-g)^2}{4},
+	\]
+	只需证明可测函数的平方仍可测. 若 \(f_n\) 是有界 \(L^1\) 函数且 \(f_n\to f\) 几乎处处, 则 \(f_n^2\in L^1\), 因为 \(f_n\) 有界且可积. 又 \(f_n^2\to f^2\) 几乎处处, 所以 \(f^2\) 可测. 因此 \(fg\) 可测.
+\end{proof}
+
+由定理 \ref{thm:ae-limit-measurable} 和定理 \ref{thm:measurable-closed-lattice-algebra} 可知, 若 \(\{f_n\}\) 是可测函数列, 则
+\[
+\sup_n f_n,
+\qquad
+\inf_n f_n,
+\qquad
+\limsup_{n\to\infty}f_n,
+\qquad
+\liminf_{n\to\infty}f_n
+\]
+只要表达式有意义, 都是可测函数.
+
+\begin{cor}\label{cor:l1-times-bounded-measurable}
+	若 \(f\in L^1\), \(g\) 可测且有界, 则 \(fg\in L^1\).
+\end{cor}
+
+\begin{proof}
+	由定理 \ref{thm:measurable-closed-lattice-algebra}, \(fg\) 可测. 若 \(|g|\leq M\), 则
+	\[
+	|fg|\leq M|f|.
+	\]
+	所以
+	\[
+	\int^* |fg|\,\dd x\leq M\int |f|\,\dd x<+\infty.
+	\]
+	由定理 \ref{thm:l1-iff-measurable-finite-upper-abs}, 得 \(fg\in L^1\).
+\end{proof}
+
+\subsection{局部可积函数}
+
+可积性不仅包含函数的正则性, 还包含无穷远处的积分有限性. 如果只保留局部积分有限性, 就得到局部可积函数.
+
+\begin{defn}[局部可积函数]
+	\label{def:locally-integrable-function}
+	设 \(f\) 是 \(\R^d\) 上几乎处处定义并取值于 \([-\infty,+\infty]\) 的函数. 若对任意 \(\varphi\in\C_0(\R^d)\), 都有
+	\[
+	\varphi f\in L^1(\R^d),
+	\]
+	则称 \(f\) 为局部可积函数. 所有局部可积函数的集合记作 \(L^1_{\operatorname{loc}}(\R^d)\), 简记为 \(L^1_{\operatorname{loc}}\).
+\end{defn}
+
+\begin{exer}\label{exer:locally-integrable-finite-ae}
+	证明: 若 \(f\in L^1_{\operatorname{loc}}\), 则 \(f\) 几乎处处有限.
+\end{exer}
+
+\begin{exer}\label{exer:locally-integrable-basic}
+	证明:
+	\begin{enumerate}
+		\item 若 \(f\in L^1_{\operatorname{loc}}\), 则 \(f\) 可测;
+		\item 若 \(f\) 可测且局部有界, 即 \(f\) 在每个紧集上有界, 则 \(f\in L^1_{\operatorname{loc}}\).
+	\end{enumerate}
+\end{exer}
+
+下面给出局部可积函数的一个逼近刻画. 注意这里的连续函数不要求具有紧致支集.
+
+\begin{thm}\label{thm:locally-integrable-continuous-approx}
+	函数 \(f\in L^1_{\operatorname{loc}}\) 的充分必要条件是: 对任意 \(\varepsilon>0\), 存在一个连续函数 \(g\), 使得
+	\[
+	\int_{\R^d}^{*}|f(x)-g(x)|\,\dd x<\varepsilon.
+	\]
+\end{thm}
+
+\begin{proof}
+	先设 \(f\in L^1_{\operatorname{loc}}\). 取函数列 \(h_n\in\C_0^+(\R^d)\), 满足
+	\[
+	0\leq h_n\leq 1,
+	\qquad
+	h_n(x)=1 \quad (\|x\|\leq n),
+	\qquad
+	h_n(x)=0 \quad (\|x\|\geq n+1),
+	\]
+	并令 \(h_0=h_{-1}=0\). 对每个 \(n\geq1\), 函数
+	\[
+	f(h_n-h_{n-1})
+	\]
+	属于 \(L^1\). 因而可以取 \(u_n\in\C_0(\R^d)\), 使得
+	\[
+	\int^*\left|f(h_n-h_{n-1})-u_n\right|\,\dd x
+	<\frac{\varepsilon}{2^n}.
+	\]
+	由于 \(h_{n+1}-h_{n-2}=1\) 于 \(h_n-h_{n-1}\) 的支集上, 且
+	\[
+	0\leq h_{n+1}-h_{n-2}\leq1,
+	\]
+	令
+	\[
+	v_n=u_n(h_{n+1}-h_{n-2}),
+	\]
+	则 \(v_n\in\C_0(\R^d)\), 且
+	\[
+	\int^*\left|f(h_n-h_{n-1})-v_n\right|\,\dd x
+	\leq
+	\int^*\left|f(h_n-h_{n-1})-u_n\right|\,\dd x
+	<\frac{\varepsilon}{2^n}.
+	\]
+	
+	定义
+	\[
+	g(x)=\sum_{n=1}^{\infty}v_n(x).
+	\]
+	这个和在每个紧集上只有有限多项非零, 因而 \(g\) 是连续函数. 又因为
+	\[
+	\sum_{n=1}^{\infty}(h_n-h_{n-1})=1,
+	\]
+	所以由上积分的次可加性,
+	\begin{align*}
+		\int^*|f-g|\,\dd x
+		&\leq
+		\sum_{n=1}^{\infty}
+		\int^*\left|f(h_n-h_{n-1})-v_n\right|\,\dd x\\
+		&<\sum_{n=1}^{\infty}\frac{\varepsilon}{2^n}
+		=\varepsilon.
+	\end{align*}
+	
+	反过来, 假设对任意 \(\varepsilon>0\) 都存在连续函数 \(g\), 使 \(\int^*|f-g|<\varepsilon\). 任取 \(\varphi\in\C_0(\R^d)\). 由于 \(g\) 连续, \(\varphi g\in\C_0(\R^d)\subset L^1\). 又
+	\[
+	|\varphi f-\varphi g|
+	\leq \|\varphi\|_\infty |f-g|.
+	\]
+	因此 \(\varphi f\) 可以在 \(L^1\) 意义下由 \(\varphi g\) 任意逼近. 由定理 \ref{thm:integrable-approx-by-integrable}, 得 \(\varphi f\in L^1\). 因 \(\varphi\) 任意, \(f\in L^1_{\operatorname{loc}}\).
+\end{proof}
+
+\begin{exer}\label{exer:locally-integrable-dominated}
+	若 \(f\) 可测, \(|f|\leq g\), 且 \(g\in L^1_{\operatorname{loc}}\), 证明 \(f\in L^1_{\operatorname{loc}}\).
+\end{exer}
+
+\begin{exer}\label{exer:locally-integrable-lattice}
+	若 \(f,g\in L^1_{\operatorname{loc}}\), 证明
+	\[
+	|f|,
+	\quad af\ (a\in\R),
+	\quad f+g,
+	\quad \max(f,g),
+	\quad \min(f,g)
+	\]
+	都属于 \(L^1_{\operatorname{loc}}\).
+\end{exer}
+
+\begin{rem}
+	两个局部可积函数的乘积未必局部可积. 例如在一维情形下, 函数 \(|x|^{-1/2}\) 在原点附近局部可积, 但它的平方 \(|x|^{-1}\) 在原点附近不可积.
+\end{rem}
+
+\begin{exer}\label{exer:locally-integrable-times-locally-bounded}
+	若 \(f\in L^1_{\operatorname{loc}}\), 且 \(g\) 可测并局部有界, 证明
+	\[
+	fg\in L^1_{\operatorname{loc}}.
+	\]
+\end{exer}
+
+\clearpage
+
+\section{可测和可积集合}
+\label{sec:measurable-and-integrable-sets}
+
+借助前几节建立的积分理论, 我们现在可以定义 \(\R^d\) 中集合的测度. 基本思想很直接: 用集合的特征函数来度量集合的大小.
+
+\begin{defn}[外测度、可测集与可积集]
+	\label{def:outer-measure-measurable-integrable-set}
+	设 \(E\subset\R^d\), 记 \(\chi_E\) 为 \(E\) 的特征函数. 定义 \(E\) 的外测度为
+	\begin{equation}
+		m^*(E)=\int_{\R^d}^{*}\chi_E(x)\,\dd x.
+		\label{eq:outer-measure-definition}
+	\end{equation}
+	若 \(\chi_E\) 是可测函数, 则称 \(E\) 为可测集. 若 \(\chi_E\in L^1\), 则称 \(E\) 为可积集, 并定义它的测度为
+	\begin{equation}
+		m(E)=\int_{\R^d}\chi_E(x)\,\dd x.
+		\label{eq:measure-integrable-set-definition}
+	\end{equation}
+\end{defn}
+
+若 \(E\) 可测且 \(m^*(E)<+\infty\), 则由定理 \ref{thm:l1-iff-measurable-finite-upper-abs} 可知 \(\chi_E\in L^1\), 因而 \(E\) 是可积集. 此时
+\[
+m(E)=m^*(E).
+\]
+
+\subsection{外测度的基本性质}
+
+由上积分的性质立刻得到外测度的基本性质.
+
+\begin{thm}\label{thm:outer-measure-basic-properties}
+	设 \(E,E_n\subset\R^d\). 则:
+	\begin{enumerate}
+		\item 若 \(E_1\subset E_2\), 则
+		\[
+		m^*(E_1)\leq m^*(E_2).
+		\]
+		\item 若
+		\[
+		E\subset \bigcup_{n=1}^{\infty}E_n,
+		\]
+		则
+		\begin{equation}
+			m^*(E)\leq \sum_{n=1}^{\infty}m^*(E_n).
+			\label{eq:outer-measure-subadditivity}
+		\end{equation}
+		\item 若 \(E_n\uparrow E\), 即
+		\[
+		E_1\subset E_2\subset\cdots,
+		\qquad
+		E=\bigcup_{n=1}^{\infty}E_n,
+		\]
+		则
+		\[
+		m^*(E_n)\uparrow m^*(E).
+		\]
+	\end{enumerate}
+\end{thm}
+
+\begin{proof}
+	若 \(E_1\subset E_2\), 则 \(\chi_{E_1}\leq\chi_{E_2}\), 由上积分单调性得到第一条.
+	
+	若 \(E\subset\bigcup_nE_n\), 则
+	\[
+	\chi_E\leq \sum_{n=1}^{\infty}\chi_{E_n}.
+	\]
+	由上积分的次可加性得到 \eqref{eq:outer-measure-subadditivity}.
+	
+	若 \(E_n\uparrow E\), 则 \(\chi_{E_n}\uparrow\chi_E\). 由上积分的单调收敛性质得到
+	\[
+	\int^*\chi_{E_n}\,\dd x\uparrow\int^*\chi_E\,\dd x,
+	\]
+	即 \(m^*(E_n)\uparrow m^*(E)\).
+\end{proof}
+
+容易看出, \(\chi_E\in\mathcal I^+\) 的充分必要条件是 \(E\) 为开集. 因此, 开集在测度理论中所起的作用, 类似于 \(\mathcal I^+\) 中函数在积分理论中所起的作用.
+
+\begin{thm}[开集外逼近]
+	\label{thm:outer-measure-open-approximation}
+	对任意集合 \(E\subset\R^d\), 有
+	\begin{equation}
+		m^*(E)=\inf\{m^*(O): O\supset E,\ O\text{为开集}\}.
+		\label{eq:outer-measure-open-approximation}
+	\end{equation}
+\end{thm}
+
+\begin{proof}
+	若 \(O\supset E\), 则由单调性有 \(m^*(E)\leq m^*(O)\). 因而
+	\[
+	m^*(E)\leq \inf_{O\supset E}m^*(O).
+	\]
+	下面证明反向不等式. 若 \(m^*(E)=+\infty\), 无需证明. 设 \(m^*(E)<+\infty\). 给定 \(\varepsilon>0\), 由上积分定义, 可取 \(f\in\mathcal I^+\), 使得
+	\[
+	\chi_E\leq f,
+	\qquad
+	\int^* f\,\dd x<m^*(E)+\varepsilon.
+	\]
+	令
+	\[
+	O=\{x:f(x)>1-\varepsilon\}.
+	\]
+	因为 \(f\) 下方半连续, 所以 \(O\) 是开集. 又 \(\chi_E\leq f\), 若 \(x\in E\), 则 \(f(x)\geq1\), 因而 \(E\subset O\). 当 \(0<\varepsilon<1\) 时,
+	\[
+	\chi_O\leq \frac{1}{1-\varepsilon}f.
+	\]
+	于是
+	\[
+	m^*(O)\leq \frac{m^*(E)+\varepsilon}{1-\varepsilon}.
+	\]
+	令 \(\varepsilon\to0\), 得到反向不等式.
+\end{proof}
+
+\subsection{可测集与可积集}
+
+从可测函数的运算性质可以直接得到可测集的运算性质.
+
+\begin{thm}\label{thm:measurable-set-basic-properties}
+	可测集具有如下性质:
+	\begin{enumerate}
+		\item 可测集的余集仍为可测集;
+		\item 可数多个可测集的并与交仍为可测集;
+		\item 若 \(\{E_n\}\) 是可测集列, 则
+		\[
+		\limsup_{n\to\infty}E_n,
+		\qquad
+		\liminf_{n\to\infty}E_n
+		\]
+		都是可测集;
+		\item 可测集的对称差是可测集;
+		\item 任意开集和闭集都是可测集.
+	\end{enumerate}
+\end{thm}
+
+\begin{proof}
+	设 \(E\) 可测. 因
+	\[
+	\chi_{E^c}=1-\chi_E,
+	\]
+	且常数函数局部可测, 由可测函数的线性运算性质可知 \(E^c\) 可测.
+	
+	若 \(E_n\) 可测, 则 \(\chi_{E_n}\) 可测. 注意
+	\[
+	\chi_{\bigcup_{n=1}^{\infty}E_n}
+	=
+	\sup_n \chi_{E_n}.
+	\]
+	可测函数列的上确界可测, 故 \(\bigcup_nE_n\) 可测. 交集由余集和并集得到.
+	
+	由集合极限的表示式
+	\[
+	\limsup_{n\to\infty}E_n=\bigcap_{N=1}^{\infty}\bigcup_{n\geq N}E_n,
+	\qquad
+	\liminf_{n\to\infty}E_n=\bigcup_{N=1}^{\infty}\bigcap_{n\geq N}E_n,
+	\]
+	立刻得到第三条. 对称差满足
+	\[
+	\chi_{E\triangle F}=|\chi_E-\chi_F|,
+	\]
+	故可测. 最后, 开集 \(O\) 的特征函数 \(\chi_O\) 下方半连续, 因而可测; 闭集是开集的余集, 也可测.
+\end{proof}
+
+\begin{thm}\label{thm:integrable-set-basic-properties}
+	可积集具有如下性质:
+	\begin{enumerate}
+		\item 可数多个可积集的交仍为可积集;
+		\item 开集或闭集为可积集的充分必要条件是它的外测度有限. 特别地, 任意紧集都是可积集;
+		\item 若 \(E_n\) 是可积集列, 且
+		\[
+		E=\bigcup_{n=1}^{\infty}E_n,
+		\]
+		并且 \(\sum_{n=1}^{\infty}m(E_n)<+\infty\), 则 \(E\) 是可积集, 且
+		\[
+		m(E)\leq \sum_{n=1}^{\infty}m(E_n).
+		\]
+		若进一步 \(E_n\) 两两不交, 则
+		\begin{equation}
+			m(E)=\sum_{n=1}^{\infty}m(E_n).
+			\label{eq:countable-additivity-measure}
+		\end{equation}
+	\end{enumerate}
+\end{thm}
+
+\begin{proof}
+	若 \(E_n\) 都可积, 则它们都可测. 因此 \(E=\bigcap_nE_n\) 可测. 又 \(E\subset E_1\), 所以
+	\[
+	m^*(E)\leq m(E_1)<+\infty.
+	\]
+	因此 \(E\) 可积.
+	
+	开集和闭集都可测, 故它们可积当且仅当外测度有限. 紧集包含在某个有限区间中, 因而外测度有限, 所以紧集可积.
+	
+	若 \(E=\bigcup_nE_n\), 则 \(E\) 可测. 又由外测度次可加性,
+	\[
+	m^*(E)\leq\sum_{n=1}^{\infty}m(E_n)<+\infty,
+	\]
+	所以 \(E\) 可积, 且得到不等式.
+	
+	若 \(E_n\) 两两不交, 则对每个 \(N\),
+	\[
+	\chi_{\bigcup_{n=1}^NE_n}=\sum_{n=1}^N\chi_{E_n}.
+	\]
+	令 \(N\to\infty\), 由 Beppo Levi 单调收敛定理得到
+	\[
+	m(E)=\int\chi_E\,\dd x
+	=\sum_{n=1}^{\infty}\int\chi_{E_n}\,\dd x
+	=\sum_{n=1}^{\infty}m(E_n).
+	\]
+\end{proof}
+
+\begin{rem}
+	对于不是可积集的可测集, 也常常定义它的测度为
+	\[
+	m(E)=m^*(E)=+\infty.
+	\]
+	在这个约定下, 公式 \eqref{eq:countable-additivity-measure} 对所有两两不交的可测集列都成立, 允许等式两端同时为 \(+\infty\).
+\end{rem}
+
+\begin{exer}\label{exer:measurable-by-compact-intersections}
+	证明: 集合 \(E\subset\R^d\) 可测的充分必要条件是对任意紧集 \(K\), 集合 \(E\cap K\) 可测. 等价地, 也可以要求 \(E\cap K\) 可积.
+\end{exer}
+
+\begin{exer}\label{exer:outer-measure-by-interval-cover}
+	证明
+	\[
+	m^*(E)=\inf\sum_{n=1}^{\infty}m(I_n),
+	\]
+	其中下确界取遍所有覆盖 \(E\) 的区间列 \(\{I_n\}_{n=1}^{\infty}\), 即
+	\[
+	E\subset\bigcup_{n=1}^{\infty}I_n.
+	\]
+	提示: 先证明每个开集都可以写成可数多个区间的并, 这些区间的顶点可取为有理点. 然后对有限个区间作加细, 使它们没有公共内点.
+\end{exer}
+
+\begin{rem}
+	由练习 \ref{exer:outer-measure-by-interval-cover} 可得零集的通常刻画: 集合 \(E\) 是零集的充分必要条件是对任意 \(\varepsilon>0\), 存在区间列 \(\{I_n\}\), 使得
+	\[
+	E\subset\bigcup_{n=1}^{\infty}I_n,
+	\qquad
+	\sum_{n=1}^{\infty}m(I_n)<\varepsilon.
+	\]
+\end{rem}
+
+\begin{exer}\label{exer:integrable-set-finite-interval-approx}
+	证明: \(E\) 为可积集的充分必要条件是对任意 \(\varepsilon>0\), 存在有限多个区间 \(I_1,\ldots,I_N\), 使得
+	\[
+	m^*\left(E\triangle\bigcup_{j=1}^N I_j\right)<\varepsilon.
+	\]
+\end{exer}
+
+\subsection{定义在可测集上的积分}
+
+至此, 我们已经在整个 \(\R^d\) 上建立了积分. 若 \(E\subset\R^d\) 是可测集, \(f\) 是定义在 \(E\) 上的函数, 令它的零延拓为
+\[
+\widetilde f(x)=
+\begin{cases}
+	f(x), & x\in E,\\
+	0, & x\notin E.
+\end{cases}
+\]
+若 \(\widetilde f\) 可测或可积, 则称 \(f\) 在 \(E\) 上可测或可积, 并定义
+\[
+\int_E f(x)\,\dd x
+=
+\int_{\R^d}\widetilde f(x)\,\dd x.
+\]
+
+若 \(E'\subset E\) 也是可测集, 且 \(f\in L^1(E)\), 则 \(f\in L^1(E')\). 这是因为
+\[
+\widetilde{f|_{E'}}=\widetilde f\,\chi_{E'},
+\]
+而 \(\chi_{E'}\) 是有界可测函数.
+
+若 \(E\) 与 \(F\) 为不交可测集, 且 \(f\) 在 \(E\cup F\) 上可积, 则
+\[
+\int_{E\cup F}f(x)\,\dd x
+=
+\int_E f(x)\,\dd x+
+\int_F f(x)\,\dd x.
+\]
+这些性质都是由整个空间上的相应结论直接得到的.
+
+\begin{exer}\label{exer:lloc-iff-integrable-on-compact}
+	证明: \(f\in L^1_{\operatorname{loc}}(\R^d)\) 的充分必要条件是 \(f\) 在每个紧集上可积.
+\end{exer}
+
+\subsection{可测集的刻画}
+
+下面的定理给出可测集的外逼近和内逼近刻画. 在从测度论出发的教科书中, 这些条件往往被用作可测性的定义.
+
+\begin{thm}\label{thm:measurable-set-characterizations}
+	对集合 \(E\subset\R^d\), 下列条件等价:
+	\begin{enumerate}
+		\item \(E\) 是可测集;
+		\item 对任意 \(\varepsilon>0\), 存在开集 \(O\supset E\), 使得
+		\[
+		m^*(O\setminus E)<\varepsilon;
+		\]
+		\item 对任意 \(\varepsilon>0\), 存在闭集 \(F\subset E\), 使得
+		\[
+		m^*(E\setminus F)<\varepsilon;
+		\]
+		\item 存在下降的开集列 \(O_n\), 使得 \(E\subset O_n\), 且
+		\[
+		\left(\bigcap_{n=1}^{\infty}O_n\right)\setminus E
+		\]
+		是零集合;
+		\item 存在上升的闭集列 \(F_n\), 使得 \(F_n\subset E\), 且
+		\[
+		E\setminus\left(\bigcup_{n=1}^{\infty}F_n\right)
+		\]
+		是零集合.
+	\end{enumerate}
+\end{thm}
+
+\begin{proof}
+	由于余集把开集变成闭集, 并把外逼近变成内逼近, 只需证明 \((1)\)、\((2)\)、\((4)\) 等价.
+	
+	先设 \(E\) 可测. 则 \(\chi_E\in L^1_{\operatorname{loc}}\). 由定理 \ref{thm:locally-integrable-continuous-approx}, 对给定 \(\varepsilon>0\), 可取连续函数 \(g\), 使得
+	\[
+	\int^*|\chi_E-g|\,\dd x<\frac{\varepsilon}{4}.
+	\]
+	于是存在 \(h\in\mathcal I^+\), 使得
+	\[
+	|\chi_E-g|\leq h,
+	\qquad
+	\int^*h\,\dd x<\frac{\varepsilon}{4}.
+	\]
+	令
+	\[
+	O=\{x:g(x)+h(x)>1/2\}.
+	\]
+	因为 \(g+h\) 下方半连续, \(O\) 是开集. 若 \(x\in E\), 则 \(\chi_E(x)=1\), 且 \(|\chi_E(x)-g(x)|\leq h(x)\), 从而
+	\[
+	g(x)+h(x)\geq1,
+	\]
+	所以 \(E\subset O\).
+	若 \(x\in O\setminus E\), 则 \(\chi_E(x)=0\). 此时 \(|g(x)|\leq h(x)\), 而 \(g(x)+h(x)>1/2\), 故
+	\[
+	2h(x)>1/2,
+	\qquad
+	\text{即}\qquad
+	\chi_{O\setminus E}(x)\leq4h(x).
+	\]
+	因此
+	\[
+	m^*(O\setminus E)
+	\leq4\int^*h\,\dd x<\varepsilon.
+	\]
+	这证明 \((1)\Rightarrow(2)\).
+	
+	再设 \((2)\) 成立. 对每个 \(n\), 取开集 \(O_n'\supset E\), 使得
+	\[
+	m^*(O_n'\setminus E)<\frac1n.
+	\]
+	令
+	\[
+	O_n=O_1'\cap\cdots\cap O_n'.
+	\]
+	则 \(O_n\) 是下降的开集列, 且 \(E\subset O_n\). 又
+	\[
+	\bigcap_{n=1}^{\infty}O_n\setminus E
+	\subset O_n'\setminus E
+	\]
+	对每个 \(n\) 成立, 所以
+	\[
+	m^*\left(\bigcap_{n=1}^{\infty}O_n\setminus E\right)=0.
+	\]
+	于是 \((4)\) 成立.
+	
+	最后, 若 \((4)\) 成立, 设
+	\[
+	N=\left(\bigcap_{n=1}^{\infty}O_n\right)\setminus E.
+	\]
+	则 \(N\) 是零集, 从而可测. 又 \(\bigcap_nO_n\) 可测, 因此
+	\[
+	E=\left(\bigcap_{n=1}^{\infty}O_n\right)\setminus N
+	\]
+	可测. 这证明 \((4)\Rightarrow(1)\).
+\end{proof}
+
+\begin{exer}\label{exer:integrable-set-open-compact-approx}
+	证明: \(E\) 为可积集的充分必要条件是对任意 \(\varepsilon>0\), 存在开集 \(O\) 和紧集 \(K\), 使得
+	\[
+	K\subset E\subset O,
+	\qquad
+	m(O\setminus K)=m(O)-m(K)<\varepsilon.
+	\]
+\end{exer}
+
+\begin{exer}\label{exer:integrable-measure-inner-regular}
+	假定 \(E\) 可积. 证明
+	\[
+	m(E)=\sup\{m(K):K\subset E,\ K\text{为紧集}\}.
+	\]
+\end{exer}
+
+\subsection{一个不可测集合}
+
+下面给出一个不可测集合的例子. 在 \(\R\) 上定义等价关系:
+\[
+x\sim y
+\quad\Longleftrightarrow\quad
+x-y\in\mathbb Q.
+\]
+于是实数被分成若干等价类. 从每个等价类中选取恰好一个属于 \([0,1)\) 的代表元, 由此得到集合 \(E\). 这个选择需要选择公理.
+
+下面证明 \(E\) 不可测. 对 \(r\in\mathbb Q\), 令
+\[
+E_r=r+E=\{r+x:x\in E\}.
+\]
+因为每个实数都与某个 \([0,1)\) 中的代表元相差一个有理数, 所以
+\begin{equation}
+	\bigcup_{r\in\mathbb Q}E_r=\R.
+	\label{eq:vitali-cover-real-line}
+\end{equation}
+另一方面, 若 \(0<r<1\), 则
+\begin{equation}
+	E_r\subset(0,2).
+	\label{eq:vitali-translates-contained}
+\end{equation}
+并且这些集合 \(E_r\) 两两不交. 因若 \(r+x=s+y\), 其中 \(x,y\in E\), \(r,s\in\mathbb Q\), 则 \(x-y=s-r\in\mathbb Q\), 所以 \(x\sim y\). 由于 \(E\) 每个等价类只取一个点, 得 \(x=y\), 从而 \(r=s\).
+
+若 \(E\) 可测, 则每个 \(E_r\) 可测且测度相同. 由 \eqref{eq:vitali-translates-contained} 和可数可加性,
+\[
+\sum_{\substack{r\in\mathbb Q\\0<r<1}}m(E_r)
+=m\left(\bigcup_{\substack{r\in\mathbb Q\\0<r<1}}E_r\right)
+\leq2.
+\]
+由于左端有可数无穷多个相等的非负项, 只能有 \(m(E_r)=0\). 于是由 \eqref{eq:vitali-cover-real-line}, \(\R\) 是可数个零集的并, 从而应是零集, 矛盾. 所以 \(E\) 不可测.
+
+\subsection{可测函数的集合刻画}
+
+现在证明这里关于可测性的定义与通常定义等价.
+
+\begin{thm}\label{thm:measurable-function-level-set-characterization}
+	函数 \(f\) 可测的充分必要条件是: 对任意实数 \(a\), 集合
+	\[
+	\{x:f(x)>a\}
+	\]
+	都是可测集.
+\end{thm}
+
+\begin{proof}
+	先证必要性. 若 \(f\) 可测, 则 \(f-a\) 可测, 故只需考虑 \(a=0\). 令
+	\[
+	E=\{x:f(x)>0\}.
+	\]
+	因为 \(f^+=\max(f,0)\) 可测, 且
+	\[
+	\chi_E=\lim_{n\to\infty}\min(nf^+,1),
+	\]
+	所以 \(\chi_E\) 可测, 即 \(E\) 可测.
+	
+	反过来, 假设对任意实数 \(a\), 集合 \(\{x:f(x)>a\}\) 可测. 对每个正整数 \(n\), 定义阶梯函数
+	\[
+	f_n(x)=\frac1n\lfloor nf(x)\rfloor,
+	\]
+	其中 \(\lfloor t\rfloor\) 表示不超过 \(t\) 的最大整数. 对每个 \(k\in\mathbb Z\), 集合
+	\[
+	E_{n,k}=\left\{x:\frac{k}{n}<f(x)\leq \frac{k+1}{n}\right\}
+	\]
+	可测, 因而 \(f_n\) 可测. 又
+	\[
+	0\leq f(x)-f_n(x)\leq \frac1n
+	\]
+	在 \(f\) 有限处成立. 故 \(f_n\to f\) 几乎处处, 从而 \(f\) 可测.
+\end{proof}
+
+\begin{exer}\label{exer:composition-measurable}
+	假定 \(f\) 可测, 且 \(\phi\) 在 \(\R\) 上连续或单调递增. 若 \(f\) 几乎处处有限, 证明 \(\phi\circ f\) 可测.
+\end{exer}
+
+\subsection{Lusin 定理与 Riemann 可积性的判别}
+
+下面的定理说明, 可测函数在去掉一个任意小测度的集合后, 可以看成连续函数.
+
+\begin{thm}[Lusin 定理]
+	\label{thm:lusin}
+	设 \(f\) 是几乎处处有限的可测函数. 则对任意 \(\varepsilon>0\), 存在闭集 \(F\subset\R^d\), 使得 \(f\) 在 \(F\) 上的限制连续, 且
+	\[
+	m(F^c)<\varepsilon.
+	\]
+	反过来, 若函数 \(f\) 具有上述性质, 则 \(f\) 可测.
+\end{thm}
+
+\begin{proof}
+	先证必要性. 令
+	\[
+	\psi(t)=\frac{t}{1+|t|},
+	\qquad
+	\psi(+\infty)=1,
+	\quad
+	\psi(-\infty)=-1.
+	\]
+	函数 \(f\) 的可测性与 \(\psi\circ f\) 的可测性等价, 而连续性也可通过 \(\psi\) 还原. 因此不妨假定 \(f\in L^1_{\operatorname{loc}}\) 且 \(|f|\leq1\).
+	
+	由定理 \ref{thm:locally-integrable-continuous-approx}, 可取连续函数列 \(g_n\), 使得
+	\[
+	\int^*|f-g_n|\,\dd x<2^{-2n}\varepsilon.
+	\]
+	取 \(h_n\in\mathcal I^+\), 使得
+	\[
+	|f-g_n|\leq h_n,
+	\qquad
+	\int^*h_n\,\dd x<2^{-2n}\varepsilon.
+	\]
+	令
+	\[
+	E_n=\{x:h_n(x)>2^{-n}\}.
+	\]
+	则 \(E_n\) 为开集, 且
+	\[
+	2^{-n}\chi_{E_n}\leq h_n,
+	\qquad
+	m^*(E_n)\leq 2^n\int^*h_n\,\dd x<2^{-n}\varepsilon.
+	\]
+	取 \(N\) 足够大, 使得
+	\[
+	\sum_{n=N}^{\infty}m^*(E_n)<\varepsilon.
+	\]
+	令
+	\[
+	F=\left(\bigcup_{n=N}^{\infty}E_n\right)^c.
+	\]
+	则 \(F\) 为闭集且 \(m(F^c)<\varepsilon\). 对 \(x\in F\), 有
+	\[
+	|f(x)-g_n(x)|\leq h_n(x)\leq 2^{-n},
+	\qquad n\geq N.
+	\]
+	因此 \(g_n\) 在 \(F\) 上一致收敛于 \(f\). 由于每个 \(g_n\) 连续, 所以 \(f|_F\) 连续.
+	
+	再证充分性. 由假设, 可取闭集 \(F_n\), 使得 \(f|_{F_n}\) 连续, 且
+	\[
+	m(F_n^c)<2^{-n}.
+	\]
+	定义
+	\[
+	f_n(x)=
+	\begin{cases}
+		f(x), & x\in F_n,\\
+		+\infty, & x\notin F_n.
+	\end{cases}
+	\]
+	因为 \(f|_{F_n}\) 连续且 \(F_n\) 闭, 可验证 \(f_n\) 是下方半连续函数, 从而可测. 又
+	\[
+	m\left(\bigcap_{N=1}^{\infty}\bigcup_{n\geq N}F_n^c\right)=0
+	\]
+	由 Borel--Cantelli 型估计得到, 即除一个零集外, 每个点属于除有限多个以外的所有 \(F_n\). 因此 \(f_n\to f\) 几乎处处. 由可测函数列的极限可测性, 得 \(f\) 可测.
+\end{proof}
+
+\begin{exer}\label{exer:lusin-for-characteristic}
+	证明: 当 \(f=\chi_E\) 是可测集的特征函数时, Lusin 定理可以由定理 \ref{thm:measurable-set-characterizations} 中的开集外逼近和闭集内逼近直接推出.
+\end{exer}
+
+\begin{rem}
+	Lusin 定理并不意味着可测函数一定在某些点连续. 例如 Dirichlet 函数
+	\[
+	f(x)=
+	\begin{cases}
+		1, & x\in\mathbb Q,\\
+		0, & x\notin\mathbb Q,
+	\end{cases}
+	\]
+	是可测函数, 但它在每一点都不连续.
+\end{rem}
+
+\begin{thm}[Lebesgue 的 Riemann 可积性判别]
+	\label{thm:riemann-integrable-iff-discontinuities-null}
+	设 \(f\) 是具有紧致支集的有界函数. 则 \(f\) Riemann 可积的充分必要条件是它的不连续点集合为零集合.
+\end{thm}
+
+\begin{proof}
+	对每个 \(x\), 定义
+	\[
+	f_1(x)=\liminf_{y\to x}f(y),
+	\qquad
+	f_2(x)=\limsup_{y\to x}f(y).
+	\]
+	则 \(f_1\) 下方半连续, \(f_2\) 上方半连续, 且
+	\[
+	f_1\leq f\leq f_2.
+	\]
+	函数 \(f\) 在 \(x\) 连续当且仅当 \(f_1(x)=f_2(x)\). 因而不连续点集合为
+	\[
+	D=\{x:f_1(x)<f_2(x)\}.
+	\]
+	
+	按照上下 Riemann 积分的定义, 可以证明
+	\[
+	\underline{\int} f\,\dd x=\int f_1\,\dd x,
+	\qquad
+	\overline{\int} f\,\dd x=\int f_2\,\dd x,
+	\]
+	其中右端是 Lebesgue 积分. 因此 \(f\) Riemann 可积的充分必要条件是
+	\[
+	\int (f_2-f_1)\,\dd x=0.
+	\]
+	这又等价于 \(f_2=f_1\) 几乎处处, 即不连续点集合 \(D\) 为零集合.
+\end{proof}
+
+\subsection{Egorov 定理}
+
+\begin{thm}[Egorov 定理]
+	\label{thm:egorov}
+	设 \(f_n\) 是几乎处处取有限值的可测函数列, 且
+	\[
+	f_n(x)\to f(x)
+	\]
+	几乎处处成立, 其中 \(f\) 也几乎处处有限. 则对任意紧集 \(K\subset\R^d\) 和任意 \(\varepsilon>0\), 存在紧集 \(K_1\subset K\), 使得
+	\[
+	m(K\setminus K_1)<\varepsilon,
+	\]
+	并且 \(f_n\) 在 \(K_1\) 上一致收敛于 \(f\).
+\end{thm}
+
+\begin{proof}
+	对 \(n=1,2,\ldots\), 定义
+	\[
+	h_n(x)=\sup_{m\geq n}|f_m(x)-f(x)|.
+	\]
+	若某个函数值为无限, 则约定 \(h_n(x)=+\infty\). 由假设, 除一个零集外, \(h_n(x)\downarrow0\). 对 \(\delta>0\), 令
+	\[
+	E_{n,\delta}=\{x\in K:h_n(x)>\delta\}.
+	\]
+	则 \(E_{n,\delta}\) 是可测集, 且随 \(n\) 下降. 又
+	\[
+	\bigcap_{n=1}^{\infty}E_{n,\delta}
+	\]
+	是零集. 因为 \(K\) 可积, 由控制收敛定理或测度的连续性可得
+	\[
+	m(E_{n,\delta})\to0,
+	\qquad n\to\infty.
+	\]
+	
+	对每个 \(j\), 取 \(N_j\) 足够大, 使得
+	\[
+	m(E_{N_j,1/j})<\frac{\varepsilon}{2^j}.
+	\]
+	令
+	\[
+	E=\bigcup_{j=1}^{\infty}E_{N_j,1/j}.
+	\]
+	则
+	\[
+	m(E)<\varepsilon.
+	\]
+	若 \(x\in K\setminus E\), 则对每个 \(j\), 当 \(n\geq N_j\) 时,
+	\[
+	|f_n(x)-f(x)|
+	\leq h_{N_j}(x)
+	\leq \frac1j.
+	\]
+	这说明 \(f_n\to f\) 在 \(K\setminus E\) 上一致成立.
+	
+	最后, 由可积集的内正则性, 可取紧集 \(K_1\subset K\setminus E\), 使得
+	\[
+	m(K\setminus K_1)<\varepsilon.
+	\]
+	于是 \(f_n\) 在 \(K_1\) 上一致收敛到 \(f\).
+\end{proof}
+
+\begin{exer}\label{exer:dct-lusin-from-egorov}
+	证明 Lebesgue 控制收敛定理和 Lusin 定理都可以由 Egorov 定理推出.
+\end{exer}
+
+\clearpage
+
+\section{变量替换}
+\label{sec:change-of-variables-lebesgue}
+
+首先说明一个记号上的约定. 若 \(\Omega\subset\R^d\) 是开集, 则可以完全仿照前面在 \(\R^d\) 上的作法, 对只定义在 \(\Omega\) 上的函数定义上积分、可测性和积分. 具体地说, 从
+\[
+\C_0(\Omega)=\{f\in \C_0(\R^d):\operatorname{supp}f\subset\Omega\}
+\]
+出发, 先定义 \(\mathcal I^+(\Omega)\), 再定义非负函数的上积分, 最后定义 \(L^1(\Omega)\).
+
+等价地, 若 \(f\) 是定义在 \(\Omega\) 上的函数, 令其零延拓为
+\[
+\widetilde f(x)=
+\begin{cases}
+	f(x), & x\in\Omega,\\
+	0, & x\notin\Omega.
+\end{cases}
+\]
+则 \(f\in L^1(\Omega)\) 当且仅当 \(\widetilde f\in L^1(\R^d)\). 在这种情况下,
+\[
+\int_\Omega f(x)\,\dd x
+=
+\int_{\R^d}\widetilde f(x)\,\dd x.
+\]
+同样的约定也适用于可测函数与上积分.
+
+\begin{exer}\label{exer:l1-on-open-set-zero-extension}
+	证明: 若 \(\Omega\subset\R^d\) 为开集, 则 \(f\in L^1(\Omega)\) 的充分必要条件是其零延拓 \(\widetilde f\in L^1(\R^d)\). 并证明相应积分相等.
+\end{exer}
+
+现在设 \(\Omega_1,\Omega_2\subset\R^d\) 是开集, 并设
+\[
+\phi:\Omega_1\longrightarrow\Omega_2
+\]
+是一个一一映射, 且 \(\phi\) 与 \(\phi^{-1}\) 都连续可微. 若 \(f\) 是定义在 \(\Omega_2\) 上的函数, 仍记
+\[
+\phi^*f=f\circ\phi,
+\qquad
+(\phi^*f)(x)=f(\phi(x)).
+\]
+
+\begin{thm}[Lebesgue 积分的变量替换公式]
+	\label{thm:change-of-variables-lebesgue}
+	在上述假设下, \(f\in L^1(\Omega_2)\) 的充分必要条件是
+	\[
+	(\phi^*f)|\det\phi'|\in L^1(\Omega_1).
+	\]
+	此时有
+	\begin{equation}
+		\int_{\Omega_2}f(y)\,\dd y
+		=
+		\int_{\Omega_1}f(\phi(x))|\det\phi'(x)|\,\dd x.
+		\label{eq:change-of-variables-lebesgue}
+	\end{equation}
+	这里
+	\[
+	\phi'(x)=\left(\frac{\partial \phi_j}{\partial x_k}(x)\right)_{j,k=1}^{d}.
+	\]
+\end{thm}
+
+\begin{proof}
+	由第一章的变量替换公式可知, 当 \(f\in\C_0(\Omega_2)\) 时,
+	\begin{equation}
+		\int_{\Omega_2}f(y)\,\dd y
+		=
+		\int_{\Omega_1}f(\phi(x))|\det\phi'(x)|\,\dd x.
+		\label{eq:change-of-variables-c0}
+	\end{equation}
+	
+	先把公式推广到 \(\mathcal I^+(\Omega_2)\) 中的函数. 设 \(f\in\mathcal I^+(\Omega_2)\). 由下方半连续正函数的表示定理, 可取 \(f_n\in\C_0^+(\Omega_2)\), 使得
+	\[
+	0\leq f_n\uparrow f.
+	\]
+	由 \eqref{eq:change-of-variables-c0}, 对每个 \(n\) 有
+	\[
+	\int_{\Omega_2}f_n(y)\,\dd y
+	=
+	\int_{\Omega_1}f_n(\phi(x))|\det\phi'(x)|\,\dd x.
+	\]
+	令 \(n\to\infty\), 并利用上积分对单调极限的性质, 得
+	\begin{equation}
+		\int_{\Omega_2}^{*}f(y)\,\dd y
+		=
+		\int_{\Omega_1}^{*}(\phi^*f)(x)|\det\phi'(x)|\,\dd x.
+		\label{eq:change-of-variables-i-plus}
+	\end{equation}
+	
+	由于 \(\phi^{-1}\) 连续可微, 有
+	\[
+	(\phi^{-1})'(\phi(x))\phi'(x)=I_d,
+	\]
+	所以 \(\det\phi'(x)\neq0\). 因而乘以正连续函数 \(|\det\phi'|\) 不破坏下方半连续性. 更具体地说,
+	\[
+	f\in\mathcal I^+(\Omega_2)
+	\quad\Longleftrightarrow\quad
+	(\phi^*f)|\det\phi'|\in\mathcal I^+(\Omega_1),
+	\]
+	而且这个对应是双射. 因此, 对任意非负函数 \(f\), 由上方 \(\mathcal I^+\) 函数控制并取下确界, 可从 \eqref{eq:change-of-variables-i-plus} 推出
+	\begin{equation}
+		\int_{\Omega_2}^{*}f(y)\,\dd y
+		=
+		\int_{\Omega_1}^{*}(\phi^*f)(x)|\det\phi'(x)|\,\dd x.
+		\label{eq:change-of-variables-upper-integral}
+	\end{equation}
+	
+	现在证明可积性的等价. 若 \(f\in L^1(\Omega_2)\), 则对任意 \(\varepsilon>0\), 存在 \(g\in\C_0(\Omega_2)\), 使得
+	\[
+	\int_{\Omega_2}^{*}|f(y)-g(y)|\,\dd y<\varepsilon.
+	\]
+	由 \eqref{eq:change-of-variables-upper-integral}, 得
+	\[
+	\int_{\Omega_1}^{*}|f(\phi(x))-g(\phi(x))|\,|\det\phi'(x)|\,\dd x<\varepsilon.
+	\]
+	又因为 \(g\in\C_0(\Omega_2)\), 所以
+	\[
+	(\phi^*g)|\det\phi'|\in\C_0(\Omega_1).
+	\]
+	于是 \((\phi^*f)|\det\phi'|\) 可以在 \(L^1\) 意义下由 \(\C_0(\Omega_1)\) 中函数任意逼近, 从而
+	\[
+	(\phi^*f)|\det\phi'|\in L^1(\Omega_1).
+	\]
+	反过来, 对 \(\phi^{-1}\) 应用同样论证, 即可由 \((\phi^*f)|\det\phi'|\in L^1(\Omega_1)\) 推出 \(f\in L^1(\Omega_2)\).
+	
+	最后, 公式 \eqref{eq:change-of-variables-lebesgue} 先对 \(\C_0(\Omega_2)\) 中函数成立, 再由刚才证明的可积逼近和上积分公式 \eqref{eq:change-of-variables-upper-integral} 传递到所有 \(L^1(\Omega_2)\) 函数. 定理得证.
+\end{proof}
+
+\begin{rem}
+	与 Riemann 积分情形相比, Lebesgue 积分的变量替换公式更稳定. 关键原因是上积分满足单调收敛性质, 因而可以从 \(\C_0\) 函数自然推广到 \(\mathcal I^+\), 再推广到任意非负函数和一般可积函数.
+\end{rem}
+
+\clearpage
+
+\section{累次积分, Lebesgue--Fubini 定理}
+\label{sec:iterated-integrals-lebesgue-fubini}
+
+本节讨论 \(\R^{d+e}\) 上函数的积分与累次积分之间的关系. 我们把 \(\R^{d+e}\) 中的点写成 \((x,y)\), 其中
+\[
+x\in\R^d,\qquad y\in\R^e.
+\]
+若 \(f\in\C_0(\R^{d+e})\), 则由第一章连续函数的累次积分公式可知
+\begin{equation}
+	\int_{\R^{d+e}}f(x,y)\,\dd x\dd y
+	=
+	\int_{\R^d}\left(\int_{\R^e}f(x,y)\,\dd y\right)\dd x.
+	\label{eq:c0-fubini-start}
+\end{equation}
+这里左端表示把 \(f\) 看作 \(\R^{d+e}\) 上函数的积分, 右端表示先固定 \(x\), 对 \(y\) 积分, 再把所得函数对 \(x\) 积分.
+
+我们现在要把公式 \eqref{eq:c0-fubini-start} 推广到 Lebesgue 积分的情形. 仍然先从 \(\mathcal I^+\) 中的函数开始.
+
+\begin{thm}\label{thm:i-plus-fubini}
+	设 \(f\in\mathcal I^+(\R^{d+e})\). 则对每个固定的 \(x\in\R^d\), 函数
+	\[
+	y\longmapsto f(x,y)
+	\]
+	属于 \(\mathcal I^+(\R^e)\). 并且函数
+	\[
+	x\longmapsto \int_{\R^e}^{*}f(x,y)\,\dd y
+	\]
+	属于 \(\mathcal I^+(\R^d)\), 且
+	\begin{equation}
+		\int_{\R^{d+e}}^{*}f(x,y)\,\dd x\dd y
+		=
+		\int_{\R^d}^{*}\left(\int_{\R^e}^{*}f(x,y)\,\dd y\right)\dd x.
+		\label{eq:i-plus-fubini}
+	\end{equation}
+\end{thm}
+
+\begin{proof}
+	由 \(\mathcal I^+\) 的表示定理, 可取 \(f_n\in\C_0^+(\R^{d+e})\), 使得
+	\[
+	0\leq f_n\uparrow f.
+	\]
+	于是对固定的 \(x\), 有
+	\[
+	0\leq f_n(x,\cdot)\uparrow f(x,\cdot).
+	\]
+	由于每个 \(f_n(x,\cdot)\in\C_0^+(\R^e)\), 得
+	\[
+	f(x,\cdot)\in\mathcal I^+(\R^e).
+	\]
+	
+	令
+	\[
+	g_n(x)=\int_{\R^e}f_n(x,y)\,\dd y.
+	\]
+	由 \(f_n\in\C_0(\R^{d+e})\) 和连续函数的累次积分性质可知 \(g_n\in\C_0^+(\R^d)\). 又由上积分的单调收敛性质,
+	\[
+	g_n(x)\uparrow \int_{\R^e}^{*}f(x,y)\,\dd y.
+	\]
+	因此
+	\[
+	x\longmapsto \int_{\R^e}^{*}f(x,y)\,\dd y
+	\]
+	属于 \(\mathcal I^+(\R^d)\). 最后, 由 \eqref{eq:c0-fubini-start} 和单调收敛性质,
+	\begin{align*}
+		\int_{\R^{d+e}}^{*}f(x,y)\,\dd x\dd y
+		&=\lim_{n\to\infty}\int_{\R^{d+e}}f_n(x,y)\,\dd x\dd y\\
+		&=\lim_{n\to\infty}\int_{\R^d}\left(\int_{\R^e}f_n(x,y)\,\dd y\right)\dd x\\
+		&=\int_{\R^d}^{*}\left(\int_{\R^e}^{*}f(x,y)\,\dd y\right)\dd x.
+	\end{align*}
+\end{proof}
+
+对于任意非负函数, 一般只能先得到一个方向的不等式.
+
+\begin{thm}\label{thm:upper-integral-iterated-inequality}
+	设 \(f\geq0\) 是 \(\R^{d+e}\) 上的任意函数. 则
+	\begin{equation}
+		\int_{\R^d}^{*}\left(\int_{\R^e}^{*}f(x,y)\,\dd y\right)\dd x
+		\leq
+		\int_{\R^{d+e}}^{*}f(x,y)\,\dd x\dd y.
+		\label{eq:upper-integral-iterated-inequality}
+	\end{equation}
+\end{thm}
+
+\begin{proof}
+	若 \(f\leq g\in\mathcal I^+(\R^{d+e})\), 则对每个 \(x\), 有
+	\[
+	\int_{\R^e}^{*}f(x,y)\,\dd y
+	\leq
+	\int_{\R^e}^{*}g(x,y)\,\dd y.
+	\]
+	于是由定理 \ref{thm:i-plus-fubini},
+	\[
+	\int_{\R^d}^{*}\left(\int_{\R^e}^{*}f(x,y)\,\dd y\right)\dd x
+	\leq
+	\int_{\R^{d+e}}^{*}g(x,y)\,\dd x\dd y.
+	\]
+	再对所有满足 \(f\leq g\in\mathcal I^+(\R^{d+e})\) 的 \(g\) 取下确界, 即得 \eqref{eq:upper-integral-iterated-inequality}.
+\end{proof}
+
+\begin{exer}\label{exer:product-equality-upper-integral}
+	证明: 若
+	\[
+	f(x,y)=g(x)h(y),
+	\]
+	其中 \(g,h\geq0\), 则 \eqref{eq:upper-integral-iterated-inequality} 中的等号成立.
+\end{exer}
+
+\begin{exer}\label{exer:upper-integral-inequality-can-be-strict}
+	设 \(g_1,g_2\) 是 \(\R^d\) 上的非负函数. 证明
+	\[
+	\int_{\R^d}^{*}(g_1+g_2)(x)\,\dd x
+	\leq
+	\int_{\R^d}^{*}g_1(x)\,\dd x+
+	\int_{\R^d}^{*}g_2(x)\,\dd x.
+	\]
+	再取 \(\R^e\) 中两个互不相交、测度皆为 \(1\) 的开集的特征函数 \(h_1,h_2\), 并令
+	\[
+	f(x,y)=g_1(x)h_1(y)+g_2(x)h_2(y).
+	\]
+	证明 \eqref{eq:upper-integral-iterated-inequality} 的两端分别等于上式中的对应两端. 因此, \eqref{eq:upper-integral-iterated-inequality} 中的等号不一定成立.
+\end{exer}
+
+\begin{cor}\label{cor:null-function-sections}
+	若 \(f\geq0\) 是 \(\R^{d+e}\) 上的零函数, 则对几乎所有的 \(x\in\R^d\), 函数
+	\[
+	y\longmapsto f(x,y)
+	\]
+	是 \(\R^e\) 上的零函数.
+\end{cor}
+
+\begin{proof}
+	由定理 \ref{thm:upper-integral-iterated-inequality},
+	\[
+	\int_{\R^d}^{*}\left(\int_{\R^e}^{*}f(x,y)\,\dd y\right)\dd x
+	\leq
+	\int_{\R^{d+e}}^{*}f(x,y)\,\dd x\dd y=0.
+	\]
+	于是非负函数
+	\[
+	F(x)=\int_{\R^e}^{*}f(x,y)\,\dd y
+	\]
+	是零函数. 因而 \(F(x)=0\) 对几乎所有 \(x\) 成立, 即对几乎所有 \(x\), 截面函数 \(f(x,\cdot)\) 是零函数.
+\end{proof}
+
+\subsection{Lebesgue--Fubini 定理}
+
+现在处理一般可积函数. 下面的结果是 Fubini 定理的基本形式.
+
+\begin{thm}[Lebesgue--Fubini 定理]
+	\label{thm:lebesgue-fubini}
+	若 \(f\in L^1(\R^{d+e})\), 则对几乎所有的 \(x\in\R^d\), 函数
+	\[
+	y\longmapsto f(x,y)
+	\]
+	属于 \(L^1(\R^e)\). 同时, 函数
+	\[
+	F(x)=\int_{\R^e}f(x,y)\,\dd y
+	\]
+	在几乎处处意义下有定义, 且 \(F\in L^1(\R^d)\). 并且
+	\begin{equation}
+		\int_{\R^{d+e}}f(x,y)\,\dd x\dd y
+		=
+		\int_{\R^d}\left(\int_{\R^e}f(x,y)\,\dd y\right)\dd x.
+		\label{eq:lebesgue-fubini}
+	\end{equation}
+\end{thm}
+
+\begin{proof}
+	因为 \(f\in L^1(\R^{d+e})\), 可以取 \(g_n\in\C_0(\R^{d+e})\), 使得
+	\begin{equation}
+		\sum_{n=1}^{\infty}
+		\int_{\R^{d+e}}|f(x,y)-g_n(x,y)|\,\dd x\dd y<+\infty.
+		\label{eq:fubini-approx-summable}
+	\end{equation}
+	由定理 \ref{thm:upper-integral-iterated-inequality},
+	\[
+	\int_{\R^d}^{*}\left(
+	\int_{\R^e}^{*}|f(x,y)-g_n(x,y)|\,\dd y
+	\right)\dd x
+	\leq
+	\int_{\R^{d+e}}|f-g_n|\,\dd x\dd y.
+	\]
+	将上式对 \(n\) 求和, 并利用 \eqref{eq:fubini-approx-summable}, 得
+	\[
+	\int_{\R^d}^{*}\left(
+	\sum_{n=1}^{\infty}
+	\int_{\R^e}^{*}|f(x,y)-g_n(x,y)|\,\dd y
+	\right)\dd x<+\infty.
+	\]
+	因此对几乎所有 \(x\), 级数
+	\[
+	\sum_{n=1}^{\infty}
+	\int_{\R^e}^{*}|f(x,y)-g_n(x,y)|\,\dd y
+	\]
+	收敛. 特别地, 对几乎所有 \(x\), 有
+	\[
+	\int_{\R^e}^{*}|f(x,y)-g_n(x,y)|\,\dd y\to0.
+	\]
+	由于 \(g_n(x,\cdot)\in\C_0(\R^e)\), 这说明对几乎所有 \(x\), 函数 \(f(x,\cdot)\) 属于 \(L^1(\R^e)\).
+	
+	对这些 \(x\) 定义
+	\[
+	F(x)=\int_{\R^e}f(x,y)\,\dd y.
+	\]
+	同时令
+	\[
+	G_n(x)=\int_{\R^e}g_n(x,y)\,\dd y.
+	\]
+	则 \(G_n\in\C_0(\R^d)\). 并且
+	\begin{align*}
+		\int_{\R^d}^{*}|F(x)-G_n(x)|\,\dd x
+		&\leq
+		\int_{\R^d}^{*}\left(
+		\int_{\R^e}^{*}|f(x,y)-g_n(x,y)|\,\dd y
+		\right)\dd x\\
+		&\leq
+		\int_{\R^{d+e}}|f(x,y)-g_n(x,y)|\,\dd x\dd y\to0.
+	\end{align*}
+	因此 \(F\in L^1(\R^d)\). 由积分的定义和 \eqref{eq:c0-fubini-start},
+	\begin{align*}
+		\int_{\R^d}F(x)\,\dd x
+		&=\lim_{n\to\infty}\int_{\R^d}G_n(x)\,\dd x\\
+		&=\lim_{n\to\infty}\int_{\R^{d+e}}g_n(x,y)\,\dd x\dd y\\
+		&=\int_{\R^{d+e}}f(x,y)\,\dd x\dd y.
+	\end{align*}
+\end{proof}
+
+\begin{rem}
+	定理 \ref{thm:lebesgue-fubini} 中的截面函数 \(y\mapsto f(x,y)\) 一般不必对所有 \(x\) 可积. 事实上, 在固定的某个 \(x\) 处任意改变 \(f(x,\cdot)\), 并不会影响 \(f\) 作为 \(\R^{d+e}\) 上函数的可积性.
+\end{rem}
+
+\begin{exer}\label{exer:product-measurable-integrable}
+	设
+	\[
+	f(x,y)=g(x)h(y).
+	\]
+	若 \(g\) 和 \(h\) 可积, 证明 \(f\) 可积. 若 \(g\) 和 \(h\) 可测, 证明 \(f\) 可测.
+\end{exer}
+
+\begin{exer}\label{exer:convolution-l1}
+	设 \(f,g\in L^1(\R^d)\). 证明对几乎所有的 \(x\in\R^d\), 积分
+	\[
+	h(x)=\int_{\R^d}f(x-y)g(y)\,\dd y
+	\]
+	存在. 并证明 \(h\in L^1(\R^d)\), 且
+	\[
+	\int_{\R^d}|h(x)|\,\dd x
+	\leq
+	\left(\int_{\R^d}|f(x)|\,\dd x\right)
+	\left(\int_{\R^d}|g(x)|\,\dd x\right).
+	\]
+	进一步, 证明
+	\[
+	\int_{\R^d}h(x)\,\dd x
+	=
+	\left(\int_{\R^d}f(x)\,\dd x\right)
+	\left(\int_{\R^d}g(x)\,\dd x\right).
+	\]
+\end{exer}
+
+\begin{exer}\label{exer:sections-of-measurable-functions}
+	若 \(f(x,y)\) 是 \(\R^{d+e}\) 上的可测函数, 证明
+	\[
+	x\longmapsto \int_{\R^e}^{*}|f(x,y)|\,\dd y
+	\]
+	是可测函数, 并且对几乎所有的 \(x\), 截面函数
+	\[
+	y\longmapsto f(x,y)
+	\]
+	是 \(\R^e\) 上的可测函数.
+\end{exer}
+
+\begin{rem}
+	即使 \eqref{eq:lebesgue-fubini} 的右端作为一个累次积分存在, 也不能单凭这一点断定左端积分存在. 前面的练习 \ref{exer:upper-integral-inequality-can-be-strict} 可以给出相应的例子: 特别地取 \(g_1\) 和 \(g_2\), 使得 \(g_1+g_2\in L^1\), 就能看到仅有某一方向的累次积分存在是不够的.
+\end{rem}
+
+\begin{thm}\label{thm:fubini-integrability-criterion}
+	设 \(f\) 是 \(\R^{d+e}\) 上的可测函数. 则 \(f\in L^1(\R^{d+e})\) 的充分必要条件是
+	\begin{equation}
+		\int_{\R^d}^{*}\left(
+		\int_{\R^e}^{*}|f(x,y)|\,\dd y
+		\right)\dd x<+\infty.
+		\label{eq:fubini-integrability-criterion}
+	\end{equation}
+\end{thm}
+
+\begin{proof}
+	若 \(f\in L^1(\R^{d+e})\), 则 \(|f|\in L^1(\R^{d+e})\). 由 Fubini 定理应用于 \(|f|\), 得 \eqref{eq:fubini-integrability-criterion}.
+	
+	反过来, 假设 \eqref{eq:fubini-integrability-criterion} 成立. 由定理 \ref{thm:l1-iff-measurable-finite-upper-abs}, 只需证明
+	\[
+	\int_{\R^{d+e}}^{*}|f(x,y)|\,\dd x\dd y<+\infty.
+	\]
+	因此不妨假定 \(f\geq0\). 取 \(g_n\in\C_0^+(\R^{d+e})\), 使得
+	\[
+	g_n(x,y)\uparrow +\infty
+	\]
+	对每个 \((x,y)\) 成立. 因 \(f\) 可测, 截断函数
+	\[
+	T_{g_n}f=\min(g_n,f)
+	\]
+	属于 \(L^1(\R^{d+e})\), 且 \(T_{g_n}f\uparrow f\). 由 Fubini 定理,
+	\begin{align*}
+		\int_{\R^{d+e}}T_{g_n}f\,\dd x\dd y
+		&=\int_{\R^d}\left(\int_{\R^e}T_{g_n}f(x,y)\,\dd y\right)\dd x\\
+		&\leq
+		\int_{\R^d}^{*}\left(
+		\int_{\R^e}^{*}f(x,y)\,\dd y
+		\right)\dd x<+\infty.
+	\end{align*}
+	由 Beppo Levi 单调收敛定理, \(f\in L^1(\R^{d+e})\). 定理得证.
+\end{proof}
+
+由定理 \ref{thm:lebesgue-fubini} 和定理 \ref{thm:fubini-integrability-criterion} 可知: 若可测函数 \(f\) 满足 \eqref{eq:fubini-integrability-criterion}, 则
+\begin{equation}
+	\int_{\R^d}\left(\int_{\R^e}f(x,y)\,\dd y\right)\dd x
+	=
+	\int_{\R^e}\left(\int_{\R^d}f(x,y)\,\dd x\right)\dd y.
+	\label{eq:fubini-change-order}
+\end{equation}
+特别地, 当 \(f\geq0\) 且 \(f\) 可测时, 只要两个累次积分都有意义, 就可以交换积分次序. 这里 \(f\geq0\) 的假定是关键的.
+
+\begin{exer}\label{exer:two-iterated-integrals-unequal}
+	证明下面两个累次积分不相等:
+	\[
+	\int_0^1\left(\int_0^{+\infty}\bigl(e^{-xy}-2e^{-2xy}\bigr)\,\dd y\right)\dd x,
+	\]
+	和
+	\[
+	\int_0^{+\infty}\left(\int_0^1\bigl(e^{-xy}-2e^{-2xy}\bigr)\,\dd x\right)\dd y.
+	\]
+\end{exer}
+
+\begin{cor}\label{cor:measurable-set-null-sections}
+	设 \(E\subset\R^{d+e}\) 是可测集. 对 \(x\in\R^d\), 记
+	\[
+	E_x=\{y\in\R^e:(x,y)\in E\}.
+	\]
+	则 \(E\) 是零集的充分必要条件是: 对几乎所有的 \(x\), \(E_x\) 是 \(\R^e\) 中的零集.
+\end{cor}
+
+\begin{proof}
+	若 \(E\) 是零集, 则 \(\chi_E\) 是零函数. 由推论 \ref{cor:null-function-sections}, 对几乎所有的 \(x\), 函数 \(\chi_E(x,\cdot)=\chi_{E_x}\) 是零函数, 即 \(E_x\) 是零集.
+	
+	反过来, 若对几乎所有的 \(x\), \(E_x\) 是零集, 则
+	\[
+	\int_{\R^e}^{*}\chi_E(x,y)\,\dd y=0
+	\]
+	对几乎所有的 \(x\) 成立. 因为 \(E\) 可测, \(\chi_E\) 是可测函数. 由定理 \ref{thm:fubini-integrability-criterion}, \(\chi_E\in L^1\), 且
+	\[
+	m(E)=\int_{\R^{d+e}}\chi_E(x,y)\,\dd x\dd y=0.
+	\]
+	故 \(E\) 是零集.
+\end{proof}
+
+\begin{rem}
+	推论 \ref{cor:measurable-set-null-sections} 中, \(E\) 可测这一条件不能省略. 即使每个截面 \(E_x\) 都只是一个点, 也不能保证 \(E\) 是零集, 甚至不能保证 \(E\) 可测.
+\end{rem}
+
+\clearpage
+
+\section{\texorpdfstring{\(L^p\)}{Lp} 空间}
+\label{sec:lp-spaces}
+
+设 \(1\leq p<+\infty\). 我们现在定义 \(L^p\) 空间. 这里采用一个基于定理 \ref{thm:l1-iff-measurable-finite-upper-abs} 的定义; 当 \(p=1\) 时, 它与前面已经定义的 \(L^1\) 完全一致.
+
+\begin{defn}[\(L^p\) 空间]
+	\label{def:lp-space}
+	设 \(1\leq p<+\infty\). 若 \(f\) 是可测函数, 且
+	\begin{equation}
+		\|f\|_p
+		=
+		\left(\int_{\R^d}^{*}|f(x)|^p\,\dd x\right)^{1/p}
+		<+\infty,
+		\label{eq:lp-norm-definition}
+	\end{equation}
+	则称 \(f\in L^p(\R^d)\), 简记为 \(f\in L^p\).
+\end{defn}
+
+由于 \(|f|^p\) 是可测非负函数, 条件 \eqref{eq:lp-norm-definition} 等价于 \(|f|^p\in L^1\). 因而在 \(f\in L^p\) 时, 上式中的上积分可以写成通常积分:
+\[
+\|f\|_p
+=
+\left(\int_{\R^d}|f(x)|^p\,\dd x\right)^{1/p}.
+\]
+和 \(L^1\) 一样, 我们总是把几乎处处相等的函数视为同一个 \(L^p\) 元素.
+
+\begin{thm}[H\"older 不等式]
+	\label{thm:holder-inequality}
+	设 \(1<p<+\infty\), 且 \(q\) 满足
+	\[
+	\frac1p+\frac1q=1.
+	\]
+	若 \(f\in L^p\), \(g\in L^q\), 则 \(fg\in L^1\), 并且
+	\begin{equation}
+		\left|\int_{\R^d}f(x)g(x)\,\dd x\right|
+		\leq
+		\|f\|_p\|g\|_q.
+		\label{eq:holder-inequality}
+	\end{equation}
+	反过来, 若 \(f\in L^p\), 且存在常数 \(C\), 使得对任意 \(g\in L^q\) 都有
+	\begin{equation}
+		\left|\int_{\R^d}f(x)g(x)\,\dd x\right|
+		\leq C\|g\|_q,
+		\label{eq:holder-converse-assumption}
+	\end{equation}
+	则
+	\[
+	\|f\|_p\leq C.
+	\]
+\end{thm}
+
+\begin{proof}
+	令
+	\[
+	\alpha=\frac1p,
+	\qquad
+	\beta=\frac1q.
+	\]
+	则 \(\alpha+\beta=1\). 对任意非负数 \(a,b\), 有 Young 不等式
+	\[
+	a^\alpha b^\beta\leq \alpha a+\beta b.
+	\]
+	这是指数函数凸性的直接结果. 令
+	\[
+	a=|f(x)|^p,
+	\qquad
+	b=|g(x)|^q,
+	\]
+	便得
+	\[
+	|f(x)g(x)|
+	\leq
+	\frac1p|f(x)|^p+\frac1q|g(x)|^q.
+	\]
+	这说明 \(fg\in L^1\) 当 \(f\in L^p\), \(g\in L^q\) 时成立.
+	
+	若 \(\|f\|_p=\|g\|_q=1\), 积分上式得到
+	\[
+	\int_{\R^d}|f(x)g(x)|\,\dd x
+	\leq
+	\frac1p+\frac1q=1.
+	\]
+	一般情形对 \(f/\|f\|_p\) 和 \(g/\|g\|_q\) 应用上面的结论即可, 零函数情形显然. 于是得到 \eqref{eq:holder-inequality}.
+	
+	下面证明反向论断. 若 \(f=0\) 几乎处处, 结论显然. 否则定义
+	\[
+	g(x)=
+	\begin{cases}
+		\dfrac{|f(x)|^p}{f(x)}, & f(x)\neq0,\\[0.8em]
+		0, & f(x)=0.
+	\end{cases}
+	\]
+	也就是说, 在实值函数情形下
+	\[
+	g(x)=\operatorname{sgn}(f(x))|f(x)|^{p-1}.
+	\]
+	则
+	\[
+	|g(x)|^q=|f(x)|^p,
+	\]
+	所以 \(g\in L^q\), 且
+	\[
+	\|g\|_q=\|f\|_p^{p-1}.
+	\]
+	把这个 \(g\) 代入 \eqref{eq:holder-converse-assumption}, 得
+	\[
+	\|f\|_p^p
+	=
+	\int_{\R^d}|f(x)|^p\,\dd x
+	=
+	\int_{\R^d}f(x)g(x)\,\dd x
+	\leq
+	C\|f\|_p^{p-1}.
+	\]
+	故 \(\|f\|_p\leq C\).
+\end{proof}
+
+\begin{exer}
+	\label{exer:holder-upper-integral}
+	证明: 若把 H\"older 不等式中的积分都换成上积分, 则对任意非负函数 \(f,g\) 仍有
+	\[
+	\int_{\R^d}^{*}f(x)g(x)\,\dd x
+	\leq
+	\left(\int_{\R^d}^{*}f(x)^p\,\dd x\right)^{1/p}
+	\left(\int_{\R^d}^{*}g(x)^q\,\dd x\right)^{1/q}.
+	\]
+\end{exer}
+
+\begin{thm}[Minkowski 不等式]
+	\label{thm:minkowski-inequality}
+	若 \(f,g\in L^p\), \(1\leq p<+\infty\), 则 \(f+g\in L^p\), 并且
+	\begin{equation}
+		\|f+g\|_p\leq \|f\|_p+\|g\|_p.
+		\label{eq:minkowski-inequality}
+	\end{equation}
+\end{thm}
+
+\begin{proof}
+	当 \(p=1\) 时, 这就是 \(L^1\) 中的三角不等式. 下面设 \(p>1\), 并令 \(q\) 为共轭指数.
+	
+	由可测函数的运算性质, \(f+g\) 可测. 又有
+	\[
+	|f+g|\leq 2\max(|f|,|g|),
+	\]
+	从而
+	\[
+	|f+g|^p\leq 2^p\bigl(|f|^p+|g|^p\bigr).
+	\]
+	故 \(f+g\in L^p\).
+	
+	任取 \(h\in L^q\). 由 H\"older 不等式,
+	\begin{align*}
+		\left|\int_{\R^d}(f+g)h\,\dd x\right|
+		&\leq
+		\left|\int_{\R^d}fh\,\dd x\right|
+		+
+		\left|\int_{\R^d}gh\,\dd x\right|\\
+		&\leq
+		\bigl(\|f\|_p+\|g\|_p\bigr)\|h\|_q.
+	\end{align*}
+	由定理 \ref{thm:holder-inequality} 的反向部分, 得
+	\[
+	\|f+g\|_p\leq \|f\|_p+\|g\|_p.
+	\]
+\end{proof}
+
+\begin{exer}
+	\label{exer:minkowski-upper-integral}
+	把不等式 \eqref{eq:minkowski-inequality} 推广到 \(f,g\) 不一定可测的情形. 也就是说, 用上积分定义
+	\[
+	\|f\|_p^{*}
+	=
+	\left(\int_{\R^d}^{*}|f(x)|^p\,\dd x\right)^{1/p},
+	\]
+	证明
+	\[
+	\|f+g\|_p^{*}
+	\leq
+	\|f\|_p^{*}+\|g\|_p^{*}.
+	\]
+\end{exer}
+
+下面的定理说明, \(L^p\) 函数仍可以用紧支连续函数按 \(L^p\) 范数逼近. 这与 \(L^1\) 的定义完全平行.
+
+\begin{thm}[\(\C_0\) 在 \(L^p\) 中的稠密性]
+	\label{thm:c0-dense-in-lp}
+	设 \(1\leq p<+\infty\). 函数 \(f\in L^p\) 的充分必要条件是: 对任意 \(\varepsilon>0\), 存在 \(g\in\C_0(\R^d)\), 使得
+	\begin{equation}
+		\int_{\R^d}^{*}|f(x)-g(x)|^p\,\dd x<\varepsilon.
+		\label{eq:c0-density-lp}
+	\end{equation}
+\end{thm}
+
+\begin{proof}
+	当 \(p=1\) 时, 这就是 \(L^1\) 的定义. 下面设 \(p>1\).
+	
+	先证必要性. 设 \(f\in L^p\). 定义截断函数
+	\[
+	f_n(x)=
+	\begin{cases}
+		f(x), & \dfrac1n<|f(x)|<n,\\[0.8em]
+		0, & \text{其他情形}.
+	\end{cases}
+	\]
+	则 \(|f-f_n|^p\leq |f|^p\), 且 \(|f-f_n|^p\to0\) 几乎处处. 由控制收敛定理,
+	\[
+	\int_{\R^d}|f-f_n|^p\,\dd x\to0.
+	\]
+	固定一个足够大的 \(n\). 因 \(f_n\) 有界且 \(|f_n|\geq 1/n\) 于其非零处成立, 有
+	\[
+	|f_n|\leq n^{p-1}|f_n|^p.
+	\]
+	所以 \(f_n\in L^1\). 由 \(L^1\) 中 \(\C_0\) 的逼近性质, 可取 \(g\in\C_0(\R^d)\), 使得
+	\[
+	\int_{\R^d}|f_n(x)-g(x)|\,\dd x
+	<
+	\frac{\varepsilon}{(2n)^{p-1}}.
+	\]
+	把 \(g\) 截断为
+	\[
+	\max(-n,\min(n,g))
+	\]
+	不会增大左端, 因而可假定 \(|g|\leq n\). 此时
+	\[
+	|f_n-g|^p\leq (2n)^{p-1}|f_n-g|,
+	\]
+	故
+	\[
+	\int_{\R^d}|f_n-g|^p\,\dd x<\varepsilon.
+	\]
+	再结合 \(f_n\to f\) 于 \(L^p\) 中, 即得必要性.
+	
+	反过来, 假设 \eqref{eq:c0-density-lp} 对任意 \(\varepsilon>0\) 成立. 首先由
+	\[
+	|f|^p\leq 2^{p-1}\bigl(|f-g|^p+|g|^p\bigr)
+	\]
+	可知 \(\int^*|f|^p<+\infty\). 还需证明 \(f\) 可测.
+	
+	取一个处处正的连续函数 \(h\in L^q\), 其中 \(1/p+1/q=1\). 例如可以取
+	\[
+	h(x)=e^{-\|x\|^2}.
+	\]
+	由练习 \ref{exer:holder-upper-integral}, 对满足 \eqref{eq:c0-density-lp} 的 \(g\in\C_0\), 有
+	\[
+	\int_{\R^d}^{*}|h(x)f(x)-h(x)g(x)|\,\dd x
+	\leq
+	\|h\|_q
+	\left(\int_{\R^d}^{*}|f(x)-g(x)|^p\,\dd x\right)^{1/p}.
+	\]
+	因此 \(hf\) 可以在 \(L^1\) 意义下由 \(hg\in\C_0(\R^d)\) 逼近, 从而 \(hf\in L^1\). 于是 \(hf\) 可测. 因为 \(h>0\) 且 \(1/h\) 连续, 得
+	\[
+	f=\frac{hf}{h}
+	\]
+	可测. 故 \(f\in L^p\).
+\end{proof}
+
+现在推广 Riesz--Fischer 定理到 \(L^p\) 空间.
+
+\begin{thm}[Riesz--Fischer 定理]
+	\label{thm:riesz-fischer-lp}
+	设 \(1\leq p<+\infty\), \(f_n\in L^p\), 且
+	\begin{equation}
+		\|f_n-f_m\|_p\to0,
+		\qquad n,m\to\infty.
+		\label{eq:lp-cauchy-condition}
+	\end{equation}
+	则存在 \(f\in L^p\), 使得
+	\begin{equation}
+		\|f_n-f\|_p\to0.
+		\label{eq:lp-convergence}
+	\end{equation}
+	反过来, \eqref{eq:lp-convergence} 显然推出 \eqref{eq:lp-cauchy-condition}.
+\end{thm}
+
+\begin{proof}
+	当 \(p=1\) 时, 这已经在前一节证明过. 下面设 \(p>1\), 并令 \(q\) 为共轭指数.
+	
+	由 Cauchy 条件, 可取严格递增的整数列 \(n_k\), 使得
+	\[
+	\sum_{k=1}^{\infty}\|f_{n_{k+1}}-f_{n_k}\|_p<+\infty.
+	\]
+	取一个处处正的连续函数 \(h\in L^q\). 由 H\"older 不等式,
+	\[
+	\sum_{k=1}^{\infty}
+	\|h(f_{n_{k+1}}-f_{n_k})\|_1
+	\leq
+	\|h\|_q
+	\sum_{k=1}^{\infty}\|f_{n_{k+1}}-f_{n_k}\|_p
+	<+\infty.
+	\]
+	由 \(L^1\) 情形的级数定理, 级数
+	\[
+	h f_{n_1}
+	+
+	\sum_{k=1}^{\infty}h(f_{n_{k+1}}-f_{n_k})
+	\]
+	几乎处处绝对收敛. 因 \(h(x)>0\), 可知 \(f_{n_k}(x)\) 对几乎所有 \(x\) 收敛. 记其极限为 \(f(x)\). 于是 \(f\) 可测.
+	
+	给定 \(\varepsilon>0\). 由 \eqref{eq:lp-cauchy-condition}, 可取 \(N\), 使得当 \(m,n\geq N\) 时
+	\[
+	\|f_m-f_n\|_p<\varepsilon.
+	\]
+	固定 \(m\geq N\), 令 \(k\to\infty\), 并使用 Fatou 引理, 得
+	\[
+	\int_{\R^d}|f_m(x)-f(x)|^p\,\dd x
+	\leq
+	\liminf_{k\to\infty}
+	\int_{\R^d}|f_m(x)-f_{n_k}(x)|^p\,\dd x
+	\leq
+	\varepsilon^p.
+	\]
+	因此 \(f_m-f\in L^p\), 且 \(\|f_m-f\|_p\leq\varepsilon\) 对所有 \(m\geq N\) 成立. 由于 \(f_m\in L^p\), 得 \(f\in L^p\), 并且 \(f_m\to f\) 于 \(L^p\) 中.
+\end{proof}
+
+\begin{rem}
+	定理 \ref{thm:riesz-fischer-lp} 表明, \(L^p\) 在范数 \(\|\cdot\|_p\) 下是完备的. 因而 \(1\leq p<+\infty\) 时, \(L^p\) 是 Banach 空间.
+\end{rem}
+
+最后引入 \(L^\infty\) 空间.
+
+\begin{defn}[\(L^\infty\) 空间]
+	\label{def:l-infinity}
+	若 \(f\) 是可测函数, 且存在常数 \(C\geq0\), 使得
+	\[
+	|f(x)|\leq C
+	\]
+	几乎处处成立, 则称 \(f\in L^\infty(\R^d)\). 定义
+	\[
+	\|f\|_\infty
+	=
+	\inf\{C\geq0: |f(x)|\leq C\text{ 几乎处处成立}\}.
+	\]
+	这个数称为 \(f\) 的本质上确界范数.
+\end{defn}
+
+实际上, 上述下确界可以达到. 也就是说,
+\[
+|f(x)|\leq \|f\|_\infty
+\]
+几乎处处成立. 这是因为可取 \(C_n\downarrow \|f\|_\infty\), 且 \(|f|\leq C_n\) 几乎处处成立; 去掉这些例外零集的可数并后, 令 \(n\to\infty\) 即可.
+
+\begin{rem}
+	H\"older 不等式在 \(p=1,q=\infty\) 的情形仍然成立: 若 \(f\in L^1\), \(g\in L^\infty\), 则 \(fg\in L^1\), 且
+	\[
+	\int_{\R^d}|f(x)g(x)|\,\dd x
+	\leq
+	\|g\|_\infty\int_{\R^d}|f(x)|\,\dd x.
+	\]
+\end{rem}
+
+\begin{exer}
+	\label{exer:lp-limit-to-linfty}
+	假定 \(f\in L^\infty\), 并且 \(f\in L^p\) 对任意 \(1\leq p<+\infty\) 成立. 证明
+	\[
+	\|f\|_\infty
+	=
+	\lim_{p\to+\infty}\|f\|_p.
+	\]
+\end{exer}
+
+\clearpage
+
+\section{勒贝格积分的微商}
+\label{sec:derivatives-of-lebesgue-integrals}
+
+本节证明勒贝格积分的一个基本定理: 局部可积函数几乎处处可以由它在小球上的平均值恢复. 这个结果是积分理论在三角级数、调和函数以及许多分析问题中的基础.
+
+若 \(S\subset\R^d\) 是球, 记 \(m(S)\) 为它的 Lebesgue 测度. 对局部可积函数 \(f\), 我们关心如下平均值:
+\[
+\frac{1}{m(S)}\int_S f(y)\,\dd y,
+\]
+其中 \(S\) 是包含点 \(x\) 的球, 并且 \(m(S)\to0\).
+
+\begin{thm}[Lebesgue 微分定理]
+	\label{thm:lebesgue-differentiation-balls}
+	若 \(f\in L^1_{\operatorname{loc}}(\R^d)\), 则对几乎所有的 \(x\in\R^d\), 有
+	\begin{equation}
+		f(x)=\lim_{\substack{m(S)\to0\\ x\in S}}
+		\frac{1}{m(S)}\int_S f(y)\,\dd y,
+		\label{eq:lebesgue-differentiation-average}
+	\end{equation}
+	其中 \(S\) 取遍包含 \(x\) 的球. 进一步, 对几乎所有的 \(x\), 还有
+	\begin{equation}
+		\lim_{\substack{m(S)\to0\\ x\in S}}
+		\frac{1}{m(S)}\int_S |f(y)-f(x)|\,\dd y=0.
+		\label{eq:lebesgue-point-property}
+	\end{equation}
+\end{thm}
+
+为了证明这个定理, 我们引入 Hardy--Littlewood 最大函数. 对 \(f\in L^1_{\operatorname{loc}}(\R^d)\), 定义
+\begin{equation}
+	Mf(x)=\sup_{S\ni x}\frac{1}{m(S)}\int_S |f(y)|\,\dd y,
+	\label{eq:hardy-littlewood-maximal-function}
+\end{equation}
+其中上确界取遍所有包含 \(x\) 的球 \(S\).
+
+\begin{exer}\label{exer:maximal-function-lsc}
+	证明 \(Mf\) 是下方半连续函数, 即 \(Mf\in\mathcal I^+\).
+\end{exer}
+
+\begin{thm}[Hardy 最大定理]
+	\label{thm:hardy-maximal-weak-l1}
+	若 \(f\in L^1(\R^d)\), 则对任意 \(\alpha>0\), 有
+	\begin{equation}
+		m\{x:Mf(x)>\alpha\}
+		\leq
+		\frac{4^d}{\alpha}\int_{\R^d}|f(y)|\,\dd y.
+		\label{eq:hardy-maximal-weak-l1}
+	\end{equation}
+\end{thm}
+
+\begin{proof}
+	记
+	\[
+	E_\alpha=\{x:Mf(x)>\alpha\}.
+	\]
+	由定义, \(E_\alpha\) 是一族球的并. 这些球满足
+	\[
+	\frac{1}{m(S)}\int_S |f(y)|\,\dd y>\alpha.
+	\]
+	记这族球为 \(\mathcal F\). 这些球的半径有上界, 因为若 \(S\in\mathcal F\), 则
+	\[
+	\alpha m(S)<\int_S |f(y)|\,\dd y\leq \int_{\R^d}|f(y)|\,\dd y.
+	\]
+	
+	我们从 \(\mathcal F\) 中选出一列互不相交的球 \(S_k\), 使得 \(E_\alpha\) 被这些球的四倍同心放大球覆盖. 设 \(R_1\) 是 \(\mathcal F\) 中球半径的上确界, 取 \(S_1\in\mathcal F\), 使其半径 \(r_1>2R_1/3\). 若已经取出互不相交的 \(S_1,\ldots,S_{k-1}\), 令 \(R_k\) 为 \(\mathcal F\) 中所有与 \(S_1,\ldots,S_{k-1}\) 都不相交的球的半径上确界. 若 \(R_k=0\), 选取过程停止; 否则取 \(S_k\in\mathcal F\), 使其半径 \(r_k>2R_k/3\).
+	
+	若这个过程无限进行, 则由于 \(S_k\) 互不相交, 有
+	\[
+	\sum_k m(S_k)
+	<\frac{1}{\alpha}\sum_k\int_{S_k}|f(y)|\,\dd y
+	\leq \frac{1}{\alpha}\int_{\R^d}|f(y)|\,\dd y<+\infty.
+	\]
+	因此 \(m(S_k)\to0\), 也就是 \(r_k\to0\), 从而 \(R_k\to0\).
+	
+	现在取 \(x\in E_\alpha\). 则存在 \(S\in\mathcal F\) 使 \(x\in S\). 设 \(S\) 的半径为 \(r\). 若 \(S\) 与所有 \(S_k\) 都不相交, 则 \(R_k\geq r\) 对所有 \(k\) 成立, 与 \(R_k\to0\) 矛盾. 因此 \(S\) 必与某个 \(S_k\) 相交. 取第一个与 \(S\) 相交的 \(S_k\). 此时 \(S\) 与 \(S_1,\ldots,S_{k-1}\) 不相交, 所以 \(r\leq R_k<3r_k/2\). 若 \(a_k\) 为 \(S_k\) 的中心, 则
+	\[
+	\|x-a_k\|\leq 2r+r_k<4r_k.
+	\]
+	因此 \(x\) 属于 \(S_k\) 的四倍同心放大球. 于是
+	\[
+	E_\alpha\subset \bigcup_k 4S_k.
+	\]
+	从而
+	\[
+	m(E_\alpha)
+	\leq \sum_k m(4S_k)
+	=4^d\sum_k m(S_k)
+	\leq \frac{4^d}{\alpha}\int_{\R^d}|f(y)|\,\dd y.
+	\]
+\end{proof}
+
+\begin{proof}[定理 \ref{thm:lebesgue-differentiation-balls} 的证明]
+	结论是局部的, 因此可以先证明 \(f\in L^1(\R^d)\) 的情形. 一般的局部可积情形, 只需在任意紧集附近乘以一个等于 \(1\) 的紧支连续截断函数, 再把结论局部化即可.
+	
+	对 \(\varepsilon>0\), 令
+	\[
+	E_\varepsilon(f)=\left\{x:
+	\limsup_{\substack{m(S)\to0\\x\in S}}
+	\frac{1}{m(S)}\int_S |f(y)-f(x)|\,\dd y>\varepsilon
+	\right\}.
+	\]
+	我们证明每个 \(E_\varepsilon(f)\) 都是零集. 任取 \(g\in\C_0(\R^d)\). 因为 \(g\) 连续, 所以
+	\[
+	\frac{1}{m(S)}\int_S |g(y)-g(x)|\,\dd y\longrightarrow0
+	\]
+	当 \(m(S)\to0\) 且 \(x\in S\). 由三角不等式,
+	\begin{align*}
+		\frac{1}{m(S)}\int_S |f(y)-f(x)|\,\dd y
+		&\leq
+		\frac{1}{m(S)}\int_S |f(y)-g(y)|\,\dd y\nobreak\\
+		&\quad+
+		\frac{1}{m(S)}\int_S |g(y)-g(x)|\,\dd y
+		+|g(x)-f(x)|.
+	\end{align*}
+	因此
+	\[
+	E_{3\varepsilon}(f)
+	\subset
+	\{x:M(f-g)(x)>\varepsilon\}
+	\cup
+	\{x:|f(x)-g(x)|>\varepsilon\}.
+	\]
+	由 Hardy 最大定理和 Chebyshev 不等式, 得
+	\[
+	m^*(E_{3\varepsilon}(f))
+	\leq
+	\frac{4^d+1}{\varepsilon}
+	\int_{\R^d}|f(x)-g(x)|\,\dd x.
+	\]
+	由于 \(\C_0(\R^d)\) 在 \(L^1\) 中稠密, 可令右端任意小. 所以
+	\[
+	m^*(E_{3\varepsilon}(f))=0.
+	\]
+	令 \(\varepsilon\) 取遍正有理数, 即得 \eqref{eq:lebesgue-point-property} 对几乎所有 \(x\) 成立. 由
+	\[
+	\left|\frac{1}{m(S)}\int_S f(y)\,\dd y-f(x)\right|
+	\leq
+	\frac{1}{m(S)}\int_S |f(y)-f(x)|\,\dd y,
+	\]
+	立即得到 \eqref{eq:lebesgue-differentiation-average}.
+\end{proof}
+
+\begin{exer}\label{exer:differentiation-general-bases}
+	证明定理 \ref{thm:hardy-maximal-weak-l1} 和定理 \ref{thm:lebesgue-differentiation-balls} 在下述情形仍成立: 不只考虑包含 \(x\) 的球 \(S\), 而考虑所有满足以下条件的可测集合 \(E\): 对某个固定常数 \(K\), 存在一个球 \(S\supset E\cup\{x\}\), 使得
+	\[
+	m(S)\leq K m(E).
+	\]
+\end{exer}
+
+\begin{exer}\label{exer:approximate-identity-l1}
+	设 \(f\in L^1(\R^d)\), 并设 \(g\in L^1\) 有界且关于 \(\|x\|\) 单调下降. 令
+	\[
+	g_\varepsilon(x)=\varepsilon^{-d}g(x/\varepsilon),
+	\qquad \varepsilon>0.
+	\]
+	证明
+	\[
+	\lim_{\varepsilon\to0}
+	\int_{\R^d}\left|f(x-y)g_\varepsilon(y)-f(x)g_\varepsilon(y)\right|\,\dd y=0
+	\]
+	对几乎所有的 \(x\) 成立. 并证明左端作为 \(x\) 的函数是连续的. 提示: 先考虑 \(g\) 具有紧致支集的情形, 并利用定理 \ref{thm:hardy-maximal-weak-l1}.
+\end{exer}
+
+对于 \(L^p\) 函数, 可以把 Hardy 最大定理的弱型估计改进为强型估计.
+
+\begin{thm}[最大函数的 \(L^p\) 估计]
+	\label{thm:maximal-lp-estimate}
+	若 \(f\in L^p(\R^d)\), \(1<p<+\infty\), 则
+	\begin{equation}
+		\int_{\R^d}(Mf(x))^p\,\dd x
+		\leq
+		C_p\int_{\R^d}|f(x)|^p\,\dd x,
+		\label{eq:maximal-lp-estimate}
+	\end{equation}
+	其中可以取
+	\[
+	C_p=4^d2^p\frac{p}{p-1}.
+	\]
+\end{thm}
+
+\begin{proof}
+	设
+	\[
+	E_s=\{x:Mf(x)>s\},
+	\qquad
+	\Phi(s)=m(E_s).
+	\]
+	由分布函数公式,
+	\[
+	\int_{\R^d}(Mf(x))^p\,\dd x
+	=
+	\int_0^{+\infty}\Phi(s)\,\dd(s^p).
+	\]
+	对每个 \(s>0\), 将 \(f\) 分解为
+	\[
+	f=g_s+h_s,
+	\]
+	其中
+	\[
+	g_s(x)=
+	\begin{cases}
+		f(x), & |f(x)|\leq s/2,\\
+		0, & |f(x)|>s/2,
+	\end{cases}
+	\qquad
+	h_s=f-g_s.
+	\]
+	则 \(Mg_s\leq s/2\). 因而在 \(E_s\) 上必有 \(Mh_s>s/2\). 由 Hardy 最大定理,
+	\[
+	\Phi(s)
+	\leq
+	m\{x:Mh_s(x)>s/2\}
+	\leq
+	\frac{2\cdot4^d}{s}\int_{\{|f|>s/2\}}|f(x)|\,\dd x.
+	\]
+	于是
+	\begin{align*}
+		\int_{\R^d}(Mf)^p\,\dd x
+		&\leq
+		2\cdot4^d\int_0^{+\infty}s^{-1}
+		\left(\int_{\{|f|>s/2\}}|f(x)|\,\dd x\right)\dd(s^p)\\
+		&=2\cdot4^d p
+		\int_{\R^d}|f(x)|
+		\left(\int_0^{2|f(x)|}s^{p-2}\,\dd s\right)\dd x\\
+		&=4^d2^p\frac{p}{p-1}
+		\int_{\R^d}|f(x)|^p\,\dd x.
+	\end{align*}
+	这就是所需估计.
+\end{proof}
+
+\begin{rem}
+	上面的常数并不是最佳的. 但是, 通过取适当的非负函数, 可以看出当 \(p\downarrow1\) 时, 常数关于 \((p-1)^{-1}\) 的阶不能改进. 特别地, 当 \(p=1\) 时不存在形如 \eqref{eq:maximal-lp-estimate} 的强型 \(L^1\) 不等式; 此时只能得到定理 \ref{thm:hardy-maximal-weak-l1} 的弱型估计.
+\end{rem}
+
+\begin{thm}[区间基下的微分定理]
+	\label{thm:lebesgue-differentiation-rectangles-lp}
+	设 \(f\in L^p(\R^d)\), \(1<p<+\infty\). 则对几乎所有 \(x\in\R^d\), 有
+	\begin{equation}
+		f(x)=\lim_{\substack{\operatorname{diam} I\to0\\ x\in I}}
+		\frac{1}{m(I)}\int_I f(y)\,\dd y,
+		\label{eq:rectangle-differentiation-lp}
+	\end{equation}
+	其中 \(I\) 取遍包含 \(x\) 的区间.
+\end{thm}
+
+\begin{proof}
+	定义区间最大函数
+	\[
+	M_{\Box}f(x)=\sup_{I\ni x}
+	\frac{1}{m(I)}\int_I |f(y)|\,\dd y,
+	\]
+	其中 \(I\) 取遍包含 \(x\) 的区间. 当 \(d=1\) 时, 它与前面的球最大函数只差无关紧要的常数. 一般维数下, 可以按坐标方向逐次应用一维最大算子, 得到
+	\[
+	\|M_{\Box}f\|_p\leq K_{p,d}\|f\|_p.
+	\]
+	于是有
+	\[
+	m\{x:M_{\Box}f(x)>s\}
+	\leq
+	K_{p,d}^p s^{-p}\|f\|_p^p.
+	\]
+	现在重复定理 \ref{thm:lebesgue-differentiation-balls} 的证明, 把球换成区间, 把 Hardy 最大定理换成上面的 \(L^p\) 控制, 即得结论.
+\end{proof}
+
+\begin{rem}
+	定理 \ref{thm:lebesgue-differentiation-rectangles-lp} 中对区间各边长的比例没有任何限制. 这点与只用球作平均时不同. 当 \(p=1\) 且 \(d>1\) 时, 这个结论一般不成立.
+\end{rem}
+
+\begin{exer}\label{exer:convex-neighborhood-differentiation}
+	设 \(\mathcal F\) 是原点的一族闭的、有界的、凸的、对称邻域, 满足
+	\[
+	\bigcap_{S\in\mathcal F}S=\{0\},
+	\]
+	并且对任意 \(S,S'\in\mathcal F\), 有 \(S\subset S'\) 或 \(S'\subset S\). 证明: 若 \(f\in L^1(\R^d)\), 则
+	\[
+	\lim_{\substack{S\in\mathcal F\\ m(S)\to0}}
+	\frac{1}{m(S)}\int_S |f(x+y)-f(x)|\,\dd y=0
+	\]
+	对几乎所有的 \(x\) 成立.
+	
+	提示: 先把族 \(\mathcal F\) 扩大, 使得若 \(S_n\in\mathcal F\), \(S_n\downarrow S\), 则 \(S\in\mathcal F\). 注意若 \(S,S'\in\mathcal F\), \(S'\subset S\), 且 \((x+S)\cap(x'+S')\neq\varnothing\), 则
+	\[
+	x'+S'\subset x+3S.
+	\]
+	然后把定理 \ref{thm:hardy-maximal-weak-l1} 推广到最大函数
+	\[
+	M_{\mathcal F}f(x)=\sup_{S\in\mathcal F}
+	\frac{1}{m(S)}\int_S |f(x+y)|\,\dd y.
+	\]
+\end{exer}
+
+现在利用定理 \ref{thm:lebesgue-differentiation-balls} 和定理 \ref{thm:hardy-maximal-weak-l1}, 证明实直线上的单调函数几乎处处可微. 虽然这个结果也可以由第三章的一般理论更自然地推出, 但直接证明本身也很有意义.
+
+设 \(f\) 是 \(\R\) 上的增函数. 对区间 \(I=[a,b]\), 记
+\[
+f(I)=f(b)-f(a),
+\qquad
+m(I)=b-a.
+\]
+定义 \(f\) 的下微商和上微商为
+\[
+f_*(x)=\liminf_{\substack{m(I)\to0\\x\in I}}\frac{f(I)}{m(I)},
+\qquad
+f^*(x)=\limsup_{\substack{m(I)\to0\\x\in I}}\frac{f(I)}{m(I)}.
+\]
+容易看出 \(f_*\in L^1_{\operatorname{loc}}(\R)\). 进一步, 函数
+\[
+g(x)=f(x)-\int_0^x f_*(t)\,\dd t
+\]
+仍是增函数. 当 \(x<y\) 时, 可由 Fatou 引理得到
+\[
+\int_x^y f_*(t)\,\dd t\leq f(y)-f(x),
+\]
+这正说明 \(g(y)-g(x)\geq0\).
+
+由定理 \ref{thm:lebesgue-differentiation-balls}, 函数 \(x\mapsto\int_0^x f_*(t)\,\dd t\) 的微商几乎处处等于 \(f_*(x)\). 因而 \(g_*(x)=0\) 几乎处处. 我们还要证明 \(g^*(x)=0\) 几乎处处.
+
+为此, 对任意 \(\varepsilon>0\), 考虑集合
+\[
+E=\{x:g_*(x)=0\text{ 且 }g^*(x)>\varepsilon\}.
+\]
+下面证明 \(E\) 是零集. 若 \(\delta>0\) 且 \(x\in E\), 则可以找到包含 \(x\) 的区间 \(I=[a,b]\), 使得
+\[
+g(I)<\delta m(I).
+\]
+定义一个增函数 \(G\): 在 \(I\) 内令 \(G=g\), 在 \(a\) 左侧令 \(G(t)=g(a)\), 在 \(b\) 右侧令 \(G(t)=g(b)\). 对 \(G\) 定义相应的最大微商
+\[
+H(x)=\sup_{J\ni x}\frac{G(J)}{m(J)}.
+\]
+把 Hardy 最大定理的证明稍作修改, 可得对任意增函数 \(G\), 有
+\[
+m\{x:H(x)>\varepsilon\}\leq \frac{4}{\varepsilon}\bigl(G(+\infty)-G(-\infty)\bigr).
+\]
+这里对上面这个 \(G\), 右端等于 \(4g(I)/\varepsilon\), 从而
+\[
+m(I\cap E)
+\leq \frac{4g(I)}{\varepsilon}
+\leq \frac{4\delta}{\varepsilon}m(I).
+\]
+因为 \(\delta>0\) 任意, 可知 \(E\) 的特征函数在 \(E\) 内几乎处处具有微商零, 从而 \(E\) 必为零集. 于是 \(g^*(x)=0\) 几乎处处.
+
+由此得到如下定理.
+
+\begin{thm}\label{thm:monotone-function-ae-differentiable}
+	若 \(f\) 是 \(\R\) 上的增函数, 则 \(f'(x)\) 几乎处处存在, 并且 \(f'\in L^1_{\operatorname{loc}}(\R)\). 此外, 可以写成
+	\begin{equation}
+		f(y)-f(x)=\int_x^y f'(t)\,\dd t+g(y)-g(x),
+		\label{eq:monotone-decomposition}
+	\end{equation}
+	其中 \(g\) 是增函数, 且 \(g'(x)=0\) 几乎处处.
+\end{thm}
+
+显然, \(g\) 不必是常数. 例如阶梯函数就是增函数, 且它的导数几乎处处为零. 更有意思的是, 存在连续的增函数, 它的导数几乎处处等于零. 下面给出经典例子.
+
+\begin{exam}[Cantor 函数]
+	\label{exam:cantor-function}
+	我们在 \([0,1]\) 上构造一个连续的增函数 \(g\), 使得
+	\[
+	g'(x)=0
+	\]
+	在 Cantor 集 \(C\) 的余集上成立. 由于 \(C\) 是零集, 这就给出一个连续增函数, 其导数几乎处处为零, 但函数本身并非常数.
+	
+	设 \(E_n\) 是构造 Cantor 集时第 \(n\) 步剩下的闭集, 并令
+	\[
+	O_n=[0,1]\setminus E_n.
+	\]
+	则 \(O_n\) 由 \(2^n-1\) 个开区间组成, 它们正是前 \(n\) 步删去的那些中间三分之一开区间. 在 \(O_n\) 上定义函数 \(g_n\): 若 \(x\) 属于 \(O_n\) 中从左到右数的第 \(k\) 个区间, 则令
+	\[
+	g_n(x)=\frac{k}{2^n}.
+	\]
+	由于 \(O_n\subset O_{n+1}\), 并且 \(g_{n+1}\) 在 \(O_n\) 上与 \(g_n\) 一致, 可以在
+	\[
+	O=[0,1]\setminus C=\bigcup_{n=1}^{\infty}O_n
+	\]
+	上定义函数 \(g\), 即
+	\[
+	g(x)=g_n(x),\qquad x\in O_n.
+	\]
+	由构造可知
+	\[
+	|g(x)-g(y)|\leq 2^{-n},
+	\qquad |x-y|<3^{-n}.
+	\]
+	因此 \(g\) 在 \(O\) 上一致连续, 从而可以唯一地连续延拓到 \([0,1]\) 上. 这个延拓仍记为 \(g\). 容易看出 \(g\) 是不减函数. 若 \(x\in O\), 则对充分大的 \(n\), 点 \(x\) 落在 \(O_n\) 的某个开区间内, 而在该区间上 \(g=g_n\) 为常数, 因此
+	\[
+	g'(x)=0.
+	\]
+	因为 \([0,1]\setminus O=C\) 是零集, 所以 \(g'(x)=0\) 几乎处处.
+\end{exam}
