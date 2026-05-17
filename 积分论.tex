@@ -1,0 +1,134 @@
+\documentclass{ctexbook}
+%\usepackage{ctexcap}
+\usepackage{amsmath, amsthm, amssymb,cases,mathrsfs,diagbox,mathtools}
+\numberwithin{equation}{chapter}
+\usepackage{enumerate}
+\usepackage{extarrows}
+\usepackage{pifont}
+\usepackage{paralist}
+\usepackage[all]{xy}
+\usepackage{xcolor, tikz,tikz-3dplot}
+\usepackage{cancel}
+\usepackage{physics}
+%\usepackage{bbding}
+%\usepackage{draftwatermark}
+%\SetWatermarkScale{1}
+\usepackage{hyperref}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\usepgfplotslibrary{groupplots}
+\usepackage{makeidx}
+\usepackage{esdiff}
+\usepackage{listings}  % 渲染代码块
+\usepackage{xcolor}  % 用到了 \color 命令
+
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+% 定义 listings 风格，可以定义多个
+\lstdefinestyle{mystyle}{
+	% backgroundcolor=\color{backcolour},  % 背景色
+	commentstyle= \color{red!50!green!50!blue!50},  % 注释的颜色
+	keywordstyle= \color{blue!70},  % 关键字/程序语言中的保留字颜色
+	numberstyle=\tiny\color{codegray},  % 左侧行号显示的颜色
+	stringstyle=\color{codepurple},
+	basicstyle=\ttfamily\footnotesize,
+	breakatwhitespace=false,
+	breaklines=true,  % 对过长的代码自动换行
+	captionpos=b,
+	keepspaces=true,
+	numbers=left,  % 在左侧显示行号
+	numbersep=5pt,
+	showspaces=false,
+	showstringspaces=false,  % 不显示字符串中的空格
+	showtabs=false,
+	tabsize=2,
+	frame=single  % [none | single | shadowbox] 显示边框
+}
+
+\lstset{style=mystyle}  % 使用 listings 风格
+
+\makeindex
+\pgfplotsset{compat=1.18}
+%\newtheorem*{solution}{解}
+\hypersetup{
+	pdftitle={大学数学},
+	pdfauthor={唐家俊},
+	pdfsubject={},
+	pdfkeywords={},
+	pdfcreator={},
+	pdfstartpage={} }
+
+\theoremstyle{plain}
+\newtheorem{thm}{定理}[section]
+\newtheorem{prop}{命题}[section]
+\newtheorem{lem}{引理}[section]
+\newtheorem{cor}{推论}[section]
+\newtheorem{app}{应用}[section]
+
+
+\theoremstyle{definition}
+\newtheorem{defn}{定义}[section]
+\newtheorem{exam}{例}[section]
+\newtheorem{exer}{练习}[section]
+
+\theoremstyle{remark}
+\newtheorem{rem}{注记}[section]
+
+\newenvironment{solution}{\begin{proof}[解]}{\end{proof}}
+\newcommand*{\ow}{\overrightarrow}
+\newcommand*{\Cov}{\mathrm{Cov}}
+
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\T}{\mathcal{T}}
+\newcommand{\C}{\mathcal{C}}
+\newcommand{\osc}{\operatorname{osc}}
+
+
+\allowdisplaybreaks[4]
+
+%带圆圈数字命令
+\newcommand*{\circled}[1]{\lower.7ex\hbox{\tikz\draw (0pt, 0pt) circle (.5em) node {\makebox[1em][c]{\small #1}};}}
+
+\title{\bfseries 积分论(校验版)}
+\author{T. Claesson, L. H\"ormander ~ 著}
+\date{\today}
+
+%❈%❈%❈%❈%❈%❈%❈%❈%❈%❈%❈%❈%❈%❈%❈%❈%❈%❈%❈%❈%❈%❈%❈%❈%❈%❈%❈%❈%❈%❈%❈%❈
+\begin{document}
+	\frontmatter
+	\maketitle
+	
+	\renewcommand\contentsname{目~录}
+	\tableofcontents
+	
+	\mainmatter
+	
+	\chapter*{前言}
+	\addcontentsline{toc}{chapter}{前言}
+	
+	本书是在作者 1959 年秋季于斯德哥尔摩大学讲授课程的讲义基础上整理而成的。原讲义中, 第一章和第二章属于学士学位考试课程的一部分; 而全书内容则包含在硕士学位的必修课程之中, 至少在隆德大学当时是如此。
+	
+	我们希望这个新版本中的第一章和第二章, 可以作为学士学位阶段一门扩充课程的教材, 大约相当于 \(6\) 个学分; 同时也希望本书能够用于博士阶段的相关课程。由于目前基础课程应包含哪些内容并不完全明确, 本书增加了关于 Riemann 积分的一章作为第一章, 这样就不必把 Riemann 积分预设为读者已经熟悉的知识。
+	
+	习题部分补充了隆德大学考试中使用过的一些题目, 也收录了讨论班中提出的一些问题。附录中汇集了若干定义、记号和注释, 这样做的目的是避免正文部分变得过于冗长。
+	
+	关于 \(L^p\) 空间中函数与范数的若干命题, 应当结合 Banach 空间及其对偶空间中弱拓扑的学习来处理。为此, 读者还应阅读泛函分析教材中的相关内容。若想获得更完整的整体图景, 也应参考 Bourbaki 学派关于积分理论的著作。本讲义在整体体系上大体沿用了该书的处理方式。
+	
+	\begin{flushright}
+		T. Claesson\\
+		L. H\"ormander\\
+		1970 年于隆德
+	\end{flushright}
+	
+	\include{body/chapter1}
+	
+	\include{body/chapter2}
+	
+	\include{body/chapter3}
+	
+	\include{body/chapter4}
+	
+\end{document}
